@@ -1,0 +1,363 @@
+@font-face {
+  font-family: opensans;
+  src: url(/fonts/opensans.ttf?d2a705b59e370eaa5d145962f3b1ade1);
+}
+
+@font-face {
+  font-family: 'decorfont';
+  src: url(/fonts/tt1018m_.ttf?01dcb77c9a956339628b370986fd6b56);
+}
+
+@font-face {
+  font-family: 'raleway';
+  src: url(/fonts/Raleway-Medium.ttf?fa56e8c122bb66dbcb913e416bb54c97);
+}
+
+.notification {
+  position: fixed;
+  left: 50%;
+  margin-left: -100px;
+  width: 200px;
+  background: linear-gradient(135deg, #36393F, #1c1c1c);
+  text-align: center;
+  color: #E88C01;
+  font-size: 13px;
+  font-family: opensans;
+  padding: 15px;
+}
+
+@media screen and (max-width: 800px) {
+  .notification {
+    position: fixed;
+    left: 400px;
+    margin-left: -100px;
+    width: 200px;
+    background: linear-gradient(135deg, #36393F, #1c1c1c);
+    text-align: center;
+    color: #E88C01;
+    font-size: 13px;
+    font-family: opensans;
+    padding: 15px;
+  }
+}
+
+.auth {
+  width: 100vw;
+  height: 100vh;
+  background: url(http://widefon.com/_ld/156/79476541.jpg);
+}
+
+.auth .title-block-auth {
+  background: -webkit-gradient(linear, left top, left bottom, from(#36393F), to(#1c1c1c));
+  background: linear-gradient(180deg, #36393F, #1c1c1c);
+  padding-top: 10px;
+}
+
+.auth .title-auth-form {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+@media screen and (max-width: 700px) {
+  .auth .login {
+    background: linear-gradient(135deg, #36393F, #1c1c1c);
+    position: absolute;
+    width: 240px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-110%, -50%);
+            transform: translate(-110%, -50%);
+  }
+
+  .auth .registration {
+    background: linear-gradient(135deg, #36393F, #1c1c1c);
+    position: absolute;
+    width: 240px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(10%, -50%);
+            transform: translate(10%, -50%);
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .auth .login {
+    background: linear-gradient(135deg, #36393F, #1c1c1c);
+    position: absolute;
+    width: 240px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-130%, -50%);
+            transform: translate(-130%, -50%);
+  }
+
+  .auth .registration {
+    background: linear-gradient(135deg, #36393F, #1c1c1c);
+    position: absolute;
+    width: 240px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(30%, -50%);
+            transform: translate(30%, -50%);
+  }
+}
+
+.auth .form-field {
+  padding: 10px;
+  border: 1px solid white;
+  background: #1c1c1c;
+  border-radius: 5px;
+  color: white;
+  width: 180px;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.auth .error-message {
+  margin-left: 30px;
+  font-size: 12px;
+  color: #E88C01;
+  font-family: opensans;
+}
+
+.auth .submit-button-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 5px;
+}
+
+.auth .submit-button-block button {
+  border: none;
+  background: #E88C01;
+  color: white;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  border-radius: 5px;
+  padding: 10px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.auth .submit-button-block button:hover {
+  background: #DDDDDD;
+  color: black;
+}
+
+.sidebar {
+  -webkit-box-shadow: 3px 0px 5px #565655;
+          box-shadow: 3px 0px 5px #565655;
+  width: 260px;
+  height: 100vh;
+  background: linear-gradient(135deg, #36393F, #1c1c1c);
+  position: fixed;
+}
+
+.scroll-black-content {
+  padding-bottom: 160px;
+}
+
+.current-user {
+  padding: 13px 20px;
+  color: #DDDDDD;
+  background: -webkit-gradient(linear, left top, left bottom, from(#FD9105), to(#CB7B02));
+  background: linear-gradient(180deg, #FD9105, #CB7B02);
+}
+
+.current-user .username {
+  color: inherit;
+  font-size: 20px;
+  font-family: opensans;
+}
+
+.current-user .logout {
+  font-size: 10px;
+  background: black;
+  color: white;
+  border-radius: 0 0 5px 5px;
+  padding: 2px 5px;
+  width: 30px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 20px;
+}
+
+.current-user .icons {
+  float: right;
+  margin-top: -28px;
+  font-size: 25px;
+}
+
+.current-user .icons span {
+  cursor: pointer;
+  margin-left: 15px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.current-user .icons span:hover {
+  color: white;
+}
+
+.search-friends {
+  padding: 20px;
+}
+
+.search-friends input {
+  padding: 10px;
+  border: 1px solid white;
+  background: #1c1c1c;
+  border-radius: 5px;
+  color: white;
+  width: 200px;
+}
+
+.search-friends button {
+  border: none;
+  background: #E88C01;
+  color: white;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  height: 39px;
+  width: 42px;
+  position: absolute;
+  left: 200px;
+  border-radius: 0 5px 5px 0;
+}
+
+.search-friends button:hover {
+  background: #DDDDDD;
+  color: black;
+}
+
+.search-friends .search-matches-list {
+  font-size: 15px;
+  position: absolute;
+  color: black;
+  background: white;
+  z-index: 200;
+  top: 110px;
+  width: 180px;
+  font-family: opensans;
+}
+
+.search-friends .search-matches-list ul li {
+  padding: 5px;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.search-friends .search-matches-list ul li:hover {
+  color: white;
+  background: #E88C01;
+}
+
+.communications {
+  color: #DDDDDD;
+}
+
+.communications .title {
+  padding: 20px;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  background: -webkit-gradient(linear, left top, left bottom, from(#36393F), to(#1c1c1c));
+  background: linear-gradient(180deg, #36393F, #1c1c1c);
+  color: #E88C01 !important;
+}
+
+.communications .title h3 {
+  font-size: 12px;
+}
+
+.communications .title .arrow-up {
+  position: absolute;
+  left: 220px;
+  margin-top: -22px;
+  font-size: 20px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.communications .title .arrow-down {
+  position: absolute;
+  left: 220px;
+  margin-top: -22px;
+  font-size: 20px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
+  -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+}
+
+.communications .list {
+  background: #DDDDDD;
+  color: black;
+  border-right: 2px solid #36393F;
+  border-left: 2px solid #36393F;
+}
+
+.communications .list ul .active-connect {
+  border-left: 4px solid #E88C01;
+  padding-left: 6px !important;
+}
+
+.communications .list ul li {
+  padding: 10px 20px;
+  font-family: opensans;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.communications .list ul li:hover {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  color: #E88C01;
+}
+
+.chat {
+  min-width: 100vw;
+  min-height: 100vh;
+  background: url(http://widefon.com/_ld/156/79476541.jpg);
+  background-attachment: fixed;
+}
+
+.message {
+  width: 500px;
+  height: 100px;
+  background: white !important;
+  color: black;
+  margin-top: 600px !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0px;
+  padding: 0px;
+  color: white;
+  font-family: opensans;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+

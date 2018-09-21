@@ -1,0 +1,27 @@
+@mixin form {
+  background: $diagonal_gray_gradient;
+  position: absolute;
+  width: 240px;
+  top: 50%;
+  left: 50%;
+}
+
+@mixin input {
+  padding: 10px;
+  border: 1px solid white;
+  background: #1c1c1c;
+  border-radius: 5px;
+  color: white;
+}
+
+@mixin button {
+  border: none;
+  background: $orange;
+  color: white;
+  transition: 0.3s;
+
+  &:hover {
+    background: $light_gray;
+    color: black;  
+  }
+}

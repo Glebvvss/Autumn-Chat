@@ -1,0 +1,66 @@
+.auth {
+	width: 100vw;
+	height: 100vh;
+	background: url(http://widefon.com/_ld/156/79476541.jpg);
+
+	.title-block-auth {
+		background: $vertical_gray_gradient;
+		padding-top: 10px;
+	}
+
+	.title-auth-form {
+		text-align: center;
+		padding-bottom: 10px;
+	}
+
+	@media screen and (max-width: 700px) {
+		.login {
+			@include form;
+			transform: translate(-110%, -50%);
+		}
+
+		.registration {
+			@include form;
+			transform: translate(10%, -50%);
+		}
+	}
+
+	@media screen and (min-width: 700px) {
+		.login {
+			@include form;
+			transform: translate(-130%, -50%);
+		}
+
+		.registration {
+			@include form;
+			transform: translate(30%, -50%);
+		}
+	}
+
+	.form-field {
+		@include input;
+		width: 180px;
+		margin-left: 20px;
+		margin-top: 10px;
+	}
+
+	.error-message {
+		margin-left: 30px;
+		font-size: 12px;
+		color: $orange;
+		font-family: opensans;
+	}
+
+	.submit-button-block {
+		display: flex;
+		padding: 5px;
+
+		button {
+			@include button;
+			border-radius: 5px;
+			padding: 10px;
+			margin: auto;
+			cursor: pointer;
+		}
+	}
+}

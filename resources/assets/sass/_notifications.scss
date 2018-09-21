@@ -1,0 +1,27 @@
+.notification {
+  position: fixed;
+  left: 50%;
+  margin-left: -100px;
+  width: 200px;
+  background: $diagonal_gray_gradient;
+  text-align: center;
+  color: $orange;
+  font-size: 13px;
+  font-family: opensans;
+  padding: 15px;
+}
+
+@media screen and (max-width: 800px) {
+  .notification {
+    position: fixed;
+    left: 400px;
+    margin-left: -100px;
+    width: 200px;
+    background: $diagonal_gray_gradient;
+    text-align: center;
+    color: $orange;
+    font-size: 13px;
+    font-family: opensans;
+    padding: 15px;
+  }
+}

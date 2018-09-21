@@ -1,0 +1,168 @@
+$padding_blocks: 20px;
+
+@mixin standard-sidebar-paddings {
+	padding: $padding_blocks;
+}
+
+@mixin disallow-text-selection {
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	-webkit-user-select: none;
+}
+
+.sidebar {
+	box-shadow: 3px 0px 5px #565655;
+	width: $width_sidebar;
+	height: 100vh;	
+	background: $diagonal_gray_gradient;
+	position: fixed;
+}
+
+.scroll-black-content {
+	padding-bottom: 160px;
+}
+
+.current-user {
+	padding: 13px 20px;
+	color: $light_gray;
+	background: $vertical_orange_gradient;
+
+	.username {
+		color: inherit;
+		font-size: 20px;
+		font-family: opensans;
+	}
+
+	.logout {
+		font-size: 10px;
+		background: black;
+		color: white;
+		border-radius: 0 0 5px 5px;
+		padding: 2px 5px;
+		width: 30px;
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		left: 20px;
+	}
+
+	.icons {
+		float: right;
+		margin-top: -28px;
+		font-size: 25px;
+
+		span {
+			cursor: pointer;
+			margin-left: 15px;
+			transition: $transition;
+
+			&:hover {
+				color: white;
+			}
+		}
+	}
+}
+
+.search-friends {
+	@include standard-sidebar-paddings;
+
+	input {
+		@include input;
+		width: $width_sidebar - 60px;
+	}
+
+	button {
+		@include button;
+		height: 39px;
+		width: 42px;
+		position: absolute;
+		left: $width_sidebar - 60px;
+		border-radius: 0 5px 5px 0;
+	}
+
+	.search-matches-list {
+		font-size: 15px;
+		position: absolute;
+		color: black;
+		background: white;
+		z-index: 200;
+		top: 110px;
+		width: 180px;
+		font-family: opensans;
+
+		ul {
+			li {
+				padding: 5px;
+				margin: 2px;
+				cursor: pointer;
+
+				&:hover {
+					color: white;
+					background: $orange;
+				}
+			}
+		}
+	}
+}
+
+.communications {
+	color: $light_gray;
+
+	.title {
+		@include standard-sidebar-paddings;
+		@include disallow-text-selection;
+		padding-top: 10px !important;
+		padding-bottom: 10px !important;
+		background: linear-gradient(180deg, $dark_gray, #1c1c1c);
+		color: $orange !important;
+
+		h3 {
+			font-size: 12px;
+		}
+
+		@mixin arrow {
+			position: absolute;
+			left: $width_sidebar - 40px;
+			margin-top: -22px;
+			font-size: 20px;
+			transition: $transition;
+			cursor: pointer;
+		}
+
+		.arrow-up {
+			@include arrow;
+		}
+
+		.arrow-down {
+			@include arrow;
+			transform: rotate(-180deg);
+		}
+	}
+
+	.list {
+		background: $light_gray;
+		color: black;
+		border-right: 2px solid $dark_gray;
+		border-left: 2px solid $dark_gray;
+		ul {
+
+			.active-connect {
+				border-left: 4px solid $orange;
+				padding-left: 10px - 4px !important;
+			}
+
+			li {
+				padding: 10px $padding_blocks;
+				font-family: opensans;	
+				font-size: 12px;
+				cursor: pointer;
+
+				&:hover {
+					@include disallow-text-selection;
+					color: $orange;
+				}
+			}
+		}
+	}
+}
