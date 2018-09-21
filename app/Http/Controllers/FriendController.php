@@ -33,20 +33,31 @@ class FriendController extends Controller
     }
 
     public function getFrendshipRequestsList() {
+        $friendshipRequests = FriendshipRequest::with(['userSender' => function($query) {
+            $query->select('id', 'username');
 
+        }])->select('id', 'sender_id')
+           ->where('recipient_id', '=', Auth::user()->id)
+           ->get();
+
+        return response()->json([
+            'friendshipRequests' => $friendshipRequests
+        ]);
     }
 
-    public function sendAnRequestForFriendship(Request $request) {
+    public function sendFriendshipRequest(Request $request) {
         $friendshipRequestMaker = new FriendshipRequestMaker();
-        return $friendshipRequestMaker->sendRequest($request->friendUsername);
+        return $friendshipRequestMaker->sendRequest($request->recipientUsername);
     }
 
-    public function confirmAnRequestForFriendship(Request $request) {
-        echo 'test';
+    public function confirmFriendshipRequest(Request $request) {
+        $friendshipRequestMaker = new FriendshipRequestMaker();
+        return $friendshipRequestMaker->confirmRequest($request->senderUsername);
     }
 
-    public function cancelAnRequestForFriendship() {
-        echo 'test';   
+    public function cancelFriendshipRequest(Request $request) {
+        $friendshipRequestMaker = new FriendshipRequestMaker();
+        return $friendshipRequestMaker->cancelRequest($request->senderUsername);   
     }
 
 }

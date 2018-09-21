@@ -24,6 +24,12 @@ Route::group(['as' => 'authenticate'], function() {
   Route::get('/get-user-id', 'UserController@getId');
 });
 
-Route::get('/search-friend/{usernameOccurrence}', 'FriendController@searchFriendByOccurrenceOfUsername');
-Route::get('/send-friend-for-request/{friendUsername}', 'FriendController@sendAnRequestForFriendship');
-Route::get('/friends', 'FriendController@getFriendsList');
+Route::group(['as' => 'friends'], function() {
+  Route::get('/get-friends', 'FriendController@getFriendsList');
+  Route::get('/get-friendship-requests', 'FriendController@getFrendshipRequestsList');
+  Route::get('/search-friend/{usernameOccurrence}', 'FriendController@searchFriendByOccurrenceOfUsername');
+
+  Route::get('/send-friendship-request/{recipientUsername}', 'FriendController@sendFriendshipRequest');
+  Route::get('/confirm-friendship-request/{senderUsername}', 'FriendController@confirmFriendshipRequest');
+  Route::get('/cancel-friendship-request/{senderUsername}', 'FriendController@cancelFriendshipRequest');
+});

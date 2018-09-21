@@ -58929,6 +58929,7 @@ function searchFriends() {
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var defaultState = {
+  friendshipRequests: [],
   friends: []
 };
 
@@ -58939,6 +58940,11 @@ function friends() {
   if (action.type === 'FETCH_FRIENDS') {
     return _extends({}, state, {
       friends: action.payload
+    });
+  }
+  if (action.type === 'FETCH_FRIENDSHIP_REQUESTS') {
+    return _extends({}, state, {
+      friendshipRequests: action.payload
     });
   }
   return state;
@@ -60296,6 +60302,7 @@ var SidebarHead = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_friends__ = __webpack_require__(269);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -60305,6 +60312,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -60324,8 +60332,10 @@ var FriendshipRequests = function (_Component) {
     var _this = _possibleConstructorReturn(this, (FriendshipRequests.__proto__ || Object.getPrototypeOf(FriendshipRequests)).call(this, props));
 
     _this.state = {
-      rootBlockClasses: 'frienship-requests-block unvisible'
+      rootBlockClasses: 'frienship-requests-block unvisible',
+      friendshipRequests: []
     };
+    _this.props.getFriendshipRequests();
     return _this;
   }
 
@@ -60333,20 +60343,49 @@ var FriendshipRequests = function (_Component) {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState, snapshot) {
       if (this.props !== prevProps) {
-        if (this.props.visible === true) {
-          this.setState(_extends({}, this.state, {
-            rootBlockClasses: 'frienship-requests-block visible'
-          }));
-        } else {
-          this.setState(_extends({}, this.state, {
-            rootBlockClasses: 'frienship-requests-block unvisible'
-          }));
-        }
+        this.hideOrShowComponentByChangeProp(prevProps);
+        this.updateFriendshipRequests(prevProps);
       }
+    }
+  }, {
+    key: 'hideOrShowComponentByChangeProp',
+    value: function hideOrShowComponentByChangeProp(prevProps) {
+      if (this.props.visible === true) {
+        this.setState(_extends({}, this.state, {
+          rootBlockClasses: 'frienship-requests-block visible'
+        }));
+      } else {
+        this.setState(_extends({}, this.state, {
+          rootBlockClasses: 'frienship-requests-block unvisible'
+        }));
+      }
+    }
+  }, {
+    key: 'updateFriendshipRequests',
+    value: function updateFriendshipRequests(prevProps) {
+      if (prevProps.friendshipRequests !== this.props.friendshipRequests) {
+        this.setState(_extends({}, this.state, {
+          friendshipRequests: this.props.friendshipRequests
+        }));
+      }
+    }
+  }, {
+    key: 'confirmRequest',
+    value: function confirmRequest(event) {
+      var senderUsername = event.target.attributes['data-username']['value'];
+      this.props.confirmRequest(senderUsername);
+    }
+  }, {
+    key: 'cancelRequest',
+    value: function cancelRequest(event) {
+      var senderUsername = event.target.attributes['data-username']['value'];
+      this.props.cancelRequest(senderUsername);
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: this.state.rootBlockClasses },
@@ -60356,28 +60395,38 @@ var FriendshipRequests = function (_Component) {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'ul',
             { className: 'some-frienship-request' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'li',
-              null,
-              'username',
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'span',
-                { className: 'response-on-friendship-request' },
-                '(',
+            this.state.friendshipRequests.map(function (item, index) {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'li',
+                { key: index },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   'span',
-                  { className: 'response-action' },
-                  ' confirm '
+                  null,
+                  item.user_sender.username
                 ),
-                '|',
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   'span',
-                  { className: 'response-action' },
-                  ' cancel '
-                ),
-                ')'
-              )
-            )
+                  { className: 'response-on-friendship-request' },
+                  '(',
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'span',
+                    { onClick: _this2.confirmRequest.bind(_this2),
+                      'data-username': item.user_sender.username,
+                      className: 'response-action' },
+                    ' confirm '
+                  ),
+                  '|',
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'span',
+                    { onClick: _this2.cancelRequest.bind(_this2),
+                      'data-username': item.user_sender.username,
+                      className: 'response-action' },
+                    ' cancel '
+                  ),
+                  ')'
+                )
+              );
+            })
           )
         )
       );
@@ -60388,9 +60437,21 @@ var FriendshipRequests = function (_Component) {
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
-  return {};
+  return {
+    friendshipRequests: state.friends.friendshipRequests
+  };
 }, function (dispatch) {
-  return {};
+  return {
+    getFriendshipRequests: function getFriendshipRequests() {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_friends__["c" /* getFriendshipRequests */])());
+    },
+    confirmRequest: function confirmRequest(senderUsername) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_friends__["b" /* comfirmFriendshipRequest */])(senderUsername));
+    },
+    cancelRequest: function cancelRequest(senderUsername) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_friends__["a" /* cancelFriendshipRequest */])(senderUsername));
+    }
+  };
 })(FriendshipRequests));
 
 /***/ }),
@@ -60520,13 +60581,13 @@ var SearchFriends = function (_Component) {
 }, function (dispatch) {
 	return {
 		getSearchMatchesList: function getSearchMatchesList(usernameOccurrence) {
-			dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["a" /* getSearchMatchesList */])(usernameOccurrence));
+			dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["d" /* getSearchMatchesList */])(usernameOccurrence));
 		},
 		clearSeatchMatchesList: function clearSeatchMatchesList() {
 			dispatch({ type: 'CLEAR_SEARCH_MATCH_LIST' });
 		},
 		sendRequestForFriendship: function sendRequestForFriendship(friendUsername) {
-			dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["b" /* sendRequestForFriendship */])(friendUsername));
+			dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["e" /* sendRequestForFriendship */])(friendUsername));
 		}
 	};
 })(SearchFriends));
@@ -60536,19 +60597,21 @@ var SearchFriends = function (_Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return sendRequestForFriendship; });
-/* unused harmony export getFriendshipRequestSendedToMe */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getSearchMatchesList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return sendRequestForFriendship; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return comfirmFriendshipRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cancelFriendshipRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getFriendshipRequests; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getSearchMatchesList; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_js__ = __webpack_require__(103);
 
 
-var sendRequestForFriendship = function sendRequestForFriendship(friendUsername) {
+var sendRequestForFriendship = function sendRequestForFriendship(recipientUsername) {
   return function (dispatch) {
-    if (friendUsername === '') {
+    if (recipientUsername === '') {
       dispatch({ type: 'OUTPUT_NOTIFICATION', payload: 'User name can`t be empty!' });
     }
 
-    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* makeUriForRequest */])('/send-friend-for-request/' + friendUsername), {
+    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* makeUriForRequest */])('/send-friendship-request/' + recipientUsername), {
       method: 'get'
     }).then(function (response) {
       response.json().then(function (data) {
@@ -60558,8 +60621,42 @@ var sendRequestForFriendship = function sendRequestForFriendship(friendUsername)
   };
 };
 
-var getFriendshipRequestSendedToMe = function getFriendshipRequestSendedToMe() {
-  return function (dispatch) {};
+var comfirmFriendshipRequest = function comfirmFriendshipRequest(senderUsername) {
+  return function (dispatch) {
+    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* makeUriForRequest */])('/confirm-friendship-request/' + senderUsername), {
+      method: 'get'
+    }).then(function (response) {
+      response.json().then(function (data) {
+        dispatch({ type: 'OUTPUT_NOTIFICATION', payload: data.message });
+        dispatch(getFriendshipRequests());
+      });
+    });
+  };
+};
+
+var cancelFriendshipRequest = function cancelFriendshipRequest(senderUsername) {
+  return function (dispatch) {
+    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* makeUriForRequest */])('/cancel-friendship-request/' + senderUsername), {
+      method: 'get'
+    }).then(function (response) {
+      response.json().then(function (data) {
+        dispatch({ type: 'OUTPUT_NOTIFICATION', payload: data.message });
+        dispatch(getFriendshipRequests());
+      });
+    });
+  };
+};
+
+var getFriendshipRequests = function getFriendshipRequests() {
+  return function (dispatch) {
+    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* makeUriForRequest */])('/get-friendship-requests'), {
+      method: 'get'
+    }).then(function (response) {
+      response.json().then(function (data) {
+        dispatch({ type: 'FETCH_FRIENDSHIP_REQUESTS', payload: data.friendshipRequests });
+      });
+    });
+  };
 };
 
 var getSearchMatchesList = function getSearchMatchesList(usernameOccurrence) {

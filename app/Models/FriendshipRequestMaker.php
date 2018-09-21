@@ -101,11 +101,17 @@ class FriendshipRequestMaker {
 
     public function confirmRequest($usernameSenderRequest) {
         $userSender = User::where('username', '=', $usernameSenderRequest)->first();
-        
-        $request = $this->checkWhetherTheRequestIsCorrect($userSender);
-        if ( !$this->checkWhetherTheRequestIsCorrect($userSender) ) {
+
+        if ( $userSender === null ) {
             return response()->json([
-                'message' => 'Request in not valid.'
+                'message' => 'Sender is not valid.'
+            ]);
+        }
+
+        $request = $this->getRequestFromDb($userSender);
+        if ( !$request ) {
+            return response()->json([
+                'message' => 'Request in not exists.'
             ]);
         }
 
@@ -115,24 +121,19 @@ class FriendshipRequestMaker {
         ]);
     }
 
-    private function checkWhetherTheRequestIsCorrect($userSender) {
-        $check = FriendshipRequest::where('sender_id', '=', $userSender->id)
-            ->where('sender_id', '=', Auth::user()->id)
-            ->first();
-
-        if ( $check ) {
-            return true;
-        }
-        return false;
+    private function getRequestFromDb($userSender) {
+        return FriendshipRequest::where('sender_id', '=', $userSender->id)
+            ->where('recipient_id', '=', Auth::user()->id)
+            ->first();   
     }
 
     private function executeRequestAndFriendRowsToDb($request, $userSender) {
-        $this->dropBufferRequestFromDb($request);
+        $this->dropRequestFromBb($request);
         $this->addFriendRowForRecipient($userSender);
         $this->addFriendRowForSender($userSender);
     }
 
-    private function dropBufferRequestFromDb($request) {
+    private function dropRequestFromBb($request) {
         FriendshipRequest::where('id', '=', $request->id)->delete();
     }
 
@@ -153,12 +154,21 @@ class FriendshipRequestMaker {
     public function cancelRequest($usernameSenderRequest) {
         $userSender = User::where('username', '=', $usernameSenderRequest)->first();
 
-        $request = $this->checkWhetherTheRequestIsCorrect($userSender);
-        if ( !$this->checkWhetherTheRequestIsCorrect($userSender) ) {
+        if ( $userSender === null ) {
+            return response()->json([
+                'message' => 'Sender is not valid.'
+            ]);
+        }
+
+        $request = $this->getRequestFromDb($userSender);
+        if ( !$request ) {
             return response()->json([
                 'message' => 'Request in not valid.'
             ]);
         }
-        $this->dropBufferRequestFromDb($request);
+        $this->dropRequestFromBb($request);
+        return response()->json([
+            'message' => 'Friendship request has been cancel.'
+        ]);
     }
 }

@@ -31,7 +31,7 @@ class User extends Model
     public function friends() {
         return $this->hasMany('App\Models\Eloquent\Friend');
     }
-
+*/
     public function friendshopRequestSenders() {
         return $this->hasMany('App\Model\Eloquent\FriendshipRequest', 'id', 'sender_id');
     }
@@ -39,5 +39,5 @@ class User extends Model
     public function friendshopRequestRecipients() {
         return $this->hasMany('App\Model\Eloquent\FriendshipRequest', 'id', 'recipient_id');
     }
-*/
+
 }
