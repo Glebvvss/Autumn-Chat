@@ -25,3 +25,14 @@
     color: black;  
   }
 }
+
+@mixin standard-sidebar-paddings {
+  padding: $padding_blocks;
+}
+
+@mixin disallow-text-selection {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+}

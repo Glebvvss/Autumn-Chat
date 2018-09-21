@@ -14,6 +14,7 @@
 }
 
 .notification {
+  z-index: 250;
   position: fixed;
   left: 50%;
   margin-left: -100px;
@@ -144,6 +145,14 @@
   color: black;
 }
 
+.visible {
+  display: block !important;
+}
+
+.unvisible {
+  display: none !important;
+}
+
 .sidebar {
   -webkit-box-shadow: 3px 0px 5px #565655;
           box-shadow: 3px 0px 5px #565655;
@@ -157,20 +166,20 @@
   padding-bottom: 160px;
 }
 
-.current-user {
+.sidebar-head {
   padding: 13px 20px;
   color: #DDDDDD;
   background: -webkit-gradient(linear, left top, left bottom, from(#FD9105), to(#CB7B02));
   background: linear-gradient(180deg, #FD9105, #CB7B02);
 }
 
-.current-user .username {
+.sidebar-head .username {
   color: inherit;
   font-size: 20px;
   font-family: opensans;
 }
 
-.current-user .logout {
+.sidebar-head .logout {
   font-size: 10px;
   background: black;
   color: white;
@@ -183,21 +192,61 @@
   left: 20px;
 }
 
-.current-user .icons {
+.sidebar-head .icons {
   float: right;
   margin-top: -28px;
   font-size: 25px;
 }
 
-.current-user .icons span {
+.sidebar-head .icons span {
   cursor: pointer;
   margin-left: 15px;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-.current-user .icons span:hover {
+.sidebar-head .icons span:hover {
   color: white;
+}
+
+.frienship-requests-block {
+  position: absolute;
+  top: 0;
+  left: 260px;
+  background: linear-gradient(135deg, #36393F, #1c1c1c);
+  width: 260px;
+  height: 205px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  overflow: hidden;
+}
+
+.frienship-requests-block .some-frienship-request li {
+  background-color: #E88C01;
+  color: white;
+  font-family: opensans;
+  font-size: 15px;
+  padding: 10px;
+  margin: 5px;
+}
+
+.frienship-requests-block .some-frienship-request li .response-on-friendship-request {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  float: right;
+  font-size: 12px;
+}
+
+.frienship-requests-block .some-frienship-request li .response-on-friendship-request .response-action {
+  cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.frienship-requests-block .some-frienship-request li .response-on-friendship-request .response-action:hover {
+  color: #DDDDDD;
 }
 
 .search-friends {

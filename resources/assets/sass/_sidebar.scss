@@ -1,14 +1,11 @@
 $padding_blocks: 20px;
 
-@mixin standard-sidebar-paddings {
-	padding: $padding_blocks;
+.visible {
+	display: block !important;	
 }
 
-@mixin disallow-text-selection {
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-o-user-select: none;
-	-webkit-user-select: none;
+.unvisible {
+	display: none !important;
 }
 
 .sidebar {
@@ -23,7 +20,7 @@ $padding_blocks: 20px;
 	padding-bottom: 160px;
 }
 
-.current-user {
+.sidebar-head {
 	padding: 13px 20px;
 	color: $light_gray;
 	background: $vertical_orange_gradient;
@@ -59,6 +56,44 @@ $padding_blocks: 20px;
 
 			&:hover {
 				color: white;
+			}
+		}
+	}
+}
+
+.frienship-requests-block {
+	position: absolute;
+	top: 0;
+	left: $width_sidebar;
+	background: $diagonal_gray_gradient;
+	width: $width_sidebar;
+	height: 205px;
+	transition: $transition;
+	overflow: hidden;
+
+	.some-frienship-request {
+
+		li {
+			background-color: $orange;
+			color: white;
+			font-family: opensans;
+			font-size: 15px;
+			padding: 10px;
+			margin: 5px;
+
+			.response-on-friendship-request {
+				@include disallow-text-selection;
+				float: right;
+				font-size: 12px;
+
+				.response-action {
+					cursor: pointer;
+					transition: $transition;
+
+					&:hover {
+						color: $light_gray;
+					}
+				}
 			}
 		}
 	}

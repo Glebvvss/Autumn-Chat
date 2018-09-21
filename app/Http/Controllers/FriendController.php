@@ -7,7 +7,8 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Models\Eloquent\User;
 use App\Models\Eloquent\Friend;
-Use App\Models\FriendshipRequestMaker;
+use App\Models\FriendshipRequestMaker;
+use App\Models\Eloquent\FriendshipRequest;
 
 class FriendController extends Controller
 {
@@ -29,6 +30,10 @@ class FriendController extends Controller
         return response()->json([
             'friends' => $friends
         ]);
+    }
+
+    public function getFrendshipRequestsList() {
+
     }
 
     public function sendAnRequestForFriendship(Request $request) {

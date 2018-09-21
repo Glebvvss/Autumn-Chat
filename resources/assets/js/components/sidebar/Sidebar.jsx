@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CurrentUser from './components/CurrentUser';
+import SidebarHead from './components/SidebarHead/SidebarHead';
 import SearchFriends from './components/SearchFriends';
 import Communications from './components/Communications';
 import ReactScrollbar from 'react-scrollbar-js';
@@ -31,8 +31,8 @@ class Sidebar extends Component {
 
 	render() {
 		return (
-			<div className="sidebar">
-				<CurrentUser />
+			<div className="sidebar">				
+				<SidebarHead />
 				<SearchFriends />
 				<ReactScrollbar style={scrollbar}>
 					<div className="scroll-black-content">
