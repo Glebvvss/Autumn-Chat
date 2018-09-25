@@ -7,38 +7,34 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Models\Eloquent\User;
 use App\Models\Eloquent\Friend;
-use App\Models\FriendshipRequestMaker;
+use App\Models\Contacts\FriendManager;
 use App\Models\Eloquent\FriendshipRequest;
+use App\Models\Contacts\FriendshipRequestMaker;
+use App\Events\FriendshipRequestConfirmed as RequestConfirmed;
 
-class FriendController extends Controller
-{
+class FriendController extends Controller {
+
     public function searchFriendByOccurrenceOfUsername(Request $request) {
-        $matchUsernames = User::select('username')
-            ->where('username', 'LIKE', $request->usernameOccurrence  . '%')
-            ->get();
-
+        $friendManager = new FriendManager();        
+        $matchUsernames = $friendManager->searchFriends($request->usernameOccurrence);
+        
         return response()->json([
             'matchUsernames' => $matchUsernames
         ]);
     }
 
-    public function getFriendsList() {
-        $friends = Friend::with('user')
-            ->where( 'user_id', '=', Auth::user()->id )
-            ->get();
+    public function getFriends() {
+        $friendManager = new FriendManager();
+        $friends = $friendManager->getFriends(Auth::user()->id);
 
         return response()->json([
             'friends' => $friends
         ]);
     }
 
-    public function getFrendshipRequestsList() {
-        $friendshipRequests = FriendshipRequest::with(['userSender' => function($query) {
-            $query->select('id', 'username');
-
-        }])->select('id', 'sender_id')
-           ->where('recipient_id', '=', Auth::user()->id)
-           ->get();
+    public function getFrendshipRequests() {
+        $friendManager = new FriendManager();
+        $friendshipRequests = $friendManager->getFriendsipRequests(Auth::user()->id);
 
         return response()->json([
             'friendshipRequests' => $friendshipRequests
@@ -46,18 +42,39 @@ class FriendController extends Controller
     }
 
     public function sendFriendshipRequest(Request $request) {
-        $friendshipRequestMaker = new FriendshipRequestMaker();
-        return $friendshipRequestMaker->sendRequest($request->recipientUsername);
+        $friendManager = new FriendManager();
+        $result = $friendManager->sendFriendshipRequest($request->recipientUsername);
+
+        return response()->json([
+            'message' => $result
+        ]);
     }
 
     public function confirmFriendshipRequest(Request $request) {
-        $friendshipRequestMaker = new FriendshipRequestMaker();
-        return $friendshipRequestMaker->confirmRequest($request->senderUsername);
+        $friendManager = new FriendManager();
+        $result = $friendManager->confirmFriendshipRequest($request->senderUsername);
+
+        if ( $result !== 'Friend added!' ) {
+            return response()->json([
+                'message' => $result
+            ]);
+        }
+
+        $sender = User::where('username', '=', $request->senderUsername)->first();
+        $newFriendForRecipient = $friendManager->getFriend( Auth::user()->id, $sender->id );
+        return response()->json([
+            'message' => $result,
+            'friend' => $newFriendForRecipient
+        ]);
     }
 
     public function cancelFriendshipRequest(Request $request) {
-        $friendshipRequestMaker = new FriendshipRequestMaker();
-        return $friendshipRequestMaker->cancelRequest($request->senderUsername);   
+        $friendManager = new FriendManager();
+        $result = $friendManager->cancelFriendshipRequest($request->senderUsername);
+
+        return response()->json([
+            'message' => $result
+        ]);
     }
 
 }

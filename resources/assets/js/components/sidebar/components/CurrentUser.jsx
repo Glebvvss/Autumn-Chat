@@ -15,7 +15,6 @@ class CurrentUser extends Component {
 	}
 
 	render() {
-		console.log(this.props.user);
 		return (
 			<div className="current-user">
 				<h1 className="username">{this.props.user.username}</h1>

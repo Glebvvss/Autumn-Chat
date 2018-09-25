@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AnimateHeight from 'react-animate-height';
 
-class Communications extends Component {
+class Contacts extends Component {
 
 	constructor(props) {
 		super(props);
@@ -13,7 +13,7 @@ class Communications extends Component {
 		}
 	}
 
-	hideOrShowCommunicationList() {
+	hideOrShowContacts() {
 		if ( this.state.communicationListVisible === true ) {
 			this.setState({
 				...this.state,
@@ -31,17 +31,13 @@ class Communications extends Component {
 		}
 	}
 
-	openSelectedChat() {
-		
-	}
-
 	render() {
 		return (
-			<div className="communications">
+			<div className="contacts">
 				<div className="title">
 					<h3>{this.props.title}</h3>
 					<span className={this.state.arrowCssClass} 
-								onClick={this.hideOrShowCommunicationList.bind(this)} >
+								onClick={this.hideOrShowContacts.bind(this)} >
 								
 						<FontAwesomeIcon icon="arrow-circle-up" />
 					</span>
@@ -51,20 +47,7 @@ class Communications extends Component {
   				height={ this.state.heightList }>
 
 					<div className="list">
-						<ul>
-							{
-								this.props.items.map((item, index) => (
-									<li key={index} 
-											className="active-connect" 
-											id-item={item.id} 
-											type={item.type}
-											onClick={this.openSelectedChat.bind(this)}>
-
-											{item.name}
-									</li>
-								))
-							}
-						</ul>						
+						{this.props.children}
 					</div>
 				</AnimateHeight>
 			</div>
@@ -73,4 +56,4 @@ class Communications extends Component {
 
 }
 
-export default Communications;
+export default Contacts;

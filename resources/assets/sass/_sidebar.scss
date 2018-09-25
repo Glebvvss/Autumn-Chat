@@ -141,7 +141,7 @@ $padding_blocks: 20px;
 	}
 }
 
-.communications {
+.contacts {
 	color: $light_gray;
 
 	.title {
@@ -200,4 +200,35 @@ $padding_blocks: 20px;
 			}
 		}
 	}
+}
+
+.right-contacts-li-element {
+	float: right;
+}
+
+.notice-new {
+	margin-right: 10px;
+	margin-top: -5px;
+	padding: 5px;
+	float: right;
+	background: $orange;
+	color: $dark_gray;
+}
+
+@mixin user-status {
+	margin-top: 3px;
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;	
+	float: right;
+}
+
+.online-status {
+	@include user-status;
+	background: $orange;
+}
+
+.offline-status {
+	@include user-status;
+	background: gray;
 }

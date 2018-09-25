@@ -302,11 +302,11 @@
   background: #E88C01;
 }
 
-.communications {
+.contacts {
   color: #DDDDDD;
 }
 
-.communications .title {
+.contacts .title {
   padding: 20px;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -319,11 +319,11 @@
   color: #E88C01 !important;
 }
 
-.communications .title h3 {
+.contacts .title h3 {
   font-size: 12px;
 }
 
-.communications .title .arrow-up {
+.contacts .title .arrow-up {
   position: absolute;
   left: 220px;
   margin-top: -22px;
@@ -333,7 +333,7 @@
   cursor: pointer;
 }
 
-.communications .title .arrow-down {
+.contacts .title .arrow-down {
   position: absolute;
   left: 220px;
   margin-top: -22px;
@@ -345,31 +345,62 @@
           transform: rotate(-180deg);
 }
 
-.communications .list {
+.contacts .list {
   background: #DDDDDD;
   color: black;
   border-right: 2px solid #36393F;
   border-left: 2px solid #36393F;
 }
 
-.communications .list ul .active-connect {
+.contacts .list ul .active-connect {
   border-left: 4px solid #E88C01;
   padding-left: 6px !important;
 }
 
-.communications .list ul li {
+.contacts .list ul li {
   padding: 10px 20px;
   font-family: opensans;
   font-size: 12px;
   cursor: pointer;
 }
 
-.communications .list ul li:hover {
+.contacts .list ul li:hover {
   -moz-user-select: none;
   -ms-user-select: none;
   -o-user-select: none;
   -webkit-user-select: none;
   color: #E88C01;
+}
+
+.right-contacts-li-element {
+  float: right;
+}
+
+.notice-new {
+  margin-right: 10px;
+  margin-top: -5px;
+  padding: 5px;
+  float: right;
+  background: #E88C01;
+  color: #36393F;
+}
+
+.online-status {
+  margin-top: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  float: right;
+  background: #E88C01;
+}
+
+.offline-status {
+  margin-top: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  float: right;
+  background: gray;
 }
 
 .chat {

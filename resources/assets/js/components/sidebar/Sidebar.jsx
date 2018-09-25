@@ -1,32 +1,21 @@
 import React, { Component } from 'react';
-import SidebarHead from './components/SidebarHead/SidebarHead';
+import { connect } from 'react-redux';
+import SidebarHead from './components/sidebar-head/SidebarHead';
 import SearchFriends from './components/SearchFriends';
-import Communications from './components/Communications';
+import Contacts from './components/contacts/Contacts';
+import Friends from './components/contacts/components/Friends';
 import ReactScrollbar from 'react-scrollbar-js';
+import { getFriends } from '../../actions/friends';
 
 const scrollbar = {
   width: 260,
   height: '100%',
 };
 
-const groups = [
-	{ id: '1', name: 'Our Group 1', type: 'group' },
-	{ id: '2', name: 'Our Group 2', type: 'group' },
-	{ id: '3', name: 'Our Group 3', type: 'group' },
-	{ id: '4', name: 'Our Group 4', type: 'group' }
-];
-
-const friends = [
-	{ id: '1', name: 'Friend 1', type: 'friend' },
-	{ id: '2', name: 'Friend 2', type: 'friend' },
-	{ id: '3', name: 'Friend 3', type: 'friend' },
-	{ id: '4', name: 'Friend 4', type: 'friend' }
-];
-
 class Sidebar extends Component {
 
 	constructor(props) {
-		super(props);
+		super(props);		
 	}
 
 	render() {
@@ -36,8 +25,9 @@ class Sidebar extends Component {
 				<SearchFriends />
 				<ReactScrollbar style={scrollbar}>
 					<div className="scroll-black-content">
-						<Communications title="GROUPS" items={groups} />
-						<Communications title="FRIENDS" items={friends} />
+						<Contacts title="FRIENDS">
+							<Friends />
+						</Contacts>
 					</div>
 				</ReactScrollbar>
 			</div>

@@ -13,15 +13,11 @@ class SearchFriends extends Component {
 	}
 
 	searchUsersByChangeInputText(event) {
-		this.searchUsersMatchesByTextInput();
+		this.props.getSearchMatchesList(event.target.value);
 		this.setState({
 			...this.state,
 			searchInputText: event.target.value
 		});
-	}
-
-	searchUsersMatchesByTextInput() {
-		this.props.getSearchMatchesList(this.state.searchInputText);
 	}
 
 	pushThisUsernameIntoInputElement( event ) {

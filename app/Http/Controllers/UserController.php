@@ -15,7 +15,7 @@ class UserController extends Controller
 
     public function getId() {
       return response()->json([
-        'username' => Auth::user()->id
+        'userId' => Auth::user()->id
       ]);
     }
 }

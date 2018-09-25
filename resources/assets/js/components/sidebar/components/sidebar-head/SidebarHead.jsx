@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { logoutAction, getUsername } from '../../../../actions/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';        
@@ -13,6 +14,7 @@ class SidebarHead extends Component {
       visibleFriendshipRequests: false,
       visibleGroupMaker: false
     };
+    this.hideIfClickWasOutComponent();
   }
 
   hideOrShowFriendshipRequests() {
@@ -29,8 +31,10 @@ class SidebarHead extends Component {
     }
   }
 
-  hideOrShowGroupMaker() {
-    
+  hideIfClickWasOutComponent(event) {
+    document.addEventListener('click', (event) => {
+     if ( ReactDOM.findDOMNode(this) ) {}
+    });
   }
 
   initialLogoutAction() {

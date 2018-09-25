@@ -49,8 +49,8 @@ export const logoutAction = () => dispatch => {
 	});
 }
 
-export const checkLogin = () => dispatch => {		
-	fetch( makeUriForRequest('/check-role-user'), {
+export const checkLogin = () => dispatch => {
+	fetch( makeUriForRequest('/check-login'), {
 		method: 'get'
 	}).then((response) => {
 		response.json().then(function(data) {
