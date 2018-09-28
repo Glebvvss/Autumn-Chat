@@ -10,20 +10,24 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class FriendshipRequestConfirmed implements ShouldBroadcast {
+class UpdateFriendList implements ShouldBroadcast {
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $idFriend;
-    public $updatedFriendlist;
+    public $idUser;
+    public $type;
 
-    public function __construct($idFriend, $updatedFriendlist) {
-        $this->idFriend = $idFriend;
-        $this->updatedFriendlist = $updatedFriendlist;
+    public function __construct($idUser, $type) {
+        $this->idUser = $idUser;
+        $this->type = $type;
     }
 
     public function broadcastOn() {
         return ['friend'];
+    }
+
+    public function broadcastAs() {
+        return 'UPDATE_FRIEND_LIST';
     }
 
 }

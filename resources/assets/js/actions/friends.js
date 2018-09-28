@@ -1,18 +1,5 @@
 import { scrfToken, makeUriForRequest } from '../functions.js';
 
-export const updateSenderFriendsAfterConfirmRequest = () => dispatch => {
-  fetch( makeUriForRequest('/get-user-id'), {
-    method: 'get'
-  }).then(response => {
-    response.json().then(data => {
-      let socket = io(':3001');
-      socket.on('add_friend_to_user_' + data.userId, (newFriend) => {
-        
-      });
-    });
-  });
-};
-
 export const getFriends = () => dispatch => {
   fetch( makeUriForRequest('/get-friends'), {
     method: 'get'
@@ -37,35 +24,58 @@ export const sendRequestForFriendship = (recipientUsername) => dispatch => {
   });
 };
 
-export const comfirmFriendshipRequest = (senderUsername) => dispatch => {
-  fetch( makeUriForRequest('/confirm-friendship-request/' + senderUsername), {
+export const comfirmFriendRequest = (senderUsername) => dispatch => {
+  fetch( makeUriForRequest('/confirm-recivied-friendship-request/' + senderUsername), {
     method: 'get'
   }).then(response => {
     response.json().then(data => {
       dispatch({type: 'OUTPUT_NOTIFICATION', payload: data.message});
-      dispatch(getFriendshipRequests());
+      dispatch(getRecivedFriendshipRequests());
       dispatch(getFriends());
     })
   });
 };
 
-export const cancelFriendshipRequest = (senderUsername) => dispatch => {
-  fetch( makeUriForRequest('/cancel-friendship-request/' + senderUsername), {
+export const cancelReciviedFriendRequest = (senderUsername) => dispatch => {
+  fetch( makeUriForRequest('/cancel-recivied-friendship-request/' + senderUsername), {
     method: 'get'
   }).then(response => {
     response.json().then(data => {
       dispatch({type: 'OUTPUT_NOTIFICATION', payload: data.message});
-      dispatch(getFriendshipRequests());
+      dispatch(getRecivedFriendshipRequests());
     })
   });
 };
 
-export const getFriendshipRequests = () => dispatch => {
-  fetch( makeUriForRequest('/get-friendship-requests'), {
+export const cancelSendedFriendshipRequest = (recipientUsername) => dispatch => {
+  fetch( makeUriForRequest('/cancel-recivied-friendship-request/' + recipientUsername), {
+    method: 'get'
+  }).then(response => {
+    response.json().then(data => {
+      dispatch({type: 'OUTPUT_NOTIFICATION', payload: data.message});
+      dispatch(getRecivedFriendshipRequests());
+    })
+  });
+};
+
+export const getRecivedFriendshipRequests = () => dispatch => {
+  fetch( makeUriForRequest('/get-recived-friendship-requests'), {
     method: 'get'
   }).then(response => {
     response.json().then(data => {      
-      dispatch({ type: 'FETCH_FRIENDSHIP_REQUESTS', payload: data.friendshipRequests });
+      dispatch({ 
+        type: 'FETCH_RECIVED_FRIENDSHIP_REQUESTS', payload: data.friendshipRequests });
+    });
+  });
+};
+
+export const getSendedFriendshipRequests = () => dispatch => {
+  fetch( makeUriForRequest('/get-sended-friendship-requests'), {
+    method: 'get'
+  }).then(response => {
+    response.json().then(data => {      
+      dispatch({ 
+        type: 'FETCH_SENDED_FRIENDSHIP_REQUESTS', payload: data.friendshipRequests });
     });
   });
 };
@@ -75,7 +85,8 @@ export const getSearchMatchesList = (usernameOccurrence) => dispatch => {
     method: 'get'
   }).then(response => {
     response.json().then(data => {
-      dispatch({type: 'SEARCH_FRIENDS_BY_OCCURRENCE', payload: data.matchUsernames});
+      dispatch({
+        type: 'SEARCH_FRIENDS_BY_OCCURRENCE', payload: data.matchUsernames});
     });
   });
 };

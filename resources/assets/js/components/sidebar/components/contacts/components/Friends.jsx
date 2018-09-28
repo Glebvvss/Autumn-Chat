@@ -1,12 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getFriends } from '../../../../../actions/friends';
+import { scrfToken, makeUriForRequest } from '../../../../../functions.js';
 
 class Friends extends Component {
 
   constructor(props) {
     super(props);
     this.props.getFriends();
+    this.socketMethod();
+  }
+
+  socketMethod() {
+    fetch( makeUriForRequest('/get-user-id'), {
+      method: 'get'
+    }).then(response => {
+      response.json().then(httpData => {
+        let socket = io(':3001'),
+            userId = httpData.userId,
+            room   = 'friends-by-user-id:' + userId;
+
+        socket.on(room, (socketData) => {
+          this.props.getFriends();
+        });
+      });
+    });
+  }
+
+  componentDidUpdate() {
+    
   }
 
   highlightActiveItem() {
@@ -44,13 +66,12 @@ class Friends extends Component {
           this.props.friends.map((item, index) => (
             <li key={index} 
                 onClick={this.openDialog.bind(this)}
-                className="active-connect">
+                className="">
 
               {item.user_friend.username}
 
               <div className="right-contacts-li-element">
                 {this.renderOnlineStatus(item.user_friend.online)}
-                {this.renderNewStatus(item.new)}
               </div>
 
             </li>
@@ -69,6 +90,6 @@ export default connect(
   dispatch => ({
     getFriends: () => {
       dispatch(getFriends());
-    }
+    },
   })
 )(Friends);

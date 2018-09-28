@@ -1,5 +1,6 @@
 let defaultState = {
-  friendshipRequests: [],
+  recivedRequests: [],
+  sendedRequests: [],
   friends: []
 };
 
@@ -10,10 +11,16 @@ export function friends(state = defaultState, action) {
       friends: action.payload
     }
   }
-  if ( action.type === 'FETCH_FRIENDSHIP_REQUESTS' ) {
+  if ( action.type === 'FETCH_RECIVED_FRIENDSHIP_REQUESTS' ) {
     return {
       ...state,
-      friendshipRequests: action.payload
+      recivedRequests: action.payload
+    }
+  }
+  if ( action.type === 'FETCH_SENDED_FRIENDSHIP_REQUESTS' ) {
+    return {
+      ...state,
+      sendedRequests: action.payload
     }
   }
   return state;

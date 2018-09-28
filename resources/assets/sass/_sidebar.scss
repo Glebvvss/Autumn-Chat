@@ -49,6 +49,15 @@ $padding_blocks: 20px;
 		margin-top: -28px;
 		font-size: 25px;
 
+		.update-marker-friendship-list {
+			background: white;
+			width: 10px;
+			height: 5px;
+			border-radius: 0 0 5px 5px;
+			position: absolute;
+			right: 30px;
+		}
+
 		span {
 			cursor: pointer;
 			margin-left: 15px;
@@ -70,6 +79,19 @@ $padding_blocks: 20px;
 	height: 205px;
 	transition: $transition;
 	overflow: hidden;
+
+	.caption-friendsip-requests {
+		padding: 5px 5px 0px 5px;
+		color: $orange;
+		font-family: opensans;
+		font-size: 12px;
+	}
+
+	.underline-orange {
+		height: 1px;
+		margin: 5px;
+		background: $orange;
+	}
 
 	.some-frienship-request {
 
@@ -104,7 +126,9 @@ $padding_blocks: 20px;
 
 	input {
 		@include input;
-		width: $width_sidebar - 60px;
+		height: 17px;
+		border-radius: 5px 0 0 5px !important;
+		width: $width_sidebar - 102px;
 	}
 
 	button {
@@ -216,6 +240,7 @@ $padding_blocks: 20px;
 }
 
 @mixin user-status {
+	margin-right: 3px;
 	margin-top: 3px;
 	width: 10px;
 	height: 10px;

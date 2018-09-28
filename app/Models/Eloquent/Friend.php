@@ -8,6 +8,10 @@ class Friend extends Model
 {
     protected $table = 'friends';
 
+    protected $fillable = [
+        'user_id', 'friend_user_id', 'new',
+    ];
+
     public function user() {
         return $this->belongsTo('App\Models\Eloquent\User', 'user_id', 'id');
     }

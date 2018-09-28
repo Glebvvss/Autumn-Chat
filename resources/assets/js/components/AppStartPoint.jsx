@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faUserFriends, faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
 library.add(faComment, faUserFriends, faArrowCircleUp);
 
+import { makeUriForRequest } from '../functions';
+
 const store = createStore(reducer, applyMiddleware(thunk));
 
 export default class AppStartPoint extends Component {

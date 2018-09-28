@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { logoutAction, getUsername } from '../../../../actions/auth';
+import { getFriendshipRequests } from '../../../../actions/friends';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';        
-import FriendshipRequests from './components/FriendshipRequests'
+import FriendshipRequests from './components/FriendshipRequests/FriendshipRequests'
 
 class SidebarHead extends Component {
 
@@ -11,10 +12,39 @@ class SidebarHead extends Component {
     super(props);
     this.props.getUsername();
     this.state = {
+      friendshipRequestListUpdated: false,
       visibleFriendshipRequests: false,
-      visibleGroupMaker: false
+      visibleGroupMaker: false,
+      changesMarkerStyles: {
+        opacity: 0
+      }
     };
     this.hideIfClickWasOutComponent();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+
+      if ( this.state.visibleFriendshipRequests === false &&
+           this.props.friendshipRequests.toString() !==
+           prevProps.friendshipRequests.toString() ) {
+
+        this.setState({
+          ...this.state,
+          changesMarkerStyles: {
+            opacity: 1
+          }
+        });
+      } else {
+        this.setState({
+          ...this.state,
+          changesMarkerStyles: {
+            opacity: 0
+          }
+        });
+      }
+
+    }
   }
 
   hideOrShowFriendshipRequests() {
@@ -33,7 +63,7 @@ class SidebarHead extends Component {
 
   hideIfClickWasOutComponent(event) {
     document.addEventListener('click', (event) => {
-     if ( ReactDOM.findDOMNode(this) ) {}
+     //if ( ReactDOM.findDOMNode(this) ) {}
     });
   }
 
@@ -52,6 +82,8 @@ class SidebarHead extends Component {
             <FontAwesomeIcon icon="comment" />
           </span>
 
+          <div className="update-marker-friendship-list" style={this.state.changesMarkerStyles}></div>
+
           <span onClick={this.hideOrShowFriendshipRequests.bind(this)}>
             <FontAwesomeIcon icon="user-friends" />
           </span>
@@ -66,7 +98,8 @@ class SidebarHead extends Component {
 
 export default connect(
   state => ({
-    user: state.userInfo
+    user: state.userInfo,
+    friendshipRequests: state.friends.friendshipRequests
   }),
   dispatch => ({
     logoutAction: () => {

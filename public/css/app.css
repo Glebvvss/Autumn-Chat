@@ -198,6 +198,15 @@
   font-size: 25px;
 }
 
+.sidebar-head .icons .update-marker-friendship-list {
+  background: white;
+  width: 10px;
+  height: 5px;
+  border-radius: 0 0 5px 5px;
+  position: absolute;
+  right: 30px;
+}
+
 .sidebar-head .icons span {
   cursor: pointer;
   margin-left: 15px;
@@ -219,6 +228,19 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
   overflow: hidden;
+}
+
+.frienship-requests-block .caption-friendsip-requests {
+  padding: 5px 5px 0px 5px;
+  color: #E88C01;
+  font-family: opensans;
+  font-size: 12px;
+}
+
+.frienship-requests-block .underline-orange {
+  height: 1px;
+  margin: 5px;
+  background: #E88C01;
 }
 
 .frienship-requests-block .some-frienship-request li {
@@ -259,7 +281,9 @@
   background: #1c1c1c;
   border-radius: 5px;
   color: white;
-  width: 200px;
+  height: 17px;
+  border-radius: 5px 0 0 5px !important;
+  width: 158px;
 }
 
 .search-friends button {
@@ -386,6 +410,7 @@
 }
 
 .online-status {
+  margin-right: 3px;
   margin-top: 3px;
   width: 10px;
   height: 10px;
@@ -395,6 +420,7 @@
 }
 
 .offline-status {
+  margin-right: 3px;
   margin-top: 3px;
   width: 10px;
   height: 10px;

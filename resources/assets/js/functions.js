@@ -12,3 +12,15 @@ export function makeUriForRequest(urn) {
 	const hostname = window.location.hostname;
 	return protocol + '/\/' + hostname + urn;
 }
+
+export const socketConnectByUserId = new Promise(function(resolve, reject) {
+  fetch( makeUriForRequest('/get-user-id'), {
+    method: 'get'
+  }).then(response => {
+    response.json().then(httpData => {
+      
+      resolve(httpData);
+
+    });
+  });
+});
