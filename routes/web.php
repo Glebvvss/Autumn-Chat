@@ -54,7 +54,7 @@ Route::group(['as' => 'friends'], function() {
         'uses' => 'FriendController@confirmFriendshipRequest'
     ]);
 
-    Route::get('/cancel-recivied-friendship-request/{senderUsername}', [
+    Route::get('/cancel-recived-friendship-request/{senderUsername}', [
         'uses' => 'FriendController@cancelReciviedFriendshipRequest'
     ]);
 

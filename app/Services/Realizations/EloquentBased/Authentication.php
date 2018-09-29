@@ -1,16 +1,45 @@
-<?php
+<?php 
 
-namespace App\Models\Auth;
+namespace App\Services\Realizations\EloquentBased;
 
 use Auth;
 use Hash;
 use Validator;
+use App\ORM\Eloquent\User;
 use Illuminate\Http\Request;
-use App\Models\Eloquent\User;
+use App\Services\Interfaces\Authentication as AuthenticationInterface;
 
-class Registration {
-    
-    public function registrationAction( Request $request ) : array {
+class Authentication implements AuthenticationInterface
+{
+
+    public function login(Request $request) : array
+    {
+        $validator = Validator::make($request->all(), [
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        $validator->after(function($validator) use ($request) {
+            if ( !Auth::attempt(['username' => $request->username, 
+                                 'password' => $request->password ])) {
+                
+                $validator->errors()->add('password', 'Incorrect username or password');
+            }
+        });
+
+        if ( $validator->fails() ) {
+            return [
+                'errors' => $validator->errors()
+            ];
+        }
+
+        return [
+            'login' => 'complete'
+        ];
+    }
+
+    public function registration(Request $request) : array
+    {
         $errors = $this->validateRegistrationRequest($request);
 
         if ( $errors ) {
@@ -21,7 +50,8 @@ class Registration {
         return [];
     }
 
-    private function validateRegistrationRequest( Request $request ) : array {
+    private function validateRegistrationRequest( Request $request ) : array 
+    {
         $validator = Validator::make($request->all(), [
             'username'        => 'required|unique:users',
             'email'           => 'required|email|unique:users',
@@ -46,12 +76,13 @@ class Registration {
         return [];
     }
 
-    private function addNewUserModelToDb( Request $request ) {
+    private function addNewUserModelToDb(Request $request) 
+    {
         $user = new User();
         $user->username = $request->username;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
     }
-
+  
 }

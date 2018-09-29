@@ -36,8 +36,8 @@ export const comfirmFriendRequest = (senderUsername) => dispatch => {
   });
 };
 
-export const cancelReciviedFriendRequest = (senderUsername) => dispatch => {
-  fetch( makeUriForRequest('/cancel-recivied-friendship-request/' + senderUsername), {
+export const cancelRecivedFriendRequest = (senderUsername) => dispatch => {
+  fetch( makeUriForRequest('/cancel-recived-friendship-request/' + senderUsername), {
     method: 'get'
   }).then(response => {
     response.json().then(data => {

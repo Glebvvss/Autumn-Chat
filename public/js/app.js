@@ -2628,7 +2628,7 @@ var socketConnectByUserId = new Promise(function (resolve, reject) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getFriends; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return sendRequestForFriendship; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return comfirmFriendRequest; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cancelReciviedFriendRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cancelRecivedFriendRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return cancelSendedFriendshipRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getRecivedFriendshipRequests; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return getSendedFriendshipRequests; });
@@ -2678,9 +2678,9 @@ var comfirmFriendRequest = function comfirmFriendRequest(senderUsername) {
   };
 };
 
-var cancelReciviedFriendRequest = function cancelReciviedFriendRequest(senderUsername) {
+var cancelRecivedFriendRequest = function cancelRecivedFriendRequest(senderUsername) {
   return function (dispatch) {
-    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* makeUriForRequest */])('/cancel-recivied-friendship-request/' + senderUsername), {
+    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* makeUriForRequest */])('/cancel-recived-friendship-request/' + senderUsername), {
       method: 'get'
     }).then(function (response) {
       response.json().then(function (data) {
@@ -60649,7 +60649,7 @@ var RecivedRequests = function (_Component) {
     key: 'cancelRequest',
     value: function cancelRequest(event) {
       var senderUsername = event.target.attributes['data-username']['value'];
-      this.props.cancelReciviedRequest(senderUsername);
+      this.props.cancelRecivedRequest(senderUsername);
     }
   }, {
     key: 'render',
@@ -60720,8 +60720,8 @@ var RecivedRequests = function (_Component) {
     comfirmRequest: function comfirmRequest(senderUsername) {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["c" /* comfirmFriendRequest */])(senderUsername));
     },
-    cancelReciviedRequest: function cancelReciviedRequest(senderUsername) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["a" /* cancelReciviedFriendRequest */])(senderUsername));
+    cancelRecivedRequest: function cancelRecivedRequest(senderUsername) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["a" /* cancelRecivedFriendRequest */])(senderUsername));
     }
   };
 })(RecivedRequests));

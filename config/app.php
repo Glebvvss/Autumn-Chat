@@ -137,7 +137,6 @@ return [
     */
 
     'providers' => [
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -163,7 +162,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         /*
          * Package Service Providers...
          */
@@ -177,6 +175,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //My service provider
+        App\Providers\Custom\Search\SearchUserServiceProvider::class,
+        App\Providers\Custom\Contacts\Friends\FriendshipRequestServiceProvider::class,
+        App\Providers\Custom\Contacts\Friends\ReciveFriendServiceProvider::class,
+        App\Providers\Custom\AuthenticationServiceProvider::class,
     ],
 
     /*

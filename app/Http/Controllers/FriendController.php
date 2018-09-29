@@ -2,25 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\Eloquent\User;
-use App\Models\Eloquent\Friend;
 use App\Events\UpdateFriendList;
 use App\Models\Contacts\UserSearcher;
 use App\Events\UpdateFriendRequestList;
-use App\Models\Contacts\Friends\FriendReciver;
-use App\Models\Contacts\Friends\FriendshipRequestMaker;
-use App\Models\Contacts\Friends\FriendshipRequestReciver;
+use App\Services\Interfaces\Search\SearchUser;
+use App\Services\Interfaces\Contacts\Friends\ReciveFriend;
+use App\Services\Interfaces\Contacts\Friends\FriendshipRequest;
 
 class FriendController extends Controller 
 {
+    protected $friendshipRequest;
+    protected $reciveFriend;
+    protected $searchUser;
+
+    public function __construct (
+        FriendshipRequest $friendshipRequest,
+        ReciveFriend      $reciveFriend,
+        SearchUser        $searchUser
+    ) {
+        $this->friendshipRequest = $friendshipRequest;
+        $this->reciveFriend      = $reciveFriend;
+        $this->searchUser        = $searchUser;
+    }
+
     public function getFriends() 
     {
-        $friendReciver = new FriendReciver();
-        $friends = $friendReciver->getAllFriendsById( Auth::user()->id );
-
+        $friends = $this->reciveFriend->all();
         return response()->json([
             'friends' => $friends
         ]);
@@ -28,9 +38,7 @@ class FriendController extends Controller
 
     public function searchFriends(Request $request) 
     {
-        $userSearcher = new UserSearcher();
-        $matchUsernames = $userSearcher->searchByOccurrence($request->usernameOccurrence);
-
+        $matchUsernames = $this->searchUser->byOccurrence($request->usernameOccurrence);
         return response()->json([
             'matchUsernames' => $matchUsernames
         ]);
@@ -38,9 +46,7 @@ class FriendController extends Controller
 
     public function getRecivedFrendshipRequests() 
     {
-        $friendshipRequestReciver = new FriendshipRequestReciver();
-        $friendshipRequests = $friendshipRequestReciver->getRecivedRequests();
-
+        $friendshipRequests = $this->friendshipRequest->getRecivedAll();
         return response()->json([
             'friendshipRequests' => $friendshipRequests
         ]);
@@ -48,19 +54,15 @@ class FriendController extends Controller
 
     public function getSendedFrendshipRequests() 
     {
-        $friendshipRequestReciver = new FriendshipRequestReciver();
-        $friendshipRequests = $friendshipRequestReciver->getSendedRequests();
-
+        $friendshipRequests = $this->friendshipRequest->getSendedAll();
         return response()->json([
             'friendshipRequests' => $friendshipRequests
         ]);
     }
 
-    public function sendFriendshipRequest(Request $request) 
+    public function sendFriendshipRequest(Request $request)
     {
-        $friendshipRequestMaker = new FriendshipRequestMaker();
-        $result = $friendshipRequestMaker->sendRequest($request->recipientUsername);
-
+        $result = $this->friendshipRequest->sendTo($request->recipientUsername);
         if ( $result === 'Request has been sent.' ) {
             $recipient = User::where('username', '=', $request->recipientUsername)->first();
             event( new UpdateFriendRequestList($recipient->id, 'recivied') );
@@ -72,11 +74,9 @@ class FriendController extends Controller
         ]);
     }
 
-    public function confirmFriendshipRequest(Request $request) 
+    public function confirmFriendshipRequest(Request $request)
     {        
-        $requestMaker = new FriendshipRequestMaker();
-        $result = $requestMaker->confirmRequest($request->senderUsername);;
-
+        $result = $this->friendshipRequest->confirmFrom($request->senderUsername);;
         if ( $result === 'Friend added!' ) {
             $sender = User::where('username', '=', $request->senderUsername)->first();
             event( new UpdateFriendRequestList($sender->id, 'sended') );
@@ -88,11 +88,9 @@ class FriendController extends Controller
         ]);
     }
 
-    public function cancelReciviedFriendshipRequest(Request $request) 
+    public function cancelReciviedFriendshipRequest(Request $request)
     {
-        $requestMaker = new FriendshipRequestMaker();
-        $result = $requestMaker->cancelRecivedRequest($request->senderUsername);
-
+        $result = $this->friendshipRequest->cancelRecivedFrom($request->senderUsername);
         if ( $result === 'Friend request canceled.' ) {
             $sender = User::where('username', '=', $request->senderUsername)->first();
             event( new UpdateFriendRequestList($sender->id, 'sended') );
@@ -103,11 +101,9 @@ class FriendController extends Controller
         ]);
     }
 
-    public function cancelSendedFriendshipRequest(Request $request) 
+    public function cancelSendedFriendshipRequest(Request $request)
     {
-        $requestMaker = new FriendshipRequestMaker();
-        $result = $requestMaker->cancelRecivedRequest($request->senderUsername);
-
+        $result = $this->friendshipRequest->cancelRecivedRequest($request->senderUsername);
         if ( $result === 'Friend request canceled.' ) {
             $sender = User::where('username', '=', $request->senderUsername)->first();
             event( new UpdateFriendRequestList($sender->id, 'recived') );

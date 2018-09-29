@@ -5,7 +5,7 @@ import { makeUriForRequest } from '../../../../../../../functions';
 import { getRecivedFriendshipRequests, 
          getFriends,
          comfirmFriendRequest,
-         cancelReciviedFriendRequest } from '../../../../../../../actions/friends';
+         cancelRecivedFriendRequest } from '../../../../../../../actions/friends';
 
 
 class RecivedRequests extends Component {
@@ -39,7 +39,7 @@ class RecivedRequests extends Component {
 
   cancelRequest(event) {
     let senderUsername = event.target.attributes['data-username']['value'];
-    this.props.cancelReciviedRequest(senderUsername); 
+    this.props.cancelRecivedRequest(senderUsername); 
   }
 
   render() {
@@ -85,8 +85,8 @@ export default connect(
     comfirmRequest: (senderUsername) => {
       dispatch(comfirmFriendRequest(senderUsername));
     },
-    cancelReciviedRequest: (senderUsername) => {
-      dispatch(cancelReciviedFriendRequest(senderUsername));
+    cancelRecivedRequest: (senderUsername) => {
+      dispatch(cancelRecivedFriendRequest(senderUsername));
     },
   }),
 )(RecivedRequests);
