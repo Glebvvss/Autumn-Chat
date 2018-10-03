@@ -426,6 +426,51 @@
   background: gray;
 }
 
+.group-manager-block {
+  position: absolute;
+  left: 260px;
+  width: 260px;
+  height: 100vh;
+  background: linear-gradient(135deg, #36393F, #1c1c1c);
+}
+
+.group-manager-block input.new-group-name {
+  padding: 10px;
+  border: 1px solid white;
+  background: #1c1c1c;
+  border-radius: 5px;
+  color: white;
+  width: 225px;
+  margin: 5px;
+}
+
+.group-manager-block button.create-group {
+  border: none;
+  background: #E88C01;
+  color: white;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  width: 248px;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 10px;
+}
+
+.group-manager-block button.create-group:hover {
+  background: #DDDDDD;
+  color: black;
+}
+
+.group-manager-block .list-select-member-to-group {
+  font-family: opensans;
+  padding: 5px 15px;
+  color: white;
+}
+
+.group-manager-block .list-select-member-to-group ul li {
+  cursor: pointer;
+}
+
 .chat {
   min-width: 100vw;
   min-height: 100vh;

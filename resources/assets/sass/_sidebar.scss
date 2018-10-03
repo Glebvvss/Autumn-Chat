@@ -255,3 +255,41 @@ $padding_blocks: 20px;
 	@include user-status;
 	background: gray;
 }
+
+
+
+.group-manager-block {
+	position: absolute;
+	left: $width_sidebar;
+	width: $width_sidebar;
+	height: 100vh;
+	background: $diagonal_gray_gradient;
+
+	input.new-group-name {
+		@include input;
+		width: $width_sidebar - 35px;
+		margin: 5px;
+	}
+
+	button.create-group {
+		@include button;
+		width: $width_sidebar - 12px;
+		border-radius: 5px;
+		margin: 5px;
+		padding: 10px;
+	}
+
+	.list-select-member-to-group {
+		font-family: opensans;
+		padding: 5px 15px;
+		color: white;
+		
+		ul {
+			li {
+				cursor: pointer;
+			}
+		}
+
+	}
+
+}
