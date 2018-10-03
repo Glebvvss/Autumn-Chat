@@ -428,10 +428,11 @@
 
 .group-manager-block {
   position: absolute;
-  left: 260px;
   width: 260px;
   height: 100vh;
   background: linear-gradient(135deg, #36393F, #1c1c1c);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .group-manager-block input.new-group-name {
@@ -465,10 +466,23 @@
   font-family: opensans;
   padding: 5px 15px;
   color: white;
+  padding-bottom: 200px !important;
 }
 
 .group-manager-block .list-select-member-to-group ul li {
+  padding: 5px 0px;
   cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.group-manager-block .list-select-member-to-group ul li:hover {
+  color: #E88C01;
+}
+
+.group-manager-block .list-select-member-to-group ul li span.added-top-group-friend {
+  color: #E88C01;
+  float: right;
 }
 
 .chat {

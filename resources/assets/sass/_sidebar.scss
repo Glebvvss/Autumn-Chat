@@ -256,14 +256,12 @@ $padding_blocks: 20px;
 	background: gray;
 }
 
-
-
 .group-manager-block {
 	position: absolute;
-	left: $width_sidebar;
 	width: $width_sidebar;
 	height: 100vh;
 	background: $diagonal_gray_gradient;
+	transition: $transition;
 
 	input.new-group-name {
 		@include input;
@@ -283,10 +281,22 @@ $padding_blocks: 20px;
 		font-family: opensans;
 		padding: 5px 15px;
 		color: white;
+		padding-bottom: 200px !important;
 		
 		ul {
 			li {
+				padding: 5px 0px;
 				cursor: pointer;
+				transition: $transition;
+
+				&:hover {
+					color: $orange;
+				}
+
+				span.added-top-group-friend {
+					color: $orange;
+					float: right;
+				}
 			}
 		}
 

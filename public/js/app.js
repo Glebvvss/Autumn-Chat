@@ -46833,7 +46833,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-__WEBPACK_IMPORTED_MODULE_7__fortawesome_fontawesome_svg_core__["b" /* library */].add(__WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["b" /* faComment */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["c" /* faUserFriends */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["a" /* faArrowCircleUp */]);
+__WEBPACK_IMPORTED_MODULE_7__fortawesome_fontawesome_svg_core__["b" /* library */].add(__WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["c" /* faComment */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["d" /* faUserFriends */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["a" /* faArrowCircleUp */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["b" /* faCheckCircle */]);
 
 
 
@@ -60443,6 +60443,7 @@ var SidebarHead = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      console.log();
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'sidebar-head' },
@@ -60461,7 +60462,7 @@ var SidebarHead = function (_Component) {
           { className: 'icons' },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'span',
-            null,
+            { onClick: this.props.changeVisibleGroupManager },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__fortawesome_react_fontawesome__["a" /* FontAwesomeIcon */], { icon: 'comment' })
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'update-marker-friendship-list', style: this.state.changesMarkerStyles }),
@@ -60482,6 +60483,7 @@ var SidebarHead = function (_Component) {
   return {
     user: state.userInfo,
     countNewRecivedFriendshipRequests: state.friendshipRequests.countNewRecived
+
   };
 }, function (dispatch) {
   return {
@@ -60493,6 +60495,9 @@ var SidebarHead = function (_Component) {
     },
     changeVisibleFriendshipRequests: function changeVisibleFriendshipRequests() {
       dispatch({ type: 'CHANGE_VISIBLE_STATUS_FRIENSHIP_REQUESTS' });
+    },
+    changeVisibleGroupManager: function changeVisibleGroupManager() {
+      dispatch({ type: 'CHANGE_VISIBLE_STATUS_GROUP_MANAGER' });
     }
   };
 })(SidebarHead));
@@ -61907,7 +61912,7 @@ var Notifications = function (_Component) {
 /* unused harmony export faChartLine */
 /* unused harmony export faChartPie */
 /* unused harmony export faCheck */
-/* unused harmony export faCheckCircle */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faCheckCircle; });
 /* unused harmony export faCheckDouble */
 /* unused harmony export faCheckSquare */
 /* unused harmony export faChess */
@@ -61948,7 +61953,7 @@ var Notifications = function (_Component) {
 /* unused harmony export faCogs */
 /* unused harmony export faCoins */
 /* unused harmony export faColumns */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faComment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faComment; });
 /* unused harmony export faCommentAlt */
 /* unused harmony export faCommentDollar */
 /* unused harmony export faCommentDots */
@@ -62533,7 +62538,7 @@ var Notifications = function (_Component) {
 /* unused harmony export faUserClock */
 /* unused harmony export faUserCog */
 /* unused harmony export faUserEdit */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faUserFriends; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return faUserFriends; });
 /* unused harmony export faUserGraduate */
 /* unused harmony export faUserLock */
 /* unused harmony export faUserMd */
@@ -64713,6 +64718,12 @@ var SendedRequests = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fortawesome_react_fontawesome__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(10);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -64723,38 +64734,106 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
+
+var scrollbar = {
+  width: 260,
+  height: '100%'
+};
+
 var GroupManager = function (_Component) {
   _inherits(GroupManager, _Component);
 
   function GroupManager(props) {
     _classCallCheck(this, GroupManager);
 
-    return _possibleConstructorReturn(this, (GroupManager.__proto__ || Object.getPrototypeOf(GroupManager)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (GroupManager.__proto__ || Object.getPrototypeOf(GroupManager)).call(this, props));
+
+    _this.state = {
+      visibleComponent: {
+        left: 0
+      }
+    };
+    return _this;
   }
 
   _createClass(GroupManager, [{
-    key: "render",
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      if (this.props !== prevProps) {
+        this.checkVisibleStatusFriendShipRequests();
+      }
+    }
+  }, {
+    key: 'checkVisibleStatusFriendShipRequests',
+    value: function checkVisibleStatusFriendShipRequests() {
+      if (this.props.visible === true) {
+        this.setState(_extends({}, this.state, {
+          visibleComponent: {
+            left: '260px'
+          }
+        }));
+      } else {
+        this.setState(_extends({}, this.state, {
+          visibleComponent: {
+            left: 0
+          }
+        }));
+      }
+    }
+  }, {
+    key: 'render',
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "div",
-        { className: "group-manager-block" },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { className: "new-group-name",
-          placeholder: "New Group Name" }),
+        'div',
+        { className: 'group-manager-block', style: this.state.visibleComponent },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'new-group-name',
+          placeholder: 'New Group Name' }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "button",
-          { className: "create-group" },
-          "Cheate Group"
+          'button',
+          { className: 'create-group' },
+          'Cheate Group'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "div",
-          { className: "list-select-member-to-group" },
+          __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default.a,
+          { style: scrollbar },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "ul",
-            null,
+            'div',
+            { className: 'list-select-member-to-group' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              "li",
+              'ul',
               null,
-              "Username"
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'li',
+                null,
+                'Username',
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'span',
+                  { className: 'added-top-group-friend' },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__fortawesome_react_fontawesome__["a" /* FontAwesomeIcon */], { icon: 'check-circle' })
+                )
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'li',
+                null,
+                'Username',
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'span',
+                  { className: 'added-top-group-friend' },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__fortawesome_react_fontawesome__["a" /* FontAwesomeIcon */], { icon: 'check-circle' })
+                )
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'li',
+                null,
+                'Username',
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'span',
+                  { className: 'added-top-group-friend' },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__fortawesome_react_fontawesome__["a" /* FontAwesomeIcon */], { icon: 'check-circle' })
+                )
+              )
             )
           )
         )
@@ -64765,7 +64844,13 @@ var GroupManager = function (_Component) {
   return GroupManager;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (GroupManager);
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_3_react_redux__["b" /* connect */])(function (state) {
+  return {
+    visible: state.sidebarDropdownElements.groupManagerVisible
+  };
+}, function (dispatch) {
+  return {};
+})(GroupManager));
 
 /***/ })
 /******/ ]);

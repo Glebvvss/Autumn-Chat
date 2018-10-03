@@ -25,13 +25,14 @@ class SidebarHead extends Component {
   }
 
   render() {
+    console.log();
     return (
       <div className="sidebar-head">
         <h1 className="username">{this.props.user.username}</h1>
         <div className="logout" onClick={this.props.logoutAction}>logout</div>
         <div className="icons">
 
-          <span>
+          <span onClick={this.props.changeVisibleGroupManager}>
             <FontAwesomeIcon icon="comment" />
           </span>
 
@@ -51,7 +52,8 @@ class SidebarHead extends Component {
 export default connect(
   state => ({
     user: state.userInfo,
-    countNewRecivedFriendshipRequests: state.friendshipRequests.countNewRecived,    
+    countNewRecivedFriendshipRequests: state.friendshipRequests.countNewRecived,
+    
   }),
   dispatch => ({
     logoutAction: () => {
@@ -62,6 +64,9 @@ export default connect(
     },
     changeVisibleFriendshipRequests: () => {
       dispatch({ type: 'CHANGE_VISIBLE_STATUS_FRIENSHIP_REQUESTS' });
+    },
+    changeVisibleGroupManager: () => {
+      dispatch({ type: 'CHANGE_VISIBLE_STATUS_GROUP_MANAGER' });
     }
   })
 )(SidebarHead);
