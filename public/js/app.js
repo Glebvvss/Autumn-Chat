@@ -58922,6 +58922,8 @@ function symbolObservablePonyfill(root) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__contacts_friends_searchFriends_js__ = __webpack_require__(242);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__contacts_friends_friends_js__ = __webpack_require__(243);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__notification__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__contacts_sidebarDropdownElements_js__ = __webpack_require__(290);
+
 
 
 
@@ -64636,6 +64638,59 @@ var _iconsCache = {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export sidebarDropdownElements */
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var defaultState = {
+  groupManagerVisible: false,
+  friendshipRequestsVisible: false
+};
+
+function sidebarDropdownElements() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
+  var action = arguments[1];
+
+
+  if (action.type === 'CHANGE_VISIBLE_STATUS_GROUP_MANAGER') {
+    if (state.groupManagerVisible === false) {
+      return _extends({}, defaultState, {
+        groupManagerVisible: true
+      });
+    } else {
+      return _extends({}, state, {
+        groupManagerVisible: false
+      });
+    }
+  }
+
+  if (action.type === 'CHANGE_VISIBLE_STATUS_FRIENSHIP_REQUESTS') {
+    if (state.friendshipRequestsVisible === false) {
+      return _extends({}, defaultState, {
+        friendshipRequestsVisible: true
+      });
+    } else {
+      return _extends({}, state, {
+        friendshipRequestsVisible: false
+      });
+    }
+  }
+
+  return state;
+}
 
 /***/ })
 /******/ ]);

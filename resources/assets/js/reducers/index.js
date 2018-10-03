@@ -7,6 +7,7 @@ import { friendshipRequests } from './contacts/friends/friendshipRequests.js';
 import { searchFriends } from './contacts/friends/searchFriends.js';
 import { friends } from './contacts/friends/friends.js';
 import { notification } from './notification';
+import { sidebarDropdownElements } from './contacts/sidebarDropdownElements.js';
 
 let reducers = {
   //
