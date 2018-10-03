@@ -153,9 +153,7 @@
   display: none !important;
 }
 
-.sidebar {
-  -webkit-box-shadow: 3px 0px 5px #565655;
-          box-shadow: 3px 0px 5px #565655;
+.sidebar-main {
   width: 260px;
   height: 100vh;
   background: linear-gradient(135deg, #36393F, #1c1c1c);
@@ -221,7 +219,6 @@
 .frienship-requests-block {
   position: absolute;
   top: 0;
-  left: 260px;
   background: linear-gradient(135deg, #36393F, #1c1c1c);
   width: 260px;
   height: 205px;

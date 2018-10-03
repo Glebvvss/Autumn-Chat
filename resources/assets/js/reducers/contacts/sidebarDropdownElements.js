@@ -10,12 +10,12 @@ export function sidebarDropdownElements( state = defaultState, action ) {
       return {
         ...defaultState,
         groupManagerVisible: true,
-      }
+      };
     } else {
       return {
         ...state,
         groupManagerVisible: false,
-      }
+      };
     }
   }
 
@@ -24,12 +24,12 @@ export function sidebarDropdownElements( state = defaultState, action ) {
       return {
         ...defaultState,
         friendshipRequestsVisible: true,
-      }
+      };
     } else {
       return {
         ...state,
         friendshipRequestsVisible: false,
-      }
+      };
     }
   }
 

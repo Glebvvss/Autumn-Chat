@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactScrollbar from 'react-scrollbar-js';
-import { makeUriForRequest } from '../../../../../../functions';
-import { getFriendshipRequests, 
-         comfirmFriendshipRequest,
-         cancelFriendshipRequest } from '../../../../../../actions/friends';
-
 import RecivedRequests from './components/RecivedRequests';
 import SendedRequests from './components/SendedRequests';
 
@@ -19,33 +14,39 @@ class FriendshipRequests extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rootBlockClasses: 'frienship-requests-block unvisible',
+      visibleComponent: {
+        left: 0
+      }
     };
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if ( this.props !== prevProps ) {
-      this.hideOrShowComponentByChangeProp(prevProps);
+      this.checkVisibleStatusFriendShipRequests();
     }
   }
 
-  hideOrShowComponentByChangeProp(prevProps) {
+  checkVisibleStatusFriendShipRequests() {
     if ( this.props.visible === true ) {
-        this.setState({
+      this.setState({
         ...this.state,
-        rootBlockClasses: 'frienship-requests-block visible'
+        visibleComponent: {
+          left: '260px'
+        }
       });
     } else {
       this.setState({
         ...this.state,
-        rootBlockClasses: 'frienship-requests-block unvisible'
+        visibleComponent: {
+          left: 0
+        }
       });
-    }  
+    }
   }
 
   render() {
     return (
-      <div className={this.state.rootBlockClasses}>
+      <div className="frienship-requests-block" style={this.state.visibleComponent}>
         <ReactScrollbar style={scrollbar}>
           <div>
             <RecivedRequests />
@@ -60,7 +61,7 @@ class FriendshipRequests extends Component {
 
 export default connect(
   state => ({
-    friendshipRequests: state.friendshipRequests
+    visible: state.sidebarDropdownElements.friendshipRequestsVisible
   }),
   dispatch => ({
 

@@ -2626,14 +2626,14 @@ var socketConnectByUserId = new Promise(function (resolve, reject) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getFriends; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return sendFriendshipRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return sendFriendshipRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return comfirmFriendRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cancelRecivedFriendRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return cancelSendedFriendshipRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return getRecivedFriendshipRequests; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return getSendedFriendshipRequests; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return getSearchMatchesList; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return readNewRecivedFriendshipRequests; });
+/* unused harmony export readNewRecivedFriendshipRequests */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getCountNewRecivedFriendshipRequests; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_js__ = __webpack_require__(18);
 
@@ -58947,8 +58947,9 @@ var reducers = {
   //cantacts
   friends: __WEBPACK_IMPORTED_MODULE_7__contacts_friends_friends_js__["a" /* friends */],
   searchFriends: __WEBPACK_IMPORTED_MODULE_6__contacts_friends_searchFriends_js__["a" /* searchFriends */],
-  friendshipRequests: __WEBPACK_IMPORTED_MODULE_5__contacts_friends_friendshipRequests_js__["a" /* friendshipRequests */]
+  friendshipRequests: __WEBPACK_IMPORTED_MODULE_5__contacts_friends_friendshipRequests_js__["a" /* friendshipRequests */],
 
+  sidebarDropdownElements: __WEBPACK_IMPORTED_MODULE_9__contacts_sidebarDropdownElements_js__["a" /* sidebarDropdownElements */]
   //communications
 
 };
@@ -60320,6 +60321,7 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_scrollbar_js__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_scrollbar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_scrollbar_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__actions_friends__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_dropdown_components_DropdownComponents__ = __webpack_require__(294);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -60337,10 +60339,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var scrollbar = {
 	width: 260,
 	height: '100%'
 };
+//visible: state.sidebarDropdownElements.friendshipRequestsVisible
 
 var Sidebar = function (_Component) {
 	_inherits(Sidebar, _Component);
@@ -60357,18 +60361,23 @@ var Sidebar = function (_Component) {
 			return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
 				{ className: 'sidebar' },
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_sidebar_head_SidebarHead__["a" /* default */], null),
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_SearchFriends__["a" /* default */], null),
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_dropdown_components_DropdownComponents__["a" /* default */], null),
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-					__WEBPACK_IMPORTED_MODULE_6_react_scrollbar_js___default.a,
-					{ style: scrollbar },
+					'div',
+					{ className: 'sidebar-main' },
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_sidebar_head_SidebarHead__["a" /* default */], null),
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_SearchFriends__["a" /* default */], null),
 					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-						'div',
-						{ className: 'scroll-black-content' },
+						__WEBPACK_IMPORTED_MODULE_6_react_scrollbar_js___default.a,
+						{ style: scrollbar },
 						__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-							__WEBPACK_IMPORTED_MODULE_4__components_contacts_Contacts__["a" /* default */],
-							{ title: 'FRIENDS' },
-							__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_contacts_components_Friends__["a" /* default */], null)
+							'div',
+							{ className: 'scroll-black-content' },
+							__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+								__WEBPACK_IMPORTED_MODULE_4__components_contacts_Contacts__["a" /* default */],
+								{ title: 'FRIENDS' },
+								__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_contacts_components_Friends__["a" /* default */], null)
+							)
 						)
 					)
 				)
@@ -60393,10 +60402,6 @@ var Sidebar = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_auth__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__fortawesome_react_fontawesome__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_FriendshipRequests_FriendshipRequests__ = __webpack_require__(269);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__actions_friends__ = __webpack_require__(19);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -60404,8 +60409,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
 
 
 
@@ -60422,7 +60425,6 @@ var SidebarHead = function (_Component) {
     var _this = _possibleConstructorReturn(this, (SidebarHead.__proto__ || Object.getPrototypeOf(SidebarHead)).call(this, props));
 
     _this.props.getUsername();
-    _this.props.getCountNewRecivedFriendshipRequests();
 
     _this.state = {
       visibleFriendshipRequests: false,
@@ -60436,45 +60438,7 @@ var SidebarHead = function (_Component) {
   _createClass(SidebarHead, [{
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
-      if (this.props !== prevProps) {
-        this.checkUnreadRecivedFriendshipRequests();
-      }
-    }
-  }, {
-    key: 'checkUnreadRecivedFriendshipRequests',
-    value: function checkUnreadRecivedFriendshipRequests() {
-      if (this.props.countNewRecivedFriendshipRequests !== 0) {
-        this.setState({
-          changesMarkerStyles: {
-            opacity: 1
-          }
-        });
-      } else {
-        this.setState({
-          changesMarkerStyles: {
-            opacity: 0
-          }
-        });
-      }
-    }
-  }, {
-    key: 'hideOrShowFriendshipRequests',
-    value: function hideOrShowFriendshipRequests() {
-      if (this.state.visibleFriendshipRequests === false) {
-        this.props.readNewRecivedFriendshipRequests();
-        this.setState(_extends({}, this.state, {
-          visibleFriendshipRequests: true
-        }));
-      } else {
-        this.setState(_extends({}, this.state, {
-          visibleFriendshipRequests: false
-        }));
-      }
-    }
-  }, {
-    key: 'initialLogoutAction',
-    value: function initialLogoutAction() {
-      this.props.logoutAction();
+      if (this.props !== prevProps) {}
     }
   }, {
     key: 'render',
@@ -60489,7 +60453,7 @@ var SidebarHead = function (_Component) {
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'logout', onClick: this.initialLogoutAction.bind(this) },
+          { className: 'logout', onClick: this.props.logoutAction },
           'logout'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60503,11 +60467,10 @@ var SidebarHead = function (_Component) {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'update-marker-friendship-list', style: this.state.changesMarkerStyles }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'span',
-            { onClick: this.hideOrShowFriendshipRequests.bind(this) },
+            { onClick: this.props.changeVisibleFriendshipRequests },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__fortawesome_react_fontawesome__["a" /* FontAwesomeIcon */], { icon: 'user-friends' })
           )
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_FriendshipRequests_FriendshipRequests__["a" /* default */], { visible: this.state.visibleFriendshipRequests })
+        )
       );
     }
   }]);
@@ -60528,398 +60491,16 @@ var SidebarHead = function (_Component) {
     getUsername: function getUsername() {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_auth__["b" /* getUsername */])());
     },
-    getCountNewRecivedFriendshipRequests: function getCountNewRecivedFriendshipRequests() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__actions_friends__["d" /* getCountNewRecivedFriendshipRequests */])());
-    },
-    readNewRecivedFriendshipRequests: function readNewRecivedFriendshipRequests() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__actions_friends__["i" /* readNewRecivedFriendshipRequests */])());
+    changeVisibleFriendshipRequests: function changeVisibleFriendshipRequests() {
+      dispatch({ type: 'CHANGE_VISIBLE_STATUS_FRIENSHIP_REQUESTS' });
     }
   };
 })(SidebarHead));
 
 /***/ }),
-/* 269 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_friends__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_RecivedRequests__ = __webpack_require__(270);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_SendedRequests__ = __webpack_require__(271);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-
-
-
-
-var scrollbar = {
-  width: 260,
-  height: '100%'
-};
-
-var FriendshipRequests = function (_Component) {
-  _inherits(FriendshipRequests, _Component);
-
-  function FriendshipRequests(props) {
-    _classCallCheck(this, FriendshipRequests);
-
-    var _this = _possibleConstructorReturn(this, (FriendshipRequests.__proto__ || Object.getPrototypeOf(FriendshipRequests)).call(this, props));
-
-    _this.state = {
-      rootBlockClasses: 'frienship-requests-block unvisible'
-    };
-    return _this;
-  }
-
-  _createClass(FriendshipRequests, [{
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate(prevProps, prevState, snapshot) {
-      if (this.props !== prevProps) {
-        this.hideOrShowComponentByChangeProp(prevProps);
-      }
-    }
-  }, {
-    key: 'hideOrShowComponentByChangeProp',
-    value: function hideOrShowComponentByChangeProp(prevProps) {
-      if (this.props.visible === true) {
-        this.setState(_extends({}, this.state, {
-          rootBlockClasses: 'frienship-requests-block visible'
-        }));
-      } else {
-        this.setState(_extends({}, this.state, {
-          rootBlockClasses: 'frienship-requests-block unvisible'
-        }));
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: this.state.rootBlockClasses },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default.a,
-          { style: scrollbar },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            null,
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_RecivedRequests__["a" /* default */], null),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_SendedRequests__["a" /* default */], null)
-          )
-        )
-      );
-    }
-  }]);
-
-  return FriendshipRequests;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
-  return {
-    friendshipRequests: state.friendshipRequests
-  };
-}, function (dispatch) {
-  return {};
-})(FriendshipRequests));
-
-/***/ }),
-/* 270 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_friends__ = __webpack_require__(19);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-
-var RecivedRequests = function (_Component) {
-  _inherits(RecivedRequests, _Component);
-
-  function RecivedRequests(props) {
-    _classCallCheck(this, RecivedRequests);
-
-    var _this = _possibleConstructorReturn(this, (RecivedRequests.__proto__ || Object.getPrototypeOf(RecivedRequests)).call(this, props));
-
-    _this.props.getRecivedFriendshipRequests();
-    _this.socketMethod();
-    return _this;
-  }
-
-  _createClass(RecivedRequests, [{
-    key: 'socketMethod',
-    value: function socketMethod() {
-      var _this2 = this;
-
-      fetch(Object(__WEBPACK_IMPORTED_MODULE_3__functions__["a" /* makeUriForRequest */])('/get-user-id'), {
-        method: 'get'
-      }).then(function (response) {
-        response.json().then(function (httpData) {
-          var socket = io(':3001'),
-              userId = httpData.userId,
-              room = 'recivied-friend-requests-of:' + userId;
-
-          socket.on(room, function (socketData) {
-            _this2.props.getRecivedFriendshipRequests();
-            _this2.props.getCountNewRecivedFriendshipRequests();
-          });
-        });
-      });
-    }
-  }, {
-    key: 'confirmRequest',
-    value: function confirmRequest(event) {
-      var senderId = event.target.attributes['data-userID']['value'];
-      this.props.comfirmRequest(senderId);
-    }
-  }, {
-    key: 'cancelRequest',
-    value: function cancelRequest(event) {
-      var senderId = event.target.attributes['data-userID']['value'];
-      this.props.cancelRecivedRequest(senderId);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this3 = this;
-
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'h5',
-          { className: 'caption-friendsip-requests' },
-          'Received'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'underline-orange' }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'ul',
-          { className: 'some-frienship-request' },
-          this.props.recivedRequests.map(function (item, index) {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'li',
-              { key: index },
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'span',
-                null,
-                item.user_sender.username
-              ),
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'span',
-                { className: 'response-on-friendship-request' },
-                '(',
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'span',
-                  { onClick: _this3.confirmRequest.bind(_this3),
-                    'data-userID': item.sender_id,
-                    className: 'response-action' },
-                  ' confirm '
-                ),
-                '|',
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'span',
-                  { onClick: _this3.cancelRequest.bind(_this3),
-                    'data-userID': item.sender_id,
-                    className: 'response-action' },
-                  ' cancel '
-                ),
-                ')'
-              )
-            );
-          })
-        )
-      );
-    }
-  }]);
-
-  return RecivedRequests;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
-  return {
-    recivedRequests: state.friendshipRequests.recived
-  };
-}, function (dispatch) {
-  return {
-    getRecivedFriendshipRequests: function getRecivedFriendshipRequests() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["f" /* getRecivedFriendshipRequests */])());
-    },
-    comfirmRequest: function comfirmRequest(senderId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["c" /* comfirmFriendRequest */])(senderId));
-    },
-    cancelRecivedRequest: function cancelRecivedRequest(senderId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["a" /* cancelRecivedFriendRequest */])(senderId));
-    },
-    getCountNewRecivedFriendshipRequests: function getCountNewRecivedFriendshipRequests() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["d" /* getCountNewRecivedFriendshipRequests */])());
-    }
-  };
-})(RecivedRequests));
-
-/***/ }),
-/* 271 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_friends__ = __webpack_require__(19);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-
-
-
-var SendedRequests = function (_Component) {
-  _inherits(SendedRequests, _Component);
-
-  function SendedRequests(props) {
-    _classCallCheck(this, SendedRequests);
-
-    var _this = _possibleConstructorReturn(this, (SendedRequests.__proto__ || Object.getPrototypeOf(SendedRequests)).call(this, props));
-
-    _this.props.getSendedFriendshipRequests();
-    _this.socketMethod();
-    return _this;
-  }
-
-  _createClass(SendedRequests, [{
-    key: 'socketMethod',
-    value: function socketMethod() {
-      var _this2 = this;
-
-      fetch(Object(__WEBPACK_IMPORTED_MODULE_3__functions__["a" /* makeUriForRequest */])('/get-user-id'), {
-        method: 'get'
-      }).then(function (response) {
-        response.json().then(function (httpData) {
-          var socket = io(':3001'),
-              userId = httpData.userId,
-              room = 'sended-friend-requests-of:' + userId;
-
-          socket.on(room, function (socketData) {
-            _this2.props.getSendedFriendshipRequests();
-          });
-        });
-      });
-    }
-  }, {
-    key: 'cancelSendedRequest',
-    value: function cancelSendedRequest(event) {
-      var recipientId = event.target.attributes['data-userID']['value'];
-      this.props.cancelSendedFriendshipRequest(recipientId);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this3 = this;
-
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'h5',
-          { className: 'caption-friendsip-requests' },
-          'Sended'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'underline-orange' }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'ul',
-          { className: 'some-frienship-request' },
-          this.props.sendedRequests.map(function (item, index) {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'li',
-              { key: index },
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'span',
-                null,
-                item.user_recipient.username
-              ),
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'span',
-                { className: 'response-on-friendship-request' },
-                '(',
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'span',
-                  { onClick: _this3.cancelSendedRequest.bind(_this3),
-                    'data-userID': item.recipient_id,
-                    className: 'response-action' },
-                  ' cancel '
-                ),
-                ')'
-              )
-            );
-          })
-        )
-      );
-    }
-  }]);
-
-  return SendedRequests;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
-  return {
-    sendedRequests: state.friendshipRequests.sended
-  };
-}, function (dispatch) {
-  return {
-    getSendedFriendshipRequests: function getSendedFriendshipRequests() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["h" /* getSendedFriendshipRequests */])());
-    },
-    cancelSendedFriendshipRequest: function cancelSendedFriendshipRequest(recipientId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["b" /* cancelSendedFriendshipRequest */])(recipientId));
-    }
-  };
-})(SendedRequests));
-
-/***/ }),
+/* 269 */,
+/* 270 */,
+/* 271 */,
 /* 272 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -61047,7 +60628,7 @@ var SearchFriends = function (_Component) {
 			dispatch({ type: 'CLEAR_SEARCH_MATCH_LIST' });
 		},
 		sendFriendshipRequest: function sendFriendshipRequest(recipientUsername) {
-			dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["j" /* sendFriendshipRequest */])(recipientUsername));
+			dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["i" /* sendFriendshipRequest */])(recipientUsername));
 		}
 	};
 })(SearchFriends));
@@ -64652,7 +64233,7 @@ var _iconsCache = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export sidebarDropdownElements */
+/* harmony export (immutable) */ __webpack_exports__["a"] = sidebarDropdownElements;
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var defaultState = {
@@ -64691,6 +64272,436 @@ function sidebarDropdownElements() {
 
   return state;
 }
+
+/***/ }),
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_friendship_requests_FriendshipRequests__ = __webpack_require__(295);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var DropdownComponents = function (_Component) {
+  _inherits(DropdownComponents, _Component);
+
+  function DropdownComponents(props) {
+    _classCallCheck(this, DropdownComponents);
+
+    return _possibleConstructorReturn(this, (DropdownComponents.__proto__ || Object.getPrototypeOf(DropdownComponents)).call(this, props));
+  }
+
+  _createClass(DropdownComponents, [{
+    key: 'render',
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_friendship_requests_FriendshipRequests__["a" /* default */], null)
+      );
+    }
+  }]);
+
+  return DropdownComponents;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (DropdownComponents);
+
+/***/ }),
+/* 295 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_RecivedRequests__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SendedRequests__ = __webpack_require__(297);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+var scrollbar = {
+  width: 260,
+  height: '100%'
+};
+
+var FriendshipRequests = function (_Component) {
+  _inherits(FriendshipRequests, _Component);
+
+  function FriendshipRequests(props) {
+    _classCallCheck(this, FriendshipRequests);
+
+    var _this = _possibleConstructorReturn(this, (FriendshipRequests.__proto__ || Object.getPrototypeOf(FriendshipRequests)).call(this, props));
+
+    _this.state = {
+      visibleComponent: {
+        left: 0
+      }
+    };
+    return _this;
+  }
+
+  _createClass(FriendshipRequests, [{
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      if (this.props !== prevProps) {
+        this.checkVisibleStatusFriendShipRequests();
+      }
+    }
+  }, {
+    key: 'checkVisibleStatusFriendShipRequests',
+    value: function checkVisibleStatusFriendShipRequests() {
+      if (this.props.visible === true) {
+        this.setState(_extends({}, this.state, {
+          visibleComponent: {
+            left: '260px'
+          }
+        }));
+      } else {
+        this.setState(_extends({}, this.state, {
+          visibleComponent: {
+            left: 0
+          }
+        }));
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'frienship-requests-block', style: this.state.visibleComponent },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default.a,
+          { style: scrollbar },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_RecivedRequests__["a" /* default */], null),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_SendedRequests__["a" /* default */], null)
+          )
+        )
+      );
+    }
+  }]);
+
+  return FriendshipRequests;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
+  return {
+    visible: state.sidebarDropdownElements.friendshipRequestsVisible
+  };
+}, function (dispatch) {
+  return {};
+})(FriendshipRequests));
+
+/***/ }),
+/* 296 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_friends__ = __webpack_require__(19);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+var RecivedRequests = function (_Component) {
+  _inherits(RecivedRequests, _Component);
+
+  function RecivedRequests(props) {
+    _classCallCheck(this, RecivedRequests);
+
+    var _this = _possibleConstructorReturn(this, (RecivedRequests.__proto__ || Object.getPrototypeOf(RecivedRequests)).call(this, props));
+
+    _this.props.getRecivedFriendshipRequests();
+    _this.socketMethod();
+    return _this;
+  }
+
+  _createClass(RecivedRequests, [{
+    key: 'socketMethod',
+    value: function socketMethod() {
+      var _this2 = this;
+
+      fetch(Object(__WEBPACK_IMPORTED_MODULE_3__functions__["a" /* makeUriForRequest */])('/get-user-id'), {
+        method: 'get'
+      }).then(function (response) {
+        response.json().then(function (httpData) {
+          var socket = io(':3001'),
+              userId = httpData.userId,
+              room = 'recivied-friend-requests-of:' + userId;
+
+          socket.on(room, function (socketData) {
+            _this2.props.getRecivedFriendshipRequests();
+            _this2.props.getCountNewRecivedFriendshipRequests();
+          });
+        });
+      });
+    }
+  }, {
+    key: 'confirmRequest',
+    value: function confirmRequest(event) {
+      var senderId = event.target.attributes['data-userID']['value'];
+      this.props.comfirmRequest(senderId);
+    }
+  }, {
+    key: 'cancelRequest',
+    value: function cancelRequest(event) {
+      var senderId = event.target.attributes['data-userID']['value'];
+      this.props.cancelRecivedRequest(senderId);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h5',
+          { className: 'caption-friendsip-requests' },
+          'Received'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'underline-orange' }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'ul',
+          { className: 'some-frienship-request' },
+          this.props.recivedRequests.map(function (item, index) {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'li',
+              { key: index },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'span',
+                null,
+                item.user_sender.username
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'span',
+                { className: 'response-on-friendship-request' },
+                '(',
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'span',
+                  { onClick: _this3.confirmRequest.bind(_this3),
+                    'data-userID': item.sender_id,
+                    className: 'response-action' },
+                  ' confirm '
+                ),
+                '|',
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'span',
+                  { onClick: _this3.cancelRequest.bind(_this3),
+                    'data-userID': item.sender_id,
+                    className: 'response-action' },
+                  ' cancel '
+                ),
+                ')'
+              )
+            );
+          })
+        )
+      );
+    }
+  }]);
+
+  return RecivedRequests;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
+  return {
+    recivedRequests: state.friendshipRequests.recived
+  };
+}, function (dispatch) {
+  return {
+    getRecivedFriendshipRequests: function getRecivedFriendshipRequests() {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["f" /* getRecivedFriendshipRequests */])());
+    },
+    comfirmRequest: function comfirmRequest(senderId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["c" /* comfirmFriendRequest */])(senderId));
+    },
+    cancelRecivedRequest: function cancelRecivedRequest(senderId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["a" /* cancelRecivedFriendRequest */])(senderId));
+    },
+    getCountNewRecivedFriendshipRequests: function getCountNewRecivedFriendshipRequests() {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["d" /* getCountNewRecivedFriendshipRequests */])());
+    }
+  };
+})(RecivedRequests));
+
+/***/ }),
+/* 297 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_friends__ = __webpack_require__(19);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+var SendedRequests = function (_Component) {
+  _inherits(SendedRequests, _Component);
+
+  function SendedRequests(props) {
+    _classCallCheck(this, SendedRequests);
+
+    var _this = _possibleConstructorReturn(this, (SendedRequests.__proto__ || Object.getPrototypeOf(SendedRequests)).call(this, props));
+
+    _this.props.getSendedFriendshipRequests();
+    _this.socketMethod();
+    return _this;
+  }
+
+  _createClass(SendedRequests, [{
+    key: 'socketMethod',
+    value: function socketMethod() {
+      var _this2 = this;
+
+      fetch(Object(__WEBPACK_IMPORTED_MODULE_3__functions__["a" /* makeUriForRequest */])('/get-user-id'), {
+        method: 'get'
+      }).then(function (response) {
+        response.json().then(function (httpData) {
+          var socket = io(':3001'),
+              userId = httpData.userId,
+              room = 'sended-friend-requests-of:' + userId;
+
+          socket.on(room, function (socketData) {
+            _this2.props.getSendedFriendshipRequests();
+          });
+        });
+      });
+    }
+  }, {
+    key: 'cancelSendedRequest',
+    value: function cancelSendedRequest(event) {
+      var recipientId = event.target.attributes['data-userID']['value'];
+      this.props.cancelSendedFriendshipRequest(recipientId);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h5',
+          { className: 'caption-friendsip-requests' },
+          'Sended'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'underline-orange' }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'ul',
+          { className: 'some-frienship-request' },
+          this.props.sendedRequests.map(function (item, index) {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'li',
+              { key: index },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'span',
+                null,
+                item.user_recipient.username
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'span',
+                { className: 'response-on-friendship-request' },
+                '(',
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'span',
+                  { onClick: _this3.cancelSendedRequest.bind(_this3),
+                    'data-userID': item.recipient_id,
+                    className: 'response-action' },
+                  ' cancel '
+                ),
+                ')'
+              )
+            );
+          })
+        )
+      );
+    }
+  }]);
+
+  return SendedRequests;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
+  return {
+    sendedRequests: state.friendshipRequests.sended
+  };
+}, function (dispatch) {
+  return {
+    getSendedFriendshipRequests: function getSendedFriendshipRequests() {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["h" /* getSendedFriendshipRequests */])());
+    },
+    cancelSendedFriendshipRequest: function cancelSendedFriendshipRequest(recipientId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["b" /* cancelSendedFriendshipRequest */])(recipientId));
+    }
+  };
+})(SendedRequests));
 
 /***/ })
 /******/ ]);

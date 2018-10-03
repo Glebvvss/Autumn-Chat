@@ -6,12 +6,13 @@ import Contacts from './components/contacts/Contacts';
 import Friends from './components/contacts/components/Friends';
 import ReactScrollbar from 'react-scrollbar-js';
 import { getFriends } from '../../actions/friends';
+import DropdownComponents from './components/dropdown-components/DropdownComponents';
 
 const scrollbar = {
   width: 260,
   height: '100%',
 };
-
+//visible: state.sidebarDropdownElements.friendshipRequestsVisible
 class Sidebar extends Component {
 
 	constructor(props) {
@@ -20,16 +21,21 @@ class Sidebar extends Component {
 
 	render() {
 		return (
-			<div className="sidebar">				
-				<SidebarHead />
-				<SearchFriends />
-				<ReactScrollbar style={scrollbar}>
-					<div className="scroll-black-content">
-						<Contacts title="FRIENDS">
-							<Friends />
-						</Contacts>
-					</div>
-				</ReactScrollbar>
+			<div className="sidebar">
+				<DropdownComponents />
+
+				<div className="sidebar-main">
+					<SidebarHead />
+					<SearchFriends />
+					<ReactScrollbar style={scrollbar}>
+						<div className="scroll-black-content">
+							<Contacts title="FRIENDS">
+								<Friends />
+							</Contacts>
+						</div>
+					</ReactScrollbar>
+				</div>
+
 			</div>
 		);
 	}

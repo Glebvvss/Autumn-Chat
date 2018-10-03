@@ -23,7 +23,8 @@ let reducers = {
   friends,
   searchFriends,
   friendshipRequests,
-  
+
+  sidebarDropdownElements,  
   //communications
 
 };
