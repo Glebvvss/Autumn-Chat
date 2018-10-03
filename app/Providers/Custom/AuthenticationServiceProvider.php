@@ -3,7 +3,7 @@
 namespace App\Providers\Custom;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\EloquentBased\Authentication;
+use App\Services\Realizations\Authentication;
 
 class AuthenticationServiceProvider extends ServiceProvider
 {

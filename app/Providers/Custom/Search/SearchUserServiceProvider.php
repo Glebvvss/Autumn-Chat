@@ -3,7 +3,7 @@
 namespace App\Providers\Custom\Search;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\EloquentBased\Search\SearchUser;
+use App\Services\Realizations\Search\SearchUser;
 
 class SearchUserServiceProvider extends ServiceProvider
 {

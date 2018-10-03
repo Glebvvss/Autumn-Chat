@@ -17,7 +17,7 @@ class CreateTableRequestForFriends extends Migration
             $table->increments('id');
             $table->unsignedInteger('sender_id');
             $table->unsignedInteger('recipient_id');
-            $table->boolean('confirm_status');
+            $table->boolean('new')->default(1);
             $table->timestamps();
         });
     }

@@ -60,7 +60,7 @@ class FriendshipRequests extends Component {
 
 export default connect(
   state => ({
-    friendshipRequests: state.friends.friendshipRequests
+    friendshipRequests: state.friendshipRequests
   }),
   dispatch => ({
 

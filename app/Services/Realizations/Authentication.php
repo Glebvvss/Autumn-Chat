@@ -1,11 +1,11 @@
 <?php 
 
-namespace App\Services\Realizations\EloquentBased;
+namespace App\Services\Realizations;
 
 use Auth;
 use Hash;
 use Validator;
-use App\ORM\Eloquent\User;
+use App\Eloquent\User;
 use Illuminate\Http\Request;
 use App\Services\Interfaces\Authentication as AuthenticationInterface;
 

@@ -1,9 +1,9 @@
 <?php 
 
-namespace App\Services\Realizations\EloquentBased\Contacts\Friends;
+namespace App\Services\Realizations\Contacts\Friends;
 
 use Auth;
-use App\ORM\Eloquent\Friend;
+use App\Eloquent\Friend;
 use Illuminate\Database\Eloquent\Collection;
 use App\Services\Interfaces\Contacts\Friends\ReciveFriend as ReciveFriendInterface;
 
@@ -61,7 +61,7 @@ class ReciveFriend implements ReciveFriendInterface
         {
             $query->select('id', 'username', 'online');
         }
-        ])->select( 'friend_user_id', 'new' )
+        ])->select( 'friend_user_id' )
           ->where( 'user_id', '=', Auth::user()->id )
           ->get()
           ->toArray();

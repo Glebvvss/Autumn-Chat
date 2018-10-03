@@ -3,7 +3,7 @@
 namespace App\Providers\Custom\Contacts\Friends;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\EloquentBased\Contacts\Friends\FriendshipRequest;
+use App\Services\Realizations\Contacts\Friends\FriendshipRequest;
 
 class FriendshipRequestServiceProvider extends ServiceProvider
 {

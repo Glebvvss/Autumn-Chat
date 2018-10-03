@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ORM\Eloquent;
+namespace App\Eloquent;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,27 +20,27 @@ class User extends Authenticatable {
     protected $table = 'users';
 
     public function messages() {
-    	return $this->hasMany('App\ORM\Eloquent\Message');
+    	return $this->hasMany('App\Eloquent\Message');
     }
 
     public function messagesMeta() {
-    	return $this->hasMany('App\ORM\Eloquent\MessageMeta');
+    	return $this->hasMany('App\Eloquent\MessageMeta');
     }
 
     public function groups() {
-    	return $this->belongsToMany('App\ORM\Eloquent\Group');
+    	return $this->belongsToMany('App\Eloquent\Group');
     }
 
     public function friends() {
-        return $this->hasMany('App\ORM\Eloquent\Friend');
+        return $this->hasMany('App\Eloquent\Friend');
     }
 
     public function friendshopRequestSenders() {
-        return $this->hasMany('App\ORM\Eloquent\FriendshipRequest', 'id', 'sender_id');
+        return $this->hasMany('App\Eloquent\FriendshipRequest', 'id', 'sender_id');
     }
 
     public function friendshopRequestRecipients() {
-        return $this->hasMany('App\ORM\Eloquent\FriendshipRequest', 'id', 'recipient_id');
+        return $this->hasMany('App\Eloquent\FriendshipRequest', 'id', 'recipient_id');
     }
 
 }

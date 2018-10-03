@@ -10,9 +10,9 @@ interface FriendshipRequest
 
     public function sendTo( string $username );
 
-    public function confirmFrom( string $username );
+    public function confirmFrom( int $id );
 
-    public function cancelSendedTo( string $username );
+    public function cancelSendedTo( int $id );
 
-    public function cancelRecivedFrom( string $username );
+    public function cancelRecivedFrom( int $id );
 }

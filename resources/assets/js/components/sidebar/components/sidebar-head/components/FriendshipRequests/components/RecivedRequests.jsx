@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import ReactScrollbar from 'react-scrollbar-js';
 import { makeUriForRequest } from '../../../../../../../functions';
 import { getRecivedFriendshipRequests, 
-         getFriends,
          comfirmFriendRequest,
-         cancelRecivedFriendRequest } from '../../../../../../../actions/friends';
-
+         cancelRecivedFriendRequest,
+         getCountNewFriendshipRequests,
+         getCountNewRecivedFriendshipRequests } from '../../../../../../../actions/friends';
 
 class RecivedRequests extends Component {
 
@@ -27,19 +27,20 @@ class RecivedRequests extends Component {
 
         socket.on(room, (socketData) => {
           this.props.getRecivedFriendshipRequests();
+          this.props.getCountNewRecivedFriendshipRequests();
         });
       });
     });
   }
 
   confirmRequest(event) {
-    let senderUsername = event.target.attributes['data-username']['value'];
-    this.props.comfirmRequest(senderUsername);
+    let senderId = event.target.attributes['data-userID']['value'];
+    this.props.comfirmRequest(senderId);
   }
 
   cancelRequest(event) {
-    let senderUsername = event.target.attributes['data-username']['value'];
-    this.props.cancelRecivedRequest(senderUsername); 
+    let senderId = event.target.attributes['data-userID']['value'];
+    this.props.cancelRecivedRequest(senderId);
   }
 
   render() {
@@ -55,11 +56,11 @@ class RecivedRequests extends Component {
                 <span className="response-on-friendship-request">
                   (
                     <span onClick={this.confirmRequest.bind(this)}
-                          data-username={item.user_sender.username} 
+                          data-userID={item.sender_id} 
                           className="response-action"> confirm </span>|
 
                     <span onClick={this.cancelRequest.bind(this)} 
-                          data-username={item.user_sender.username} 
+                          data-userID={item.sender_id} 
                           className="response-action"> cancel </span>
                   )
                 </span>
@@ -75,18 +76,21 @@ class RecivedRequests extends Component {
 
 export default connect(
   state => ({
-    recivedRequests: state.friends.recivedRequests
+    recivedRequests: state.friendshipRequests.recived
   }),
   dispatch => ({
     getRecivedFriendshipRequests: () => {
       dispatch(getRecivedFriendshipRequests());
 
     },
-    comfirmRequest: (senderUsername) => {
-      dispatch(comfirmFriendRequest(senderUsername));
+    comfirmRequest: senderId => {
+      dispatch(comfirmFriendRequest(senderId));
     },
-    cancelRecivedRequest: (senderUsername) => {
-      dispatch(cancelRecivedFriendRequest(senderUsername));
+    cancelRecivedRequest: senderId => {
+      dispatch(cancelRecivedFriendRequest(senderId));
+    },
+    getCountNewRecivedFriendshipRequests: () => {
+      dispatch(getCountNewRecivedFriendshipRequests());
     },
   }),
 )(RecivedRequests);

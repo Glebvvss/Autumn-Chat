@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { sendRequestForFriendship, getSearchMatchesList } from '../../../actions/friends.js';
+import { sendFriendshipRequest, getSearchMatchesList } from '../../../actions/friends.js';
 
 class SearchFriends extends Component {
 
@@ -27,8 +27,8 @@ class SearchFriends extends Component {
 		});
 	}
 
-	sendRequestForFriendship() {
-		this.props.sendRequestForFriendship(this.state.searchInputText);
+	sendFriendshipRequest() {
+		this.props.sendFriendshipRequest(this.state.searchInputText);
 	}
 
 	selectMatchUsernameAndInsertIntoInput(event) {
@@ -54,7 +54,7 @@ class SearchFriends extends Component {
 								value={this.state.searchInputText}
 								onChange={this.searchUsersByChangeInputText.bind(this)} />
 
-				<button onClick={this.sendRequestForFriendship.bind(this)}>add</button>
+				<button onClick={this.sendFriendshipRequest.bind(this)}>add</button>
 				<div className="search-matches-list">
 					<ul>
 						{
@@ -81,8 +81,8 @@ export default connect(
 		clearSeatchMatchesList: () => {
 			dispatch({ type: 'CLEAR_SEARCH_MATCH_LIST' });
 		},
-		sendRequestForFriendship: (friendUsername) => {
-			dispatch(sendRequestForFriendship(friendUsername));
+		sendFriendshipRequest: (recipientUsername) => {
+			dispatch(sendFriendshipRequest(recipientUsername));
 		}
 	}),
 )(SearchFriends);

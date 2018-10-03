@@ -11,11 +11,13 @@
 |
 */
 
+Route::get('/test', 'UserController@test');
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('app');
 });
 
-Route::group(['as' => 'authenticate'], function() {
+Route::group(['as' => 'auth'], function() {
     Route::post('/login', 'AuthController@login');
 
     Route::post('/registration', 'AuthController@registration');
@@ -23,42 +25,54 @@ Route::group(['as' => 'authenticate'], function() {
     Route::get('/logout', 'AuthController@logout');
 
     Route::get('/check-login', 'AuthController@checkLogin');
+});
+
+Route::group(['as' => 'user'], function() {
+    Route::get('/search-friend/{usernameOccurrence}', [
+        'uses' => 'UserController@searchByOccurrence'
+    ]);
 
     Route::get('/get-username', 'UserController@getUsername');
 
     Route::get('/get-user-id', 'UserController@getId');
 });
 
-Route::group(['as' => 'friends'], function() {
+Route::group(['as' => 'friend'], function() {
     Route::get('/get-friends', [ 
-        'uses' => 'FriendController@getFriends'
+        'uses' => 'FriendController@getAll'
     ]);
+});
 
-    Route::get('/search-friend/{usernameOccurrence}', [
-        'uses' => 'FriendController@searchFriends'
-    ]);
-
+Route::group(['as' => 'friendship-request'], function() {
     Route::get('/get-recived-friendship-requests', [
-        'uses' => 'FriendController@getRecivedFrendshipRequests'
+        'uses' => 'FriendshipRequestController@getRecivedAll'
     ]);
 
     Route::get('/get-sended-friendship-requests', [
-        'uses' => 'FriendController@getSendedFrendshipRequests'
+        'uses' => 'FriendshipRequestController@getSendedAll'
     ]);
 
-    Route::get('/send-friendship-request/{recipientUsername}', [
-        'uses' => 'FriendController@sendFriendshipRequest'
+    Route::get('/send-friendship-request/{username}', [
+        'uses' => 'FriendshipRequestController@send'
     ]);
 
-    Route::get('/confirm-friendship-request/{senderUsername}', [
-        'uses' => 'FriendController@confirmFriendshipRequest'
+    Route::get('/confirm-friendship-request/{senderId}', [
+        'uses' => 'FriendshipRequestController@confirm'
     ]);
 
-    Route::get('/cancel-recived-friendship-request/{senderUsername}', [
-        'uses' => 'FriendController@cancelReciviedFriendshipRequest'
+    Route::get('/cancel-recived-friendship-request/{senderId}', [
+        'uses' => 'FriendshipRequestController@cancelRecived'
     ]);
 
-    Route::get('/cancel-sended-friendship-request/{senderUsername}', [
-        'uses' => 'FriendController@cancelSendedFriendshipRequest'
+    Route::get('/cancel-sended-friendship-request/{recipientId}', [
+        'uses' => 'FriendshipRequestController@cancelSended'
+    ]);
+
+    Route::get('/get-count-new-recived-friendship-requests', [
+        'uses' => 'FriendshipRequestController@getCountNewRecived'
+    ]);
+
+    Route::get('/read-new-recived-friendship-requests', [
+        'uses' => 'FriendshipRequestController@readNewRecived'
     ]);
 });

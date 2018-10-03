@@ -9,7 +9,6 @@ import { getSendedFriendshipRequests,
          comfirmFriendshipRequest,
          cancelSendedFriendshipRequest } from '../../../../../../../actions/friends';
 
-
 class SendedRequests extends Component {
 
   constructor(props) {
@@ -35,8 +34,8 @@ class SendedRequests extends Component {
   }
 
   cancelSendedRequest(event) {
-    let recipientUsername = event.target.attributes['data-username']['value'];
-    this.props.cancelSendedFriendshipRequest(recipientUsername);
+    let recipientId = event.target.attributes['data-userID']['value'];
+    this.props.cancelSendedFriendshipRequest(recipientId);
   }
 
   render() {
@@ -47,11 +46,11 @@ class SendedRequests extends Component {
         <ul className="some-frienship-request">
           { this.props.sendedRequests.map((item, index) => (
             <li key={index}>
-              <span>{item.user_sender.username}</span>
+              <span>{item.user_recipient.username}</span>
               <span className="response-on-friendship-request">
                 (
                   <span onClick={this.cancelSendedRequest.bind(this)} 
-                        data-username={item.user_sender.username} 
+                        data-userID={item.recipient_id}
                         className="response-action"> cancel </span>
                 )
               </span>
@@ -67,14 +66,14 @@ class SendedRequests extends Component {
 
 export default connect(
   state => ({
-    sendedRequests: state.friends.sendedRequests
+    sendedRequests: state.friendshipRequests.sended
   }),
   dispatch => ({
     getSendedFriendshipRequests: () => {
       dispatch(getSendedFriendshipRequests());
     },
-    cancelSendedFriendshipRequest: (recipientUsername) => {
-      dispatch(cancelSendedFriendshipRequest(recipientUsername));
+    cancelSendedFriendshipRequest: recipientId => {
+      dispatch(cancelSendedFriendshipRequest(recipientId));
     }
   }),
 )(SendedRequests);

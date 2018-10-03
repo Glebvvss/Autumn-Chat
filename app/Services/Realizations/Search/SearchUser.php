@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Realizations\EloquentBased\Search;
+namespace App\Services\Realizations\Search;
 
 use Auth;
-use App\ORM\Eloquent\User;
+use App\Eloquent\User;
 use App\Services\Interfaces\Search\SearchUser as SearchUserInterface;
 
 class SearchUser implements SearchUserInterface

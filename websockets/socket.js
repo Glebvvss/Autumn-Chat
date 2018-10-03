@@ -5,9 +5,7 @@ let io    = require('socket.io')(3001),
 io.on('connection', (socket) => {
 
   redis.psubscribe('*', (error, count) => {
-    if ( error === null ) {
-      console.log('No Errors!');
-    }
+    
   });
 
   redis.on('pmessage', (pattern, chanel, message) => {
@@ -32,7 +30,7 @@ function updateFriendshipRequestList(socket, messageJSON) {
 
     socket.emit(room, 'update');
 
-  } else if ( messageJSON.data.type === 'recivied' ) {
+  } else if ( messageJSON.data.type === 'recived' ) {
     let userId = messageJSON.data.idUser;
         room   = 'recivied-friend-requests-of:' + userId;
 

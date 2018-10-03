@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Hash;
 use Validator;
-use App\ORM\Eloquent\User;
+use App\Eloquent\User;
 use Illuminate\Http\Request;
 use App\Services\Interfaces\Authentication;
 
@@ -29,8 +29,8 @@ class AuthController extends Controller {
             return response()->json($errors);
         }
 
-        //$result = $this->login($request);
-        //return response()->json($result);
+        $result = $this->login($request);
+        return response()->json($result);
     }
 
     public function checkLogin() {
