@@ -7,13 +7,13 @@ use App\Eloquent\User;
 use Illuminate\Http\Request;
 use App\Events\UpdateFriendList;
 use App\Events\UpdateFriendRequestList;
-use App\Services\Interfaces\Contacts\Friends\FriendshipRequest;
+use App\Services\Interfaces\FriendshipRequestService;
 
 class FriendshipRequestController extends Controller 
 {
     protected $friendshipRequest;
 
-    public function __construct (FriendshipRequest $friendshipRequest) {
+    public function __construct (FriendshipRequestService $friendshipRequest) {
         $this->friendshipRequest = $friendshipRequest;
     }
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Providers\Custom\Contacts\Friends;
+namespace App\Providers\Custom;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\Contacts\Friends\FriendshipRequest;
+use App\Services\Realizations\FriendshipRequest;
 
 class FriendshipRequestServiceProvider extends ServiceProvider
 {
@@ -24,7 +24,7 @@ class FriendshipRequestServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\Interfaces\Contacts\Friends\FriendshipRequest', function() {
+        $this->app->bind('App\Services\Interfaces\FriendshipRequestService', function() {
             return new FriendshipRequest();
         });
     }

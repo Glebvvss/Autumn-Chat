@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\ServiceTests\Contacts\Friends\FriendshipRequestTests;
+namespace Tests\Feature\ServiceTests\FriendshipRequestTests;
 
 use Hash;
 use Auth;
@@ -12,9 +12,9 @@ use App\Eloquent\User;
 use App\Eloquent\Friend;
 use App\Eloquent\FriendshipRequest as FriendshipRequestTable;
 
-use App\Services\Realizations\Contacts\Friends\FriendshipRequest;
+use App\Services\Realizations\FriendshipRequest;
 
-use Tests\Feature\ServiceTests\Contacts\Friends\FriendshipRequestTests\Traits\TMockDataForTables;
+use Tests\Feature\ServiceTests\FriendshipRequestTests\Traits\TMockDataForTables;
 
 class ConfirmFriendshipRequestTest extends TestCase
 {

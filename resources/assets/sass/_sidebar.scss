@@ -48,13 +48,15 @@ $padding_blocks: 20px;
 		margin-top: -28px;
 		font-size: 25px;
 
-		.update-marker-friendship-list {
+		.update-marker-friendship-list {			
 			background: white;
+			border: 2px solid $orange;
 			width: 10px;
-			height: 5px;
-			border-radius: 0 0 5px 5px;
+			height: 10px;
+			border-radius: 7px;
 			position: absolute;
-			right: 30px;
+			right: 15px;
+			top: 8px;
 		}
 
 		span {
@@ -64,56 +66,6 @@ $padding_blocks: 20px;
 
 			&:hover {
 				color: white;
-			}
-		}
-	}
-}
-
-.frienship-requests-block {
-	position: absolute;
-	top: 0;
-	background: $diagonal_gray_gradient;
-	width: $width_sidebar;
-	height: 205px;
-	transition: $transition;
-	overflow: hidden;
-
-	.caption-friendsip-requests {
-		padding: 5px 5px 0px 5px;
-		color: $orange;
-		font-family: opensans;
-		font-size: 12px;
-	}
-
-	.underline-orange {
-		height: 1px;
-		margin: 5px;
-		background: $orange;
-	}
-
-	.some-frienship-request {
-
-		li {
-			background-color: $orange;
-			color: white;
-			font-family: opensans;
-			font-size: 15px;
-			padding: 10px;
-			margin: 5px;
-
-			.response-on-friendship-request {
-				@include disallow-text-selection;
-				float: right;
-				font-size: 12px;
-
-				.response-action {
-					cursor: pointer;
-					transition: $transition;
-
-					&:hover {
-						color: $light_gray;
-					}
-				}
 			}
 		}
 	}
@@ -256,8 +208,59 @@ $padding_blocks: 20px;
 	background: gray;
 }
 
+
+.frienship-requests-block {
+	position: fixed;
+	top: 0;
+	background: $diagonal_gray_gradient;
+	width: $width_sidebar;
+	height: 205px;
+	transition: $transition;
+	overflow: hidden;
+
+	.caption-friendsip-requests {
+		padding: 5px 5px 0px 5px;
+		color: $orange;
+		font-family: opensans;
+		font-size: 12px;
+	}
+
+	.underline-orange {
+		height: 1px;
+		margin: 5px;
+		background: $orange;
+	}
+
+	.some-frienship-request {
+
+		li {
+			background-color: $orange;
+			color: white;
+			font-family: opensans;
+			font-size: 15px;
+			padding: 10px;
+			margin: 5px;
+
+			.response-on-friendship-request {
+				@include disallow-text-selection;
+				float: right;
+				font-size: 12px;
+
+				.response-action {
+					cursor: pointer;
+					transition: $transition;
+
+					&:hover {
+						color: $light_gray;
+					}
+				}
+			}
+		}
+	}
+}
+
 .group-manager-block {
-	position: absolute;
+	position: fixed;
 	width: $width_sidebar;
 	height: 100vh;
 	background: $diagonal_gray_gradient;
@@ -294,6 +297,7 @@ $padding_blocks: 20px;
 				}
 
 				span.added-top-group-friend {
+					opacity: 0;
 					color: $orange;
 					float: right;
 				}

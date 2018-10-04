@@ -1,8 +1,8 @@
 <?php 
 
-namespace App\Services\Interfaces\Search;
+namespace App\Services\Interfaces;
 
-interface SearchUser
+interface SearchUserService
 {
     public function byOccurrence( string $usernameQccurance );
 }

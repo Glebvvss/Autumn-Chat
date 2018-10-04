@@ -1,6 +1,6 @@
 <?php 
 
-namespace Tests\Feature\ServiceTests\Contacts\Friends\FriendshipRequestTests\Traits;
+namespace Tests\Feature\ServiceTests\FriendshipRequestTests\Traits;
 
 use Hash;
 use App\Eloquent\User;

@@ -65,15 +65,11 @@ class Friends extends Component {
         {
           this.props.friends.map((item, index) => (
             <li key={index} 
-                onClick={this.openDialog.bind(this)}
-                className="">
-
-              {item.user_friend.username}
-
+                onClick={this.openDialog.bind(this)} >
+              {item.username}
               <div className="right-contacts-li-element">
-                {this.renderOnlineStatus(item.user_friend.online)}
+                {this.renderOnlineStatus(item.online)}
               </div>
-
             </li>
           ))
         }

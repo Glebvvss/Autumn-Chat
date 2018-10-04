@@ -1,6 +1,13 @@
-export function groupList(state=[], action) {
-  if ( action.type === 'FETCH_GROUPS' ) {
+let defaultState = {
+  groups: [],
+};
 
+export function groupList( state = defaultState, action ) {
+  if ( action.type === 'FETCH_GROUPS' ) {
+    return {
+      ...state,
+      groups: action.payload
+    }
   }
   if ( action.type === 'CREATE_GROUP' ) {
 

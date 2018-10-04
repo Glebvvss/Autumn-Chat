@@ -7,13 +7,13 @@ use Auth;
 use App\Eloquent\User;
 use App\Eloquent\Friend;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\Search\SearchUser;
+use App\Services\Interfaces\SearchUserService;
 
 class UserController extends Controller
 {
     private $searchUser;
 
-    public function __construct(SearchUser $searchUser) 
+    public function __construct(SearchUserService $searchUser) 
     {
         $this->searchUser = $searchUser;
     }
@@ -38,31 +38,5 @@ class UserController extends Controller
         return response()->json([
             'matchUsernames' => $matchUsernames
         ]);
-    }
-
-    public function test() {
-        $user = new User();
-        $user->username = 'testuser1';
-        $user->email = 'testuser1@example.test';
-        $user->password = Hash::make('password');
-        $user->save();
-
-        $user = new User();
-        $user->username = 'testuser2';
-        $user->email = 'testuser2@example.test';
-        $user->password = Hash::make('password');
-        $user->save();
-
-        $friend = new Friend();
-        $friend->user_id = User::where('username', '=', 'testuser1')->first()->id;
-        $friend->friend_user_id = User::where('username', '=', 'testuser2')->first()->id;
-        $friend->save();
-
-        $friend = new Friend();
-        $friend->user_id = User::where('username', '=', 'testuser2')->first()->id;
-        $friend->friend_user_id = User::where('username', '=', 'testuser1')->first()->id;
-        $friend->save();
-
-        dump(User::all());
     }
 }

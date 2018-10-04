@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Realizations\Contacts\Friends;
+namespace App\Services\Realizations;
 
 use Auth;
 use App\Eloquent\User;
@@ -8,9 +8,9 @@ use App\Eloquent\Friend;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use App\Eloquent\FriendshipRequest as FriendRequestTable;
-use App\Services\Interfaces\Contacts\Friends\FriendshipRequest as FriendshipRequestInterface;
+use App\Services\Interfaces\FriendshipRequestService;
 
-class FriendshipRequest implements FriendshipRequestInterface
+class FriendshipRequest implements FriendshipRequestService
 {
     public function getSendedAll() : array 
     {

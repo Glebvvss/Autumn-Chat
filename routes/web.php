@@ -76,3 +76,13 @@ Route::group(['as' => 'friendship-request'], function() {
         'uses' => 'FriendshipRequestController@readNewRecived'
     ]);
 });
+
+Route::group(['as' => 'group'], function() {
+    Route::get('/get-groups', [
+        'uses' => 'GroupController@gatAll'
+    ]); 
+
+    Route::get('/get-users-by-group/{id}', [
+        'uses' => 'GroupController@getUsersByGroupId'
+    ]); 
+});

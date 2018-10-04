@@ -4,7 +4,7 @@ namespace App\Services\Interfaces;
 
 use Illuminate\Http\Request;
 
-interface Authentication
+interface AuthenticationService
 {
     public function login(Request $request);
 

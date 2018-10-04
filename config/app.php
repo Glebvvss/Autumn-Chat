@@ -176,9 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         //My service provider
-        App\Providers\Custom\Search\SearchUserServiceProvider::class,
-        App\Providers\Custom\Contacts\Friends\FriendshipRequestServiceProvider::class,
-        App\Providers\Custom\Contacts\Friends\ReciveFriendServiceProvider::class,
+        App\Providers\Custom\SearchUserServiceProvider::class,
+        App\Providers\Custom\FriendshipRequestServiceProvider::class,
         App\Providers\Custom\AuthenticationServiceProvider::class,
     ],
 

@@ -7,13 +7,13 @@ use Hash;
 use Validator;
 use App\Eloquent\User;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\Authentication;
+use App\Services\Interfaces\AuthenticationService;
 
 class AuthController extends Controller {
 
     private $authentication;
 
-    public function __construct(Authentication $authentication) {
+    public function __construct(AuthenticationService $authentication) {
         $this->authentication = $authentication;
     }
 

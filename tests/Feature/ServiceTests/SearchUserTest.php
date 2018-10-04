@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Eloquent\User;
 
-use App\Services\Realizations\Search\SearchUser;
+use App\Services\Realizations\SearchUser;
 
 class SearchUserTest extends TestCase
 {

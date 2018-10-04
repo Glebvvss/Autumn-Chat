@@ -7,9 +7,9 @@ use Hash;
 use Validator;
 use App\Eloquent\User;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\Authentication as AuthenticationInterface;
+use App\Services\Interfaces\AuthenticationService;
 
-class Authentication implements AuthenticationInterface
+class Authentication implements AuthenticationService
 {
 
     public function login(Request $request) : array

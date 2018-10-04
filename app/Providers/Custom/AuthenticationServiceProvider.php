@@ -24,7 +24,7 @@ class AuthenticationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\Interfaces\Authentication', function() {
+        $this->app->bind('App\Services\Interfaces\AuthenticationService', function() {
             return new Authentication();
         });
     }

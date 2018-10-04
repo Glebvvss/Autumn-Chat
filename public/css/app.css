@@ -198,11 +198,13 @@
 
 .sidebar-head .icons .update-marker-friendship-list {
   background: white;
+  border: 2px solid #E88C01;
   width: 10px;
-  height: 5px;
-  border-radius: 0 0 5px 5px;
+  height: 10px;
+  border-radius: 7px;
   position: absolute;
-  right: 30px;
+  right: 15px;
+  top: 8px;
 }
 
 .sidebar-head .icons span {
@@ -214,58 +216,6 @@
 
 .sidebar-head .icons span:hover {
   color: white;
-}
-
-.frienship-requests-block {
-  position: absolute;
-  top: 0;
-  background: linear-gradient(135deg, #36393F, #1c1c1c);
-  width: 260px;
-  height: 205px;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-  overflow: hidden;
-}
-
-.frienship-requests-block .caption-friendsip-requests {
-  padding: 5px 5px 0px 5px;
-  color: #E88C01;
-  font-family: opensans;
-  font-size: 12px;
-}
-
-.frienship-requests-block .underline-orange {
-  height: 1px;
-  margin: 5px;
-  background: #E88C01;
-}
-
-.frienship-requests-block .some-frienship-request li {
-  background-color: #E88C01;
-  color: white;
-  font-family: opensans;
-  font-size: 15px;
-  padding: 10px;
-  margin: 5px;
-}
-
-.frienship-requests-block .some-frienship-request li .response-on-friendship-request {
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  -webkit-user-select: none;
-  float: right;
-  font-size: 12px;
-}
-
-.frienship-requests-block .some-frienship-request li .response-on-friendship-request .response-action {
-  cursor: pointer;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-
-.frienship-requests-block .some-frienship-request li .response-on-friendship-request .response-action:hover {
-  color: #DDDDDD;
 }
 
 .search-friends {
@@ -426,8 +376,60 @@
   background: gray;
 }
 
+.frienship-requests-block {
+  position: fixed;
+  top: 0;
+  background: linear-gradient(135deg, #36393F, #1c1c1c);
+  width: 260px;
+  height: 205px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  overflow: hidden;
+}
+
+.frienship-requests-block .caption-friendsip-requests {
+  padding: 5px 5px 0px 5px;
+  color: #E88C01;
+  font-family: opensans;
+  font-size: 12px;
+}
+
+.frienship-requests-block .underline-orange {
+  height: 1px;
+  margin: 5px;
+  background: #E88C01;
+}
+
+.frienship-requests-block .some-frienship-request li {
+  background-color: #E88C01;
+  color: white;
+  font-family: opensans;
+  font-size: 15px;
+  padding: 10px;
+  margin: 5px;
+}
+
+.frienship-requests-block .some-frienship-request li .response-on-friendship-request {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  float: right;
+  font-size: 12px;
+}
+
+.frienship-requests-block .some-frienship-request li .response-on-friendship-request .response-action {
+  cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.frienship-requests-block .some-frienship-request li .response-on-friendship-request .response-action:hover {
+  color: #DDDDDD;
+}
+
 .group-manager-block {
-  position: absolute;
+  position: fixed;
   width: 260px;
   height: 100vh;
   background: linear-gradient(135deg, #36393F, #1c1c1c);
@@ -481,6 +483,7 @@
 }
 
 .group-manager-block .list-select-member-to-group ul li span.added-top-group-friend {
+  opacity: 0;
   color: #E88C01;
   float: right;
 }

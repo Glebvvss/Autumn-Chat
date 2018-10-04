@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Realizations\Search;
+namespace App\Services\Realizations;
 
 use Auth;
 use App\Eloquent\User;
-use App\Services\Interfaces\Search\SearchUser as SearchUserInterface;
+use App\Services\Interfaces\SearchUserService;
 
-class SearchUser implements SearchUserInterface
+class SearchUser implements SearchUserService
 {
 
     public function byOccurrence( string $usernameQccurance ) : array 

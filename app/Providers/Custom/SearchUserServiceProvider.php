@@ -1,11 +1,11 @@
-<?php 
+<?php
 
-namespace App\Providers\Custom\Contacts\Friends;
+namespace App\Providers\Custom;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\Contacts\Friends\ReciveFriend;
+use App\Services\Realizations\SearchUser;
 
-class ReciveFriendServiceProvider extends ServiceProvider
+class SearchUserServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -24,8 +24,8 @@ class ReciveFriendServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\Interfaces\Contacts\Friends\ReciveFriend', function() {
-            return new ReciveFriend();
+        $this->app->bind('App\Services\Interfaces\SearchUserService', function() {
+            return new SearchUser();
         });
     }
 }

@@ -1,8 +1,8 @@
 <?php 
 
-namespace App\Services\Interfaces\Contacts\Friends; 
+namespace App\Services\Interfaces; 
 
-interface FriendshipRequest
+interface FriendshipRequestService
 {
     public function getSendedAll();
 
