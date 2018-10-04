@@ -51,7 +51,6 @@ class SidebarHead extends Component {
   }
 
   render() {
-    console.log(this.props.haveNewRequests);
     return (
       <div className="sidebar-head">
         <h1 className="username">{this.props.user.username}</h1>

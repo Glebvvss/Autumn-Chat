@@ -79,10 +79,22 @@ Route::group(['as' => 'friendship-request'], function() {
 
 Route::group(['as' => 'group'], function() {
     Route::get('/get-groups', [
-        'uses' => 'GroupController@gatAll'
+        'uses' => 'GroupController@getAll'
     ]); 
 
+    Route::get('/create-group', [
+        'uses' => 'GroupController@create'
+    ]);
+
     Route::get('/get-users-by-group/{id}', [
-        'uses' => 'GroupController@getUsersByGroupId'
-    ]); 
+        'uses' => 'GroupController@getUsersOfGroupById'
+    ]);
+
+    Route::get('/add-user-to-group/{id}', [
+        'uses' => 'GroupController@addUserTo'
+    ]);
+
+    Route::get('/remove-user-from-group/{id}', [
+        'uses' => 'GroupController@removeUserFrom'
+    ]);
 });

@@ -10,9 +10,9 @@ export const getGroups = () => dispatch => {
   });
 };
 
-export const = () => dispatch => {
+export const createGroup = (memberList) => dispatch => {
   fetch( makeUriForRequest('/create-group'), {
-    method: 'get'
+    method: 'post'
   }).then(response => {
     
   });

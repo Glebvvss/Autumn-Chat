@@ -25,7 +25,17 @@ class GroupController extends Controller
         ]);
     }
 
-    public function getUsersByGroupId(Request $request) 
+    public function addUserTo(Request $request)
+    {
+
+    }
+
+    public function removeUserFrom(Request $request) 
+    {
+
+    }
+
+    public function getUsersOfGroupById(Request $request) 
     {
         $usersOfGroup = Group::find($request->id)
             ->users()

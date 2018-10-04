@@ -12,7 +12,7 @@ const scrollbar = {
   width: 260,
   height: '100%',
 };
-//visible: state.sidebarDropdownElements.friendshipRequestsVisible
+
 class Sidebar extends Component {
 
 	constructor(props) {

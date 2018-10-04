@@ -60389,7 +60389,6 @@ var scrollbar = {
 	width: 260,
 	height: '100%'
 };
-//visible: state.sidebarDropdownElements.friendshipRequestsVisible
 
 var Sidebar = function (_Component) {
 	_inherits(Sidebar, _Component);
@@ -60518,7 +60517,6 @@ var SidebarHead = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log(this.props.haveNewRequests);
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'sidebar-head' },
