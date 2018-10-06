@@ -1,0 +1,46 @@
+header.fixed-header {
+  z-index: -1;
+  position: fixed;
+  width: 100%;
+  background: white;
+  height: 53px;
+  left: $width_sidebar;
+  font-family: opensans;
+  top: 0;
+}
+
+ul.user-list-of-group {
+  margin-top: 20px;
+  font-size: 10px;
+
+  li {
+    display: inline;
+    padding: 15px;
+  }
+}
+
+.members {
+  div {
+    display: inline !important;
+  }
+}
+
+.member-title {
+  float: left; 
+  margin-top: 0; 
+  font-size: 10px; 
+  margin-left: 15px;
+}
+
+.header-right-buttons {
+  background: $diagonal_gray_gradient;
+  padding: 9px;
+  position: absolute;
+  right: $width_sidebar;
+  margin-top: -35px !important;
+  min-width: 180px;
+
+  button {
+    margin-left: 5px;
+  }
+}

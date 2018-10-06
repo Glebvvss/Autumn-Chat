@@ -82,7 +82,7 @@ Route::group(['as' => 'group'], function() {
         'uses' => 'GroupController@getAll'
     ]); 
 
-    Route::get('/create-group', [
+    Route::post('/create-group', [
         'uses' => 'GroupController@create'
     ]);
 

@@ -13,6 +13,7 @@ $padding_blocks: 20px;
 	height: 100vh;	
 	background: $diagonal_gray_gradient;
 	position: fixed;
+	top: 0;
 }
 
 .scroll-black-content {
@@ -260,6 +261,7 @@ $padding_blocks: 20px;
 }
 
 .group-manager-block {
+	top: 0;
 	position: fixed;
 	width: $width_sidebar;
 	height: 100vh;

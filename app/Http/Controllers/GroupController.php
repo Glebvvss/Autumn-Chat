@@ -7,21 +7,35 @@ use App\Eloquent\User;
 use App\Eloquent\Group;
 use App\Eloquent\Friend;
 use Illuminate\Http\Request;
+use App\Services\Realizations\GroupEditor;
 
 class GroupController extends Controller 
 {
     public function getAll() 
     {
-        $groups = Group::all();
+        $groups = User::find( Auth::user()->id )
+            ->groups()
+            ->get()
+            ->toArray();
+
         return response()->json([
             'groups' => $groups
         ]);
     }
 
-    public function create(Request $request) 
+    public function create(Request $request)
     {
+        $usersOfGroup = json_decode($request->userListOfGroup);
+
+        if ( $request->groupName === null ) {
+            $request->groupName = '';
+        }
+
+        $groupEditor = new GroupEditor();
+        $result = $groupEditor->create($request->groupName, $usersOfGroup->list);
+
         return response()->json([
-          'usersOfGroup' => ''
+            'message' => $result
         ]);
     }
 

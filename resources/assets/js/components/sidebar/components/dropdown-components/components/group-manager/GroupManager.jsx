@@ -4,6 +4,8 @@ import ReactScrollbar from 'react-scrollbar-js';
 import { connect } from 'react-redux';
 import FriendList from './components/FriendList';
 
+import { createGroup } from '../../../../../../actions/groups.js';
+
 const scrollbar = {
   width: 260,
   height: '100%',
@@ -17,13 +19,27 @@ class GroupManager extends Component {
       visibleComponent: {
         left: 0
       },
-      groupMemberList: []
+      groupMemberList: [],
+      groupName: '',
     };
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if ( this.props !== prevProps ) {
       this.checkVisibleStatusFriendShipRequests();
+      this.resetGroupMemberListIfGroupCreated();
+    }
+  }
+
+  resetGroupMemberListIfGroupCreated() {
+    if ( this.props.notification === 'Group created!' ) {
+      let elementList = document.querySelectorAll('span.added-top-group-friend');
+
+      elementList.forEach((element) => {
+        element.style.opacity = '';
+      });
+    
+      this.state.groupMemberList = [];
     }
   }
 
@@ -60,6 +76,13 @@ class GroupManager extends Component {
     }
   }
 
+  handleInput(event) {
+    this.setState({
+      ...this.state,
+      groupName: event.target.value
+    });
+  }
+
   addOrRomoveCheckMarker(event) {
     let span = event.target.children[0];
     if ( span.style.opacity === '' ) {
@@ -69,13 +92,23 @@ class GroupManager extends Component {
     }
   }
 
+  initialCreateGroup() {
+    this.props.createGroup(this.state.groupName, { list: this.state.groupMemberList });
+  }
+
   render() {
     return (
       <div className="group-manager-block" style={this.state.visibleComponent}>
-        <input className="new-group-name" 
-               placeholder="New Group Name" />
+        <input  className="new-group-name"
+                onChange={this.handleInput.bind(this)}
+                value={this.state.groupName}
+                placeholder="New Group Name" />
 
-        <button className="create-group">Cheate Group</button>
+        <button className="create-group" 
+                onClick={this.initialCreateGroup.bind(this)}>
+
+          Cheate Group
+        </button>
 
         <ReactScrollbar style={scrollbar}>
           <div className="list-select-member-to-group">
@@ -106,9 +139,12 @@ class GroupManager extends Component {
 export default connect(
   state => ({
     visible: state.sidebarDropdownElements.groupManagerVisible,
-    friends: state.friends.friends
+    friends: state.friends.friends,
+    notification: state.notification.message,
   }),
   dispatch => ({
-
+    createGroup: (groupName, userListOfGroup) => {
+      dispatch(createGroup(groupName, userListOfGroup));
+    }
   })
 )(GroupManager);

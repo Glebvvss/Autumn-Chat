@@ -2,7 +2,7 @@ let defaultState = {
   groups: [],
 };
 
-export function groupList( state = defaultState, action ) {
+export function groups( state = defaultState, action ) {
   if ( action.type === 'FETCH_GROUPS' ) {
     return {
       ...state,

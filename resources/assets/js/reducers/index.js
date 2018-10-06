@@ -6,6 +6,7 @@ import { login } from './auth/login.js';
 import { friendshipRequests } from './contacts/friends/friendshipRequests.js';
 import { searchFriends } from './contacts/friends/searchFriends.js';
 import { friends } from './contacts/friends/friends.js';
+import { groups } from './contacts/groups/groups.js';
 import { notification } from './notification';
 import { sidebarDropdownElements } from './contacts/sidebarDropdownElements.js';
 
@@ -25,6 +26,9 @@ let reducers = {
   friendshipRequests,
 
   sidebarDropdownElements,  
+
+  groups,
+  
   //communications
 
 };

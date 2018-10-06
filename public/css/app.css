@@ -45,7 +45,6 @@
 .auth {
   width: 100vw;
   height: 100vh;
-  background: url(http://widefon.com/_ld/156/79476541.jpg);
 }
 
 .auth .title-block-auth {
@@ -129,6 +128,8 @@
 }
 
 .auth .submit-button-block button {
+  border-radius: 5px;
+  padding: 10px;
   border: none;
   background: #E88C01;
   color: white;
@@ -145,6 +146,51 @@
   color: black;
 }
 
+header.fixed-header {
+  z-index: -1;
+  position: fixed;
+  width: 100%;
+  background: white;
+  height: 53px;
+  left: 260px;
+  font-family: opensans;
+  top: 0;
+}
+
+ul.user-list-of-group {
+  margin-top: 20px;
+  font-size: 10px;
+}
+
+ul.user-list-of-group li {
+  display: inline;
+  padding: 15px;
+}
+
+.members div {
+  display: inline !important;
+}
+
+.member-title {
+  float: left;
+  margin-top: 0;
+  font-size: 10px;
+  margin-left: 15px;
+}
+
+.header-right-buttons {
+  background: linear-gradient(135deg, #36393F, #1c1c1c);
+  padding: 9px;
+  position: absolute;
+  right: 260px;
+  margin-top: -35px !important;
+  min-width: 180px;
+}
+
+.header-right-buttons button {
+  margin-left: 5px;
+}
+
 .visible {
   display: block !important;
 }
@@ -158,6 +204,7 @@
   height: 100vh;
   background: linear-gradient(135deg, #36393F, #1c1c1c);
   position: fixed;
+  top: 0;
 }
 
 .scroll-black-content {
@@ -234,6 +281,8 @@
 }
 
 .search-friends button {
+  border-radius: 5px;
+  padding: 10px;
   border: none;
   background: #E88C01;
   color: white;
@@ -429,6 +478,7 @@
 }
 
 .group-manager-block {
+  top: 0;
   position: fixed;
   width: 260px;
   height: 100vh;
@@ -448,6 +498,8 @@
 }
 
 .group-manager-block button.create-group {
+  border-radius: 5px;
+  padding: 10px;
   border: none;
   background: #E88C01;
   color: white;
@@ -491,8 +543,6 @@
 .chat {
   min-width: 100vw;
   min-height: 100vh;
-  background: url(http://widefon.com/_ld/156/79476541.jpg);
-  background-attachment: fixed;
 }
 
 .message {
@@ -518,11 +568,32 @@ h6 {
 body {
   margin: 0px;
   padding: 0px;
+  background: url(http://widefon.com/_ld/156/79476541.jpg);
+  background-attachment: fixed;
+}
+
+.main {
+  width: 1000px !important;
 }
 
 ul {
   list-style-type: none;
   margin: 0px;
   padding: 0px;
+}
+
+button {
+  border-radius: 5px;
+  padding: 10px;
+  border: none;
+  background: #E88C01;
+  color: white;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #DDDDDD;
+  color: black;
 }
 

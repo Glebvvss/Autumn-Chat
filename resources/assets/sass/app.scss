@@ -19,13 +19,27 @@ h6 {
 	font-family: opensans;
 }
 
+html {
+	
+}
+
 body {
 	margin: 0px;
 	padding: 0px;
+  background: url(http://widefon.com/_ld/156/79476541.jpg);
+  background-attachment: fixed;
+}
+
+.main {
+	width: 1000px !important;
 }
 
 ul {
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
+}
+
+button {
+	@include button;
 }

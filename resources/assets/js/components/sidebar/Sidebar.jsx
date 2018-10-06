@@ -4,6 +4,7 @@ import SidebarHead from './components/sidebar-head/SidebarHead';
 import SearchFriends from './components/SearchFriends';
 import Contacts from './components/contacts/Contacts';
 import Friends from './components/contacts/components/Friends';
+import Groups from './components/contacts/components/Groups';
 import ReactScrollbar from 'react-scrollbar-js';
 import { getFriends } from '../../actions/friends';
 import DropdownComponents from './components/dropdown-components/DropdownComponents';
@@ -29,9 +30,15 @@ class Sidebar extends Component {
 					<SearchFriends />
 					<ReactScrollbar style={scrollbar}>
 						<div className="scroll-black-content">
+
+							<Contacts title="GROUPS">
+								<Groups />
+							</Contacts>
+
 							<Contacts title="FRIENDS">
 								<Friends />
 							</Contacts>
+
 						</div>
 					</ReactScrollbar>
 				</div>
