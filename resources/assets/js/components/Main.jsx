@@ -6,6 +6,7 @@ import RegistrationForm from './auth/RegistrationForm';
 import { checkLogin } from '../actions/auth.js';
 import Notifications from './notifications/Notifications';
 import Header from './header/Header';
+import Chat from './chat/Chat';
 
 class Main extends Component {
 	constructor(props) {
@@ -28,6 +29,7 @@ class Main extends Component {
         <Notifications />
         <Header />
 				<Sidebar />
+				<Chat />
 			</div>
 		);
 	}

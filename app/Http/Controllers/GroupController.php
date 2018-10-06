@@ -25,14 +25,14 @@ class GroupController extends Controller
 
     public function create(Request $request)
     {
-        $usersOfGroup = json_decode($request->userListOfGroup);
+        $groupMembersIdList = json_decode($request->groupMembersIdList);
 
         if ( $request->groupName === null ) {
             $request->groupName = '';
         }
 
         $groupEditor = new GroupEditor();
-        $result = $groupEditor->create($request->groupName, $usersOfGroup->list);
+        $result = $groupEditor->create($request->groupName, $groupMembersIdList);
 
         return response()->json([
             'message' => $result

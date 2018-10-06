@@ -1,12 +1,52 @@
 .chat {
-  min-width: 100vw;
-  min-height: 100vh;
+  position: absolute;
+  left: $width_sidebar;
+  top: 60px;
+}
+
+form.message-form {
+  position: fixed;
+  left: $width_sidebar;
+  bottom: 0;
+  width: 100vw;
+  background: black;
+
+  .message-block {
+    margin-right: $width_sidebar + 10px !important;
+  }
+
+  textarea {
+    height: 60px;
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    font-family: opensans;
+    font-size: 12px;
+  }
+
+  button {
+    width: 100%;
+    padding: 5px !important;
+    margin-right: $width_sidebar + 10px !important;
+  }
+}
+
+.message-list {
+  padding-bottom: 120px !important;
+  padding: 10px;
+}
+
+.message-out-block {
+  margin: 10px 0;
 }
 
 .message {
-  width: 500px;
-  height: 100px;
+  max-width: 600px;
+  display: inline-block;
   background: white !important;
   color: black;
-  margin-top: 600px !important;
+  padding: 5px;
+  border-radius: 5px;
+  font-family: opensans;
+  font-size: 12px;
 }

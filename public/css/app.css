@@ -14,7 +14,7 @@
 }
 
 .notification {
-  z-index: 250;
+  z-index: 10000;
   position: fixed;
   left: 50%;
   margin-left: -100px;
@@ -147,7 +147,7 @@
 }
 
 header.fixed-header {
-  z-index: -1;
+  z-index: 1000;
   position: fixed;
   width: 100%;
   background: white;
@@ -155,6 +155,7 @@ header.fixed-header {
   left: 260px;
   font-family: opensans;
   top: 0;
+  border-bottom: 1px solid #36393F;
 }
 
 ul.user-list-of-group {
@@ -205,6 +206,7 @@ ul.user-list-of-group li {
   background: linear-gradient(135deg, #36393F, #1c1c1c);
   position: fixed;
   top: 0;
+  z-index: 6000;
 }
 
 .scroll-black-content {
@@ -426,6 +428,7 @@ ul.user-list-of-group li {
 }
 
 .frienship-requests-block {
+  z-index: 5000;
   position: fixed;
   top: 0;
   background: linear-gradient(135deg, #36393F, #1c1c1c);
@@ -485,6 +488,7 @@ ul.user-list-of-group li {
   background: linear-gradient(135deg, #36393F, #1c1c1c);
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  z-index: 5000;
 }
 
 .group-manager-block input.new-group-name {
@@ -541,16 +545,56 @@ ul.user-list-of-group li {
 }
 
 .chat {
-  min-width: 100vw;
-  min-height: 100vh;
+  position: absolute;
+  left: 260px;
+  top: 60px;
+}
+
+form.message-form {
+  position: fixed;
+  left: 260px;
+  bottom: 0;
+  width: 100vw;
+  background: black;
+}
+
+form.message-form .message-block {
+  margin-right: 270px !important;
+}
+
+form.message-form textarea {
+  height: 60px;
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  font-family: opensans;
+  font-size: 12px;
+}
+
+form.message-form button {
+  width: 100%;
+  padding: 5px !important;
+  margin-right: 270px !important;
+}
+
+.message-list {
+  padding-bottom: 120px !important;
+  padding: 10px;
+}
+
+.message-out-block {
+  margin: 10px 0;
 }
 
 .message {
-  width: 500px;
-  height: 100px;
+  max-width: 600px;
+  display: inline-block;
   background: white !important;
   color: black;
-  margin-top: 600px !important;
+  padding: 5px;
+  border-radius: 5px;
+  font-family: opensans;
+  font-size: 12px;
 }
 
 h1,

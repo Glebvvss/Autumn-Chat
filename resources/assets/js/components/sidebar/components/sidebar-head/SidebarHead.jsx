@@ -58,7 +58,7 @@ class SidebarHead extends Component {
         <div className="icons">
 
           <span onClick={this.props.changeVisibleGroupManager}>
-            <FontAwesomeIcon icon="comment" />
+            <FontAwesomeIcon icon="comments" />
           </span>
 
           <div className="update-marker-friendship-list" 

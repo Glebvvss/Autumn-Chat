@@ -7,8 +7,8 @@ import Main from './Main.jsx';
 import { Provider } from 'react-redux';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment, faUserFriends, faArrowCircleUp, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-library.add(faComment, faUserFriends, faArrowCircleUp, faCheckCircle);
+import { faComment, faComments, faUserFriends, faArrowCircleUp, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+library.add(faComment, faComments, faUserFriends, faArrowCircleUp, faCheckCircle);
 
 import { makeUriForRequest } from '../functions';
 

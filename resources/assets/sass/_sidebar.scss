@@ -14,6 +14,7 @@ $padding_blocks: 20px;
 	background: $diagonal_gray_gradient;
 	position: fixed;
 	top: 0;
+	z-index: 6000;
 }
 
 .scroll-black-content {
@@ -211,6 +212,7 @@ $padding_blocks: 20px;
 
 
 .frienship-requests-block {
+	z-index: 5000;
 	position: fixed;
 	top: 0;
 	background: $diagonal_gray_gradient;
@@ -267,6 +269,7 @@ $padding_blocks: 20px;
 	height: 100vh;
 	background: $diagonal_gray_gradient;
 	transition: $transition;
+	z-index: 5000;
 
 	input.new-group-name {
 		@include input;

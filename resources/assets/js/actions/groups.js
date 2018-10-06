@@ -5,13 +5,12 @@ export const getGroups = () => dispatch => {
     method: 'get'
   }).then(response => {
     response.json().then(data => {
-      console.log(data.groups);
       dispatch({ type: 'FETCH_GROUPS', payload: data.groups });
     });
   });
 };
 
-export const createGroup = (groupName, userListOfGroup) => dispatch => {
+export const createGroup = (groupName, groupMembersIdList) => dispatch => {
   fetch( makeUriForRequest('/create-group'), {
     method: 'post',
     headers: {
@@ -19,8 +18,8 @@ export const createGroup = (groupName, userListOfGroup) => dispatch => {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     body:
-      'groupName='       + groupName + '&' +
-      'userListOfGroup=' + JSON.stringify(userListOfGroup)
+      'groupName='           + groupName + '&' +
+      'groupMembersIdList=' + JSON.stringify(groupMembersIdList)
 
   }).then(response => {
     response.json().then(data => {

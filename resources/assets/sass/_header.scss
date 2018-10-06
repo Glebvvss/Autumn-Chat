@@ -1,5 +1,5 @@
 header.fixed-header {
-  z-index: -1;
+  z-index: 1000;
   position: fixed;
   width: 100%;
   background: white;
@@ -7,6 +7,7 @@ header.fixed-header {
   left: $width_sidebar;
   font-family: opensans;
   top: 0;
+  border-bottom: 1px solid $dark_gray;
 }
 
 ul.user-list-of-group {

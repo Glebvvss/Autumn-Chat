@@ -11,6 +11,8 @@ const scrollbar = {
   height: '100%',
 };
 
+let groupMemberList = [];
+
 class GroupManager extends Component {
 
   constructor(props) {
@@ -19,7 +21,6 @@ class GroupManager extends Component {
       visibleComponent: {
         left: 0
       },
-      groupMemberList: [],
       groupName: '',
     };
   }
@@ -38,8 +39,6 @@ class GroupManager extends Component {
       elementList.forEach((element) => {
         element.style.opacity = '';
       });
-    
-      this.state.groupMemberList = [];
     }
   }
 
@@ -67,13 +66,8 @@ class GroupManager extends Component {
   }
 
   updateListOfGroupMembers(event) {
-    let id = event.target.attributes['data-userID'];
-    if ( this.state.groupMemberList.indexOf(id.value) === -1 ) {
-      this.state.groupMemberList.push(id.value);
-    } else {
-      const elementToDelete = this.state.groupMemberList.indexOf(id.value);
-      this.state.groupMemberList.splice(elementToDelete, 1);
-    }
+    let clickedFriendId = event.target.attributes['data-userID']['value'];
+    this.props.changeFroupMemberList(clickedFriendId);
   }
 
   handleInput(event) {
@@ -93,7 +87,7 @@ class GroupManager extends Component {
   }
 
   initialCreateGroup() {
-    this.props.createGroup(this.state.groupName, { list: this.state.groupMemberList });
+    this.props.createGroup(this.state.groupName, this.props.groupMembersIdList);
   }
 
   render() {
@@ -141,10 +135,14 @@ export default connect(
     visible: state.sidebarDropdownElements.groupManagerVisible,
     friends: state.friends.friends,
     notification: state.notification.message,
+    groupMembersIdList: state.makeNewGroup.groupMembersIdList,
   }),
   dispatch => ({
-    createGroup: (groupName, userListOfGroup) => {
-      dispatch(createGroup(groupName, userListOfGroup));
+    createGroup: (groupName, groupMembersIdList) => {
+      dispatch(createGroup(groupName, groupMembersIdList));
+    },
+    changeFroupMemberList: (clickedFriendId) => {
+      dispatch({ type: 'CHANGE_GROUP_MEMBER_LIST_BEFORE_CREATED', payload: clickedFriendId });
     }
   })
 )(GroupManager);

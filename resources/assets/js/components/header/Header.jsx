@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import MemberList from './components/MemberList';
+import AddMemberButton from './components/AddMemberButton';
+import LeaveGroupButton from './components/LeaveGroupButton';
 
 class Header extends Component {
 
@@ -10,22 +13,10 @@ class Header extends Component {
   render() {
     return (
       <header className="fixed-header">
-        <div className="members">
-          <ul className="user-list-of-group">
-            <li>Members:</li>
-            <li>Username</li>
-            <li>Username</li>
-            <li>Username</li>
-            <li>Username</li>
-            <li>Username</li>
-            <li>Username</li>
-            <li>Username</li>
-            <li>...</li>
-          </ul>
-        </div>
+        <MemberList />
         <div className="header-right-buttons">
-          <button className="button-right">Add Member</button>
-          <button className="button">Leave</button>
+          <AddMemberButton />
+          <LeaveGroupButton />
         </div>
       </header>
     )
@@ -33,4 +24,4 @@ class Header extends Component {
 
 }
 
-export default Header
+export default Header;
