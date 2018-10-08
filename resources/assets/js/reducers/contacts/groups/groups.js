@@ -1,5 +1,6 @@
 let defaultState = {
   groups: [],
+  membersOfSelectedGroup: []
 };
 
 export function groups( state = defaultState, action ) {

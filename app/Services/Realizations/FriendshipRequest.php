@@ -40,7 +40,7 @@ class FriendshipRequest implements FriendshipRequestService
         return $friendshipRequests;
     }
 
-    public function sendTo( string $username ) : string 
+    public function sendTo( string $username ) : string
     {
         $user = $this->getUserByUsername($username);
         if ( !$user ) {

@@ -36,6 +36,10 @@ form.message-form {
   padding: 10px;
 }
 
+.username-of-writer-message {
+
+}
+
 .message-out-block {
   margin: 10px 0;
 }
@@ -44,9 +48,15 @@ form.message-form {
   max-width: 600px;
   display: inline-block;
   background: white !important;
-  color: black;
-  padding: 5px;
-  border-radius: 5px;
+  color: $dark_gray;
+  padding: 15px;
+  border-radius: 10px;
   font-family: opensans;
   font-size: 12px;
+
+  hr {
+    color: white;
+    background: white;
+    opacity: 0.5;
+  }
 }

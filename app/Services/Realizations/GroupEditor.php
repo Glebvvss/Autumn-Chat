@@ -7,8 +7,9 @@ use App\Eloquent\User;
 use App\Eloquent\Group;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use App\Services\Interfaces\GroupEditorService;
 
-class GroupEditor
+class GroupEditor implements GroupEditorService
 {
     public function create(string $groupName, array $memberListId) 
     {
@@ -24,6 +25,25 @@ class GroupEditor
         $this->associateUsersWithGroups($newGroupId, $memberListId);
 
         return 'Group created!';
+    }
+
+
+    public function addMemberTo(int $groupId, int $userId) 
+    {
+        $user = User::find($userId);
+
+        $group = Group::find($groupId);
+        $group->users()->attach($user);
+        $group->save();
+    }
+
+    public function leaveMemberFrom(int $groupId, int $userId) 
+    {
+        $user = User::find($userId);
+
+        $group = Group::find($groupId);
+        $group->users()->detach($user);
+        $group->save();
     }
 
     private function createNewEmptyGroup(string $groupName)
@@ -48,19 +68,10 @@ class GroupEditor
         }
     }
 
-    public function addGroupCreatorToMemberList($memberListId) 
+    private function addGroupCreatorToMemberList($memberListId) 
     {
         $memberListId[] = Auth::user()->id;
         return $memberListId;
     }
-
-    public function addMemberTo(int $groupId, int $userId) {
-
-    }
-
-    public function leaveMemberFrom(int $groupId, int $userId) {
-
-    }
-
 
 }

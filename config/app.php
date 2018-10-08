@@ -179,6 +179,8 @@ return [
         App\Providers\Custom\SearchUserServiceProvider::class,
         App\Providers\Custom\FriendshipRequestServiceProvider::class,
         App\Providers\Custom\AuthenticationServiceProvider::class,
+        App\Providers\Custom\GroupEditorServiceProvider::class,
+        App\Providers\Custom\ReciveFriendServiceProvider::class,
     ],
 
     /*

@@ -13,7 +13,8 @@ class FriendshipRequestController extends Controller
 {
     protected $friendshipRequest;
 
-    public function __construct (FriendshipRequestService $friendshipRequest) {
+    public function __construct (FriendshipRequestService $friendshipRequest) 
+    {
         $this->friendshipRequest = $friendshipRequest;
     }
 

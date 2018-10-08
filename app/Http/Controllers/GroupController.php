@@ -7,7 +7,7 @@ use App\Eloquent\User;
 use App\Eloquent\Group;
 use App\Eloquent\Friend;
 use Illuminate\Http\Request;
-use App\Services\Realizations\GroupEditor;
+use App\Services\Interfaces\GroupEditorService;
 
 class GroupController extends Controller 
 {
@@ -23,17 +23,16 @@ class GroupController extends Controller
         ]);
     }
 
-    public function create(Request $request)
-    {
+    public function create(
+        GroupEditorService $groupEditor,
+        Request $request
+    ){
         $groupMembersIdList = json_decode($request->groupMembersIdList);
-
         if ( $request->groupName === null ) {
             $request->groupName = '';
         }
 
-        $groupEditor = new GroupEditor();
         $result = $groupEditor->create($request->groupName, $groupMembersIdList);
-
         return response()->json([
             'message' => $result
         ]);
@@ -44,20 +43,20 @@ class GroupController extends Controller
 
     }
 
-    public function removeUserFrom(Request $request) 
+    public function removeUserFrom(Request $request)
     {
 
     }
 
-    public function getUsersOfGroupById(Request $request) 
+    public function getMembersOfGroup(Request $request)
     {
-        $usersOfGroup = Group::find($request->id)
+        $membersOfGroup = Group::find($request->id)
             ->users()
             ->get()
             ->toArray();
 
         return response()->json([
-          'usersOfGroup' => $usersOfGroup
+          'membersOfGroup' => $membersOfGroup
         ]);
     }
 }

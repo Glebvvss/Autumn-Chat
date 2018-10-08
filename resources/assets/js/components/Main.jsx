@@ -27,7 +27,6 @@ class Main extends Component {
 		return (
 			<div className="main">
         <Notifications />
-        <Header />
 				<Sidebar />
 				<Chat />
 			</div>

@@ -105,9 +105,9 @@ export const getCountNewRecivedFriendshipRequests = () => dispatch => {
   fetch( makeUriForRequest('/get-count-new-recived-friendship-requests'), {
     method: 'get'
   }).then(response => {
-    response.json().then(data => {      
-      dispatch({ 
-        type: 'FETCH_COUNT_NEW_RECIVED_FRIENSHIP_REQUESTS', payload: data.count 
+    response.json().then(data => {
+      dispatch({
+        type: 'FETCH_COUNT_NEW_RECIVED_FRIENSHIP_REQUESTS', payload: data.count
       });
     });
   });

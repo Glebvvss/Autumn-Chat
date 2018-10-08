@@ -15,7 +15,6 @@ class Chat extends Component {
         <form className="message-form">
           <div className="message-block">
             <textarea></textarea>
-            <button>Add Message</button>
           </div>
         </form>
 

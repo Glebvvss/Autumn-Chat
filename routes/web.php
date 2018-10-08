@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/test', 'UserController@test');
-
 Route::get('/', function () {
     return view('app');
 });
@@ -40,6 +38,14 @@ Route::group(['as' => 'user'], function() {
 Route::group(['as' => 'friend'], function() {
     Route::get('/get-friends', [ 
         'uses' => 'FriendController@getAll'
+    ]);
+
+    Route::get('/get-friends-who-not-in-group/{groupId}', [ 
+        'uses' => 'FriendController@getAllWhoNotInGroup'
+    ]);
+
+    Route::get('/get-all-friends-who-not-in-group/{groupId}', [
+        'uses' => 'FriendController@getAllWhoNotInGroup'
     ]);
 });
 
@@ -86,8 +92,8 @@ Route::group(['as' => 'group'], function() {
         'uses' => 'GroupController@create'
     ]);
 
-    Route::get('/get-users-by-group/{id}', [
-        'uses' => 'GroupController@getUsersOfGroupById'
+    Route::get('/get-members-of-group/{id}', [
+        'uses' => 'GroupController@getMembersOfGroup'
     ]);
 
     Route::get('/add-user-to-group/{id}', [

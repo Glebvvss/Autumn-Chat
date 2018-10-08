@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getGroups } from '../../../../../actions/groups';
-import { scrfToken, makeUriForRequest } from '../../../../../functions.js';
+import { makeUriForRequest } from '../../../../../functions.js';
+import { getGroups, 
+         getMembersOfGroup, 
+         getFriendsWhoNotInGroup } from '../../../../../actions/groups';
 
 class Groups extends Component {
 
@@ -28,7 +30,7 @@ class Groups extends Component {
 
   componentDidUpdate(prevProps) {
     if ( this.props !== prevProps ) {
-      console.log(this.props.groups);
+      
     }
   }
 
@@ -36,8 +38,12 @@ class Groups extends Component {
     
   }
 
-  openDialog() {
+  selectGroup(event) {
+    const selectedGroupId = event.target.attributes['data-id']['value'];
 
+    this.props.getFriendsWhoNotInGroup(selectedGroupId);
+    this.props.setSelectedGroupId(selectedGroupId);
+    this.props.getMembersOfGroup(selectedGroupId);   
   }
 
   render() {
@@ -45,8 +51,9 @@ class Groups extends Component {
       <ul>
         {
           this.props.groups.map((item, index) => (
-            <li key={index} 
-                onClick={this.openDialog.bind(this)} >
+            <li key={index}
+                data-id={item.id}
+                onClick={this.selectGroup.bind(this)} >
                 
               {item.group_name}
             </li>
@@ -60,11 +67,22 @@ class Groups extends Component {
 
 export default connect(
   state => ({
-    groups: state.groups.groups
+    groups:                       state.groups.groups,
+    membersOfGroup:               state.selectedGroup.membersOfSelectedGroup,
+    friendsWhoNotInSelectedGroup: state.selectedGroup.friendsWhoNotInSelectedGroup,
   }),
   dispatch => ({
+    getFriendsWhoNotInGroup: (groupId) => {
+      dispatch(getFriendsWhoNotInGroup(groupId));
+    },
     getGroups: () => {
       dispatch(getGroups());
     },
+    getMembersOfGroup: (groupId) => {
+      dispatch(getMembersOfGroup(groupId));
+    },
+    setSelectedGroupId: (groupId) => {
+      dispatch({ type: 'SET_SELECTED_GROUP_ID', payload: groupId });
+    }
   })
 )(Groups);

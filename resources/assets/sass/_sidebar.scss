@@ -21,6 +21,13 @@ $padding_blocks: 20px;
 	padding-bottom: 160px;
 }
 
+.group-no-selected-text {
+	font-family: opensans;
+	font-size: 15px;
+	color: white;
+	padding-left: 15px;
+}
+
 .sidebar-head {
 	padding: 13px 20px;
 	color: $light_gray;
@@ -262,6 +269,7 @@ $padding_blocks: 20px;
 	}
 }
 
+
 .group-manager-block {
 	top: 0;
 	position: fixed;
@@ -271,44 +279,91 @@ $padding_blocks: 20px;
 	transition: $transition;
 	z-index: 5000;
 
+	.group-manager-tabs {
+		color: $orange;
+		font-family: opensans;
+		font-size: 12px;
+		background: $vertical_gray_gradient;
+
+		ul {
+			width: 100%;
+			text-align: center;
+			margin-bottom: 15px;
+
+			li {
+				display: inline-block;
+				padding: 2px 20px;
+				cursor: pointer;
+
+				&:hover {
+					color: white;
+				}
+			}
+
+			.active-tab {
+				color: white;
+				background: $vertical_orange_gradient;
+			}
+		}
+	}
+}
+
+.update-selected-group {
+
+	button.add-checked-friends-to-group {
+		width: $width_sidebar - 28px;
+		margin-left: 15px;
+		padding: 5px 0;
+	}
+}
+
+.leave-group {
+	button.leave-selected-group {
+		width: $width_sidebar - 28px;
+		margin-left: 15px;
+		padding: 5px 0;
+	}	
+}
+
+.make-new-group {
+
 	input.new-group-name {
 		@include input;
-		width: $width_sidebar - 35px;
-		margin: 5px;
+		width: $width_sidebar - 50px;
+		margin-left: 15px;
+		border-radius: 5px 5px 0 0;
 	}
 
 	button.create-group {
 		@include button;
-		width: $width_sidebar - 12px;
-		border-radius: 5px;
-		margin: 5px;
-		padding: 10px;
+		width: $width_sidebar - 28px;
+		border-radius: 0 0 5px 5px;
+		margin: 0 15px;
+		padding: 5px;
+		font-size: 10px;
 	}
+}
 
-	.list-select-member-to-group {
-		font-family: opensans;
-		padding: 5px 15px;
-		color: white;
-		padding-bottom: 200px !important;
-		
-		ul {
-			li {
-				padding: 5px 0px;
-				cursor: pointer;
-				transition: $transition;
+.list-select-member-to-group {
+	font-family: opensans;
+	padding: 5px 15px;
+	color: white;
+	padding-bottom: 200px !important;
+	
+	ul {
+		li {
+			padding: 5px 0px;
+			cursor: pointer;
 
-				&:hover {
-					color: $orange;
-				}
+			&:hover {
+				color: $orange;
+			}
 
-				span.added-top-group-friend {
-					opacity: 0;
-					color: $orange;
-					float: right;
-				}
+			span.added-top-group-friend {
+				opacity: 0;
+				color: $orange;
+				float: right;
 			}
 		}
-
 	}
-
 }

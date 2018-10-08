@@ -213,6 +213,13 @@ ul.user-list-of-group li {
   padding-bottom: 160px;
 }
 
+.group-no-selected-text {
+  font-family: opensans;
+  font-size: 15px;
+  color: white;
+  padding-left: 15px;
+}
+
 .sidebar-head {
   padding: 13px 20px;
   color: #DDDDDD;
@@ -491,17 +498,60 @@ ul.user-list-of-group li {
   z-index: 5000;
 }
 
-.group-manager-block input.new-group-name {
+.group-manager-block .group-manager-tabs {
+  color: #E88C01;
+  font-family: opensans;
+  font-size: 12px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#36393F), to(#1c1c1c));
+  background: linear-gradient(180deg, #36393F, #1c1c1c);
+}
+
+.group-manager-block .group-manager-tabs ul {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.group-manager-block .group-manager-tabs ul li {
+  display: inline-block;
+  padding: 2px 20px;
+  cursor: pointer;
+}
+
+.group-manager-block .group-manager-tabs ul li:hover {
+  color: white;
+}
+
+.group-manager-block .group-manager-tabs ul .active-tab {
+  color: white;
+  background: -webkit-gradient(linear, left top, left bottom, from(#FD9105), to(#CB7B02));
+  background: linear-gradient(180deg, #FD9105, #CB7B02);
+}
+
+.update-selected-group button.add-checked-friends-to-group {
+  width: 232px;
+  margin-left: 15px;
+  padding: 5px 0;
+}
+
+.leave-group button.leave-selected-group {
+  width: 232px;
+  margin-left: 15px;
+  padding: 5px 0;
+}
+
+.make-new-group input.new-group-name {
   padding: 10px;
   border: 1px solid white;
   background: #1c1c1c;
   border-radius: 5px;
   color: white;
-  width: 225px;
-  margin: 5px;
+  width: 210px;
+  margin-left: 15px;
+  border-radius: 5px 5px 0 0;
 }
 
-.group-manager-block button.create-group {
+.make-new-group button.create-group {
   border-radius: 5px;
   padding: 10px;
   border: none;
@@ -509,36 +559,35 @@ ul.user-list-of-group li {
   color: white;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-  width: 248px;
-  border-radius: 5px;
-  margin: 5px;
-  padding: 10px;
+  width: 232px;
+  border-radius: 0 0 5px 5px;
+  margin: 0 15px;
+  padding: 5px;
+  font-size: 10px;
 }
 
-.group-manager-block button.create-group:hover {
+.make-new-group button.create-group:hover {
   background: #DDDDDD;
   color: black;
 }
 
-.group-manager-block .list-select-member-to-group {
+.list-select-member-to-group {
   font-family: opensans;
   padding: 5px 15px;
   color: white;
   padding-bottom: 200px !important;
 }
 
-.group-manager-block .list-select-member-to-group ul li {
+.list-select-member-to-group ul li {
   padding: 5px 0px;
   cursor: pointer;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
 }
 
-.group-manager-block .list-select-member-to-group ul li:hover {
+.list-select-member-to-group ul li:hover {
   color: #E88C01;
 }
 
-.group-manager-block .list-select-member-to-group ul li span.added-top-group-friend {
+.list-select-member-to-group ul li span.added-top-group-friend {
   opacity: 0;
   color: #E88C01;
   float: right;
@@ -590,11 +639,17 @@ form.message-form button {
   max-width: 600px;
   display: inline-block;
   background: white !important;
-  color: black;
-  padding: 5px;
-  border-radius: 5px;
+  color: #36393F;
+  padding: 15px;
+  border-radius: 10px;
   font-family: opensans;
   font-size: 12px;
+}
+
+.message hr {
+  color: white;
+  background: white;
+  opacity: 0.5;
 }
 
 h1,
