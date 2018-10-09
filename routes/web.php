@@ -96,11 +96,11 @@ Route::group(['as' => 'group'], function() {
         'uses' => 'GroupController@getMembersOfGroup'
     ]);
 
-    Route::get('/add-user-to-group/{id}', [
-        'uses' => 'GroupController@addUserTo'
+    Route::post('/add-new-members-to-group', [
+        'uses' => 'GroupController@addNewMembersTo'
     ]);
 
-    Route::get('/remove-user-from-group/{id}', [
-        'uses' => 'GroupController@removeUserFrom'
+    Route::get('/leave-group/{id}', [
+        'uses' => 'GroupController@leave'
     ]);
 });

@@ -1,3 +1,5 @@
+import { cloneObject }  from '../../../functions.js';
+
 let defaultState = {
   groupMembersIdList: [],
 };
@@ -16,7 +18,7 @@ export function makeNewGroup( state = defaultState, action ) {
 
     return {
       ...state,
-      groupMembersIdList: clone(state.groupMembersIdList)
+      groupMembersIdList: cloneObject(state.groupMembersIdList)
     };
   }
   if ( action.type === 'CLEAR_GROUP_MEMBERS_ID_LIST_AFTER_CREATED' ) {
@@ -26,8 +28,4 @@ export function makeNewGroup( state = defaultState, action ) {
     };
   }
   return state;
-}
-
-function clone(object) {
-  return JSON.parse( JSON.stringify(object) );
 }

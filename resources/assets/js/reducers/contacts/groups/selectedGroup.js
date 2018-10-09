@@ -1,7 +1,10 @@
+import { cloneObject }  from '../../../functions.js';
+
 let defaultState = {
   selectedGroupId: null,
+  membersOfSelectedGroup: [],
+  newMembersIdToGroupList: [],
   friendsWhoNotInSelectedGroup: [],
-  membersOfSelectedGroup: []
 };
 
 export function selectedGroup(state = defaultState, action) {
@@ -21,6 +24,22 @@ export function selectedGroup(state = defaultState, action) {
     return {
       ...state,
       selectedGroupId: action.payload,
+    };
+  }
+  if ( action.type === 'UPDATE_NEW_MEMBERS_ID_TO_GROUP_LIST' ) {
+
+    let clickedFriendId = action.payload;
+
+    if ( state.newMembersIdToGroupList.indexOf(clickedFriendId) === -1 ) {
+      state.newMembersIdToGroupList.push(clickedFriendId);
+    } else {
+      const elementToDelete = state.newMembersIdToGroupList.indexOf(clickedFriendId);
+      state.newMembersIdToGroupList.splice(elementToDelete, 1);
+    }
+
+    return {
+      ...state,
+      newMembersIdToGroupList: cloneObject(state.newMembersIdToGroupList)
     };
   }
   return state;

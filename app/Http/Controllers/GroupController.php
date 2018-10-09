@@ -38,14 +38,22 @@ class GroupController extends Controller
         ]);
     }
 
-    public function addUserTo(Request $request)
-    {
-
+    public function leave(
+        GroupEditorService $groupEditor,
+        Request $request
+    ){
+        $groupEditor->leaveMemberFrom($request->id, Auth::user()->id);
     }
 
-    public function removeUserFrom(Request $request)
-    {
-
+    public function addNewMembersTo(
+        GroupEditorService $groupEditor,
+        Request $request
+    ){
+        $newGroupMembersIdList = json_decode($request->newGroupMembersIdList);
+        $result = $groupEditor->addNewMembersTo($request->groupId, $newGroupMembersIdList);
+        return response()->json([
+            'message' => $result,
+        ]);
     }
 
     public function getMembersOfGroup(Request $request)

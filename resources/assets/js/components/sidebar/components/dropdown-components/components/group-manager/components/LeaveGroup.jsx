@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactScrollbar from 'react-scrollbar-js';
 import { connect } from 'react-redux';
+import { leaveGroup } from '../../../../../../../actions/groups.js';
 
 const scrollbar = {
   width: 260,
@@ -21,7 +22,7 @@ class LeaveGroup extends Component {
   }
 
   initialLeaveGroup() {
-    
+    this.props.leaveGroup(this.props.selectedGroupId);
   }
 
   renderIfGroupSelected() {
@@ -58,6 +59,8 @@ export default connect(
     selectedGroupId: state.selectedGroup.selectedGroupId
   }),
   dispatch => ({
-
+    leaveGroup: groupId => {
+      dispatch(leaveGroup(groupId));
+    }
   })
 )(LeaveGroup);

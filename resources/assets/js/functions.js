@@ -1,4 +1,4 @@
-export function scrfToken() { 
+export const scrfToken = () => { 
  	let metas = document.getElementsByTagName('meta'); 
  	for (let i = 0; i < metas.length; i++) { 
 	    if (metas[i].getAttribute("name") == "csrf-token") { 
@@ -7,7 +7,7 @@ export function scrfToken() {
  	}
 };
 
-export function makeUriForRequest(urn) {
+export const makeUriForRequest = urn => {
 	const protocol = window.location.protocol;
 	const hostname = window.location.hostname;
 	return protocol + '/\/' + hostname + urn;
@@ -18,9 +18,13 @@ export const socketConnectByUserId = new Promise(function(resolve, reject) {
     method: 'get'
   }).then(response => {
     response.json().then(httpData => {
-      
-      resolve(httpData);
 
+      resolve(httpData);
+      
     });
   });
 });
+
+export const cloneObject = object => {
+  return JSON.parse( JSON.stringify(object) );
+}

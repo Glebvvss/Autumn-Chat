@@ -6,7 +6,7 @@ interface GroupEditorService
 {
     public function create(string $groupName, array $memberListId);
 
-    public function addMemberTo(int $groupId, int $userId);
+    public function addNewMembersTo(int $groupId, array $listUserId);
 
     public function leaveMemberFrom(int $groupId, int $userId);
 }

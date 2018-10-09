@@ -8,6 +8,8 @@ class FriendListForCreateGroup extends Component {
   constructor(props) {
     super(props);
     this.props.getFriends();
+
+
   }
 
   addFriendToGroup(event) {
@@ -17,7 +19,7 @@ class FriendListForCreateGroup extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if ( this.props !== prevProps ) {
-      
+      this.resetCheckMarkersIfMembersAdded();
     }
   }
 
@@ -35,11 +37,8 @@ class FriendListForCreateGroup extends Component {
     }
   }
 
-  resetCheckMarkers() {
-    let elementList = document.querySelectorAll('span.added-top-group-friend');
-    elementList.forEach((element) => {
-      element.style.opacity = '';
-    });
+  resetCheckMarkersIfMembersAdded() {
+    //document.querySelectorAll('span.added-top-group-friend');
   }
 
   render() {
@@ -53,11 +52,10 @@ class FriendListForCreateGroup extends Component {
                   data-userID={item.id}>
 
                 {item.username}
-                <span className="added-top-group-friend">
+                <span className="added-top-group-friend" data-id-marker={item.id}>
                   <FontAwesomeIcon icon="check-circle" />
                 </span>
-              </li>
-            ))
+              </li> ))
           }
         </ul>
       </div>

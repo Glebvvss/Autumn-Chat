@@ -11,7 +11,8 @@ export const loginAction = (username, password) => dispatch => {
 			'username=' + username + '&' +
 			'password=' + password
 
-	}).then((response) => {
+	})
+	.then((response) => {
 		response.json().then(function(data) {
 			dispatch({type: 'LOGIN_ACTION', payload: data});
 			dispatch(checkLogin());
@@ -32,7 +33,8 @@ export const registrationAction = (username, email, password, confirmPassword) =
 			'password='					+ password 				+ '&' +
 			'confirmPassword='	+ confirmPassword
 
-	}).then((response) => {
+	})
+	.then((response) => {
 		response.json().then(function(data) {
 			dispatch({type: 'REGISTRATION_ACTION', payload: data});
 			dispatch(checkLogin());
@@ -44,7 +46,8 @@ export const registrationAction = (username, email, password, confirmPassword) =
 export const logoutAction = () => dispatch => {
 	fetch( makeUriForRequest('/logout'), {
 		method: 'get'
-	}).then((response) => {
+	})
+	.then((response) => {
 		dispatch(checkLogin());
 	});
 }
@@ -52,7 +55,8 @@ export const logoutAction = () => dispatch => {
 export const checkLogin = () => dispatch => {
 	fetch( makeUriForRequest('/check-login'), {
 		method: 'get'
-	}).then((response) => {
+	})
+	.then((response) => {
 		response.json().then(function(data) {
 			dispatch({type: 'CHECK_LOGIN', payload: data});
 		});
@@ -62,7 +66,8 @@ export const checkLogin = () => dispatch => {
 export const getUsername = () => dispatch => {
   fetch( makeUriForRequest('/get-username'), {
     method: 'get'
-  }).then(response => {
+  })
+  .then(response => {
     response.json().then(data => {
       dispatch({type: 'FETCH_USERNAME', payload: data});
     });

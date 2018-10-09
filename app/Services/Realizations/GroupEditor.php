@@ -28,19 +28,23 @@ class GroupEditor implements GroupEditorService
     }
 
 
-    public function addMemberTo(int $groupId, int $userId) 
-    {
-        $user = User::find($userId);
+    public function addNewMembersTo(int $groupId, array $listUserId) 
+    {        
+        foreach( $listUserId as $userId ) {
+            $user = User::find($userId);
 
-        $group = Group::find($groupId);
-        $group->users()->attach($user);
-        $group->save();
+            $group = Group::find($groupId);
+            $group->users()->attach($user);
+            $group->save();
+        }
+
+        return 'New members to group added.';
     }
 
     public function leaveMemberFrom(int $groupId, int $userId) 
     {
         $user = User::find($userId);
-
+        
         $group = Group::find($groupId);
         $group->users()->detach($user);
         $group->save();

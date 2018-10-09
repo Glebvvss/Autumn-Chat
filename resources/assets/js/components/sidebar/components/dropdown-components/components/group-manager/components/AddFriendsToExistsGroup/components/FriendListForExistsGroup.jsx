@@ -6,6 +6,10 @@ class FriendListForExistsGroup extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      friendsWhoNotInSelectedGroup: []
+    };
   }
 
   addFriendToGroup(event) {
@@ -15,22 +19,44 @@ class FriendListForExistsGroup extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if ( this.props !== prevProps ) {
-      
+
+      this.setState({
+        ...this.state,
+        friendsWhoNotInSelectedGroup: this.props.friendsWhoNotInSelectedGroup
+      });
+
+
+
     }
   }
 
   updateListOfGroupMembers(event) {
     let clickedFriendId = event.target.attributes['data-userID']['value'];
-    this.props.changeFroupMemberList(clickedFriendId);
+    this.props.updateNewMambersIdToGroupList(clickedFriendId);
   }
 
   addOrRomoveCheckMarker(event) {
-    let span = event.target.children[0];
-    if ( span.style.opacity === '' ) {
-      span.style.opacity = '1';
-    } else {
-      span.style.opacity = '';
+    //как прийду надо будет это доделать!!!
+    const numberOfList = event.target.attributes['data-key']['value'];
+    this.props.friendsWhoNotInSelectedGroup[numberOfList]['selected'] = true;
+
+    this.setState({
+      ...this.state,
+      friendsWhoNotInSelectedGroup: this.state.friendsWhoNotInSelectedGroup
+    });
+    //шоб работало четко
+  }
+
+  renderCheckMarkerOnSelectedElement(item) {
+
+    if ( item.hasOwnProperty('selected') && item.selected === true ) {
+      return (
+        <span className="added-top-group-friend">
+          <FontAwesomeIcon icon="check-circle" />
+        </span>
+      );
     }
+
   }
 
   resetCheckMarkers() {
@@ -45,15 +71,15 @@ class FriendListForExistsGroup extends Component {
       <div className="list-select-member-to-group">
         <ul>
           {
-            this.props.friendsWhoNotInSelectedGroup.map((item, index) => (
+            this.state.friendsWhoNotInSelectedGroup.map((item, index) => (
               <li key={index}
+                  data-key={index}
                   onClick={this.addFriendToGroup.bind(this)}
                   data-userID={item.id}>
 
                 {item.username}
-                <span className="added-top-group-friend">
-                  <FontAwesomeIcon icon="check-circle" />
-                </span>
+
+                {this.renderCheckMarkerOnSelectedElement(item)}
               </li>
             ))
           }
@@ -68,11 +94,18 @@ export default connect(
   state => ({
     friends:                      state.friends.friends,
     notification:                 state.notification.message,
+    newMembersIdToGroupList:      state.selectedGroup.newMembersIdToGroupList,
     friendsWhoNotInSelectedGroup: state.selectedGroup.friendsWhoNotInSelectedGroup,
   }),
   dispatch => ({
     changeFroupMemberList: (clickedFriendId) => {
       dispatch({ type: 'CHANGE_GROUP_MEMBER_LIST_BEFORE_CREATED', payload: clickedFriendId });
     },
+    updateNewMambersIdToGroupList: (clickedFriendId) => {
+      dispatch({ 
+        type:    'UPDATE_NEW_MEMBERS_ID_TO_GROUP_LIST',
+        payload: clickedFriendId 
+      });
+    }
   })
 )(FriendListForExistsGroup);

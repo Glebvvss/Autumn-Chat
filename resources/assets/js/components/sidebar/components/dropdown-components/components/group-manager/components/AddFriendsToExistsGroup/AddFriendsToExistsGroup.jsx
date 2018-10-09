@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactScrollbar from 'react-scrollbar-js';
 import { connect } from 'react-redux';
-
+import { addSelectedMembersToGroup } from '../../../../../../../../actions/groups';
 import FriendListForExistsGroup from './components/FriendListForExistsGroup';
 
 const scrollbar = {
@@ -22,11 +22,20 @@ class AddFriendsToExistsGroup extends Component {
     };
   }
 
+  initialAddSelectedFriendsToGroup() {
+    this.props.addSelectedMembersToGroup(
+      this.props.selectedGroupId, 
+      this.props.newMembersIdToGroupList
+    );
+  }
+
   renderIfGroupSelected() {
     return (
       <div className="update-selected-group">
         <div>
-          <button className="add-checked-friends-to-group">
+          <button className="add-checked-friends-to-group"
+                  onClick={this.initialAddSelectedFriendsToGroup.bind(this)}>
+
             Add
           </button>
           
@@ -60,8 +69,11 @@ export default connect(
     groupMembersIdList: state.makeNewGroup.groupMembersIdList,
     friendsWhoNotInSelectedGroup: state.selectedGroup.friendsWhoNotInSelectedGroup,
     selectedGroupId: state.selectedGroup.selectedGroupId,
+    newMembersIdToGroupList: state.selectedGroup.newMembersIdToGroupList,
   }),
   dispatch => ({
-
+    addSelectedMembersToGroup: (groupId, newGroupMembersIdList) => {
+      dispatch( addSelectedMembersToGroup(groupId, newGroupMembersIdList) );
+    }
   })
 )(AddFriendsToExistsGroup);
