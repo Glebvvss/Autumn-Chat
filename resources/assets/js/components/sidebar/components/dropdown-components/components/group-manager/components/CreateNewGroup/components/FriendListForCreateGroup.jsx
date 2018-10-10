@@ -28,17 +28,34 @@ class FriendListForCreateGroup extends Component {
     this.props.changeFroupMemberList(clickedFriendId);
   }
 
-  addOrRomoveCheckMarker(event) {
-    let span = event.target.children[0];
-    if ( span.style.opacity === '' ) {
-      span.style.opacity = '1';
-    } else {
-      span.style.opacity = '';
-    }
+  resetCheckMarkersIfMembersAdded() {
+    
   }
 
-  resetCheckMarkersIfMembersAdded() {
-    //document.querySelectorAll('span.added-top-group-friend');
+  addOrRomoveCheckMarker(event) {
+    const numberOfList = event.target.attributes['data-key']['value'];
+    let element = this.props.friends[numberOfList];
+
+    if ( element.hasOwnProperty('selected') && element['selected'] === true ) {
+      this.props.friends[numberOfList]['selected'] = false;
+    } else {
+      this.props.friends[numberOfList]['selected'] = true;
+    }
+
+    this.setState({
+      ...this.state,
+      friends: this.props.friends
+    });
+  }
+
+  renderCheckMarkerOnSelectedElement(item) {
+    if ( item.hasOwnProperty('selected') && item.selected === true ) {
+      return (
+        <span className="add-to-group-friend">
+          <FontAwesomeIcon icon="check-circle" />
+        </span>
+      );
+    }
   }
 
   render() {
@@ -48,13 +65,13 @@ class FriendListForCreateGroup extends Component {
           {
             this.props.friends.map((item, index) => (
               <li key={index}
+                  data-key={index}
                   onClick={this.addFriendToGroup.bind(this)}
                   data-userID={item.id}>
 
                 {item.username}
-                <span className="added-top-group-friend" data-id-marker={item.id}>
-                  <FontAwesomeIcon icon="check-circle" />
-                </span>
+
+                {this.renderCheckMarkerOnSelectedElement(item)}
               </li> ))
           }
         </ul>

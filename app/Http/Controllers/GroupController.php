@@ -9,12 +9,21 @@ use App\Eloquent\Friend;
 use Illuminate\Http\Request;
 use App\Services\Interfaces\GroupEditorService;
 
-class GroupController extends Controller 
+class GroupController extends Controller
 {
-    public function getAll() 
+
+    private $groupEditor;
+
+    public function __construct(GroupEditorService $groupEditor)
+    {
+        $this->groupEditor = $groupEditor;
+    }
+
+    public function getAllPublic() 
     {
         $groups = User::find( Auth::user()->id )
             ->groups()
+            ->where('type', '=', 'public')
             ->get()
             ->toArray();
 
@@ -23,34 +32,25 @@ class GroupController extends Controller
         ]);
     }
 
-    public function create(
-        GroupEditorService $groupEditor,
-        Request $request
-    ){
+    public function createPublic(Request $request) {
         $groupMembersIdList = json_decode($request->groupMembersIdList);
         if ( $request->groupName === null ) {
             $request->groupName = '';
         }
 
-        $result = $groupEditor->create($request->groupName, $groupMembersIdList);
+        $result = $this->groupEditor->createPublic($request->groupName, $groupMembersIdList);
         return response()->json([
             'message' => $result
         ]);
     }
 
-    public function leave(
-        GroupEditorService $groupEditor,
-        Request $request
-    ){
-        $groupEditor->leaveMemberFrom($request->id, Auth::user()->id);
+    public function leave(Request $request) {
+        $this->groupEditor->leaveMemberFrom($request->id, Auth::user()->id);
     }
 
-    public function addNewMembersTo(
-        GroupEditorService $groupEditor,
-        Request $request
-    ){
+    public function addNewMembersTo(Request $request) {
         $newGroupMembersIdList = json_decode($request->newGroupMembersIdList);
-        $result = $groupEditor->addNewMembersTo($request->groupId, $newGroupMembersIdList);
+        $result = $this->groupEditor->addNewMembersTo($request->groupId, $newGroupMembersIdList);
         return response()->json([
             'message' => $result,
         ]);

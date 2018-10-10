@@ -587,8 +587,7 @@ ul.user-list-of-group li {
   color: #E88C01;
 }
 
-.list-select-member-to-group ul li span.added-top-group-friend {
-  opacity: 0;
+.list-select-member-to-group ul li span.add-to-group-friend {
   color: #E88C01;
   float: right;
 }

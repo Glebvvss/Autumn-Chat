@@ -12,22 +12,17 @@ class FriendListForExistsGroup extends Component {
     };
   }
 
-  addFriendToGroup(event) {
-    this.addOrRomoveCheckMarker(event);
-    this.updateListOfGroupMembers(event);
-  }
-
   componentDidUpdate(prevProps, prevState, snapshot) {
     if ( this.props !== prevProps ) {
-
-      this.setState({
-        ...this.state,
-        friendsWhoNotInSelectedGroup: this.props.friendsWhoNotInSelectedGroup
-      });
-
-
-
+      this.setFriendsWhoNotInSelectedGroup();      
     }
+  }
+
+  setFriendsWhoNotInSelectedGroup() {
+    this.setState({
+      ...this.state,
+      friendsWhoNotInSelectedGroup: this.props.friendsWhoNotInSelectedGroup
+    });
   }
 
   updateListOfGroupMembers(event) {
@@ -36,27 +31,19 @@ class FriendListForExistsGroup extends Component {
   }
 
   addOrRomoveCheckMarker(event) {
-    //как прийду надо будет это доделать!!!
     const numberOfList = event.target.attributes['data-key']['value'];
-    this.props.friendsWhoNotInSelectedGroup[numberOfList]['selected'] = true;
+    let element = this.props.friendsWhoNotInSelectedGroup[numberOfList];
+
+    if ( element.hasOwnProperty('selected') && element['selected'] === true ) {
+      this.props.friendsWhoNotInSelectedGroup[numberOfList]['selected'] = false;
+    } else {
+      this.props.friendsWhoNotInSelectedGroup[numberOfList]['selected'] = true;
+    }
 
     this.setState({
       ...this.state,
-      friendsWhoNotInSelectedGroup: this.state.friendsWhoNotInSelectedGroup
+      friendsWhoNotInSelectedGroup: this.props.friendsWhoNotInSelectedGroup
     });
-    //шоб работало четко
-  }
-
-  renderCheckMarkerOnSelectedElement(item) {
-
-    if ( item.hasOwnProperty('selected') && item.selected === true ) {
-      return (
-        <span className="added-top-group-friend">
-          <FontAwesomeIcon icon="check-circle" />
-        </span>
-      );
-    }
-
   }
 
   resetCheckMarkers() {
@@ -64,6 +51,21 @@ class FriendListForExistsGroup extends Component {
     elementList.forEach((element) => {
       element.style.opacity = '';
     });
+  }
+
+  addSelectedFriendsToGroup(event) {
+    this.addOrRomoveCheckMarker(event);
+    this.updateListOfGroupMembers(event);
+  }
+
+  renderCheckMarkerOnSelectedElement(item) {
+    if ( item.hasOwnProperty('selected') && item.selected === true ) {
+      return (
+        <span className="add-to-group-friend">
+          <FontAwesomeIcon icon="check-circle" />
+        </span>
+      );
+    }
   }
 
   render() {
@@ -74,7 +76,7 @@ class FriendListForExistsGroup extends Component {
             this.state.friendsWhoNotInSelectedGroup.map((item, index) => (
               <li key={index}
                   data-key={index}
-                  onClick={this.addFriendToGroup.bind(this)}
+                  onClick={this.addSelectedFriendsToGroup.bind(this)}
                   data-userID={item.id}>
 
                 {item.username}

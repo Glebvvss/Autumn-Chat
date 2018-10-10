@@ -1,7 +1,7 @@
 import { scrfToken, makeUriForRequest } from '../functions.js';
 
 export const getGroups = () => dispatch => {
-  fetch( makeUriForRequest('/get-groups'), {
+  fetch( makeUriForRequest('/get-public-groups'), {
     method: 'get'
   })
   .then(response => {

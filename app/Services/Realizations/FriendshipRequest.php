@@ -7,6 +7,7 @@ use App\Eloquent\User;
 use App\Eloquent\Friend;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use App\Services\Realizations\GroupEditor;
 use App\Eloquent\FriendshipRequest as FriendRequestTable;
 use App\Services\Interfaces\FriendshipRequestService;
 
@@ -208,11 +209,14 @@ class FriendshipRequest implements FriendshipRequestService
             ->first();   
     }
 
-    private function buildFriendshipsContact( FriendRequestTable $request, int $id ) 
+    private function buildFriendshipsContact( FriendRequestTable $request, int $idSender ) 
     {
         $this->dropRequestFromBb($request);
-        $this->addFriendRowForRecipient($id);
-        $this->addFriendRowForSender($id);
+        $this->addFriendRowForRecipient($idSender);
+        $this->addFriendRowForSender($idSender);
+
+        $groupEditor = new GroupEditor();
+        $groupEditor->createIndividualBetween( Auth::user()->id, $idSender );
     }
 
     private function addFriendRowForRecipient( int $id ) 
