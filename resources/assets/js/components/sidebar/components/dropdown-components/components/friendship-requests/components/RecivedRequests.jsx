@@ -13,10 +13,10 @@ class RecivedRequests extends Component {
   constructor(props) {
     super(props);
     this.props.getRecivedFriendshipRequests();
-    this.socketMethod();
+    this.subscribeOnChangesInRecivedRequestList();
   }
 
-  socketMethod() {
+  subscribeOnChangesInRecivedRequestList() {
     fetch( makeUriForRequest('/get-user-id'), {
       method: 'get'
     }).then(response => {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import MessageList from './components/MessageList';
+import MessageList from './components/MessageList/MessageList';
+import NewMessageForm from './components/NewMessageForm';
 
 class Chat extends Component {
 
@@ -11,13 +12,7 @@ class Chat extends Component {
     return (
       <div className="chat">
         <MessageList />
-
-        <form className="message-form">
-          <div className="message-block">
-            <textarea></textarea>
-          </div>
-        </form>
-
+        <NewMessageForm />
       </div>
     );
   }

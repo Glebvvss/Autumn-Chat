@@ -5,7 +5,7 @@ namespace App\Services\Realizations;
 use Auth;
 use Hash;
 use Validator;
-use App\Eloquent\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\Interfaces\AuthenticationService;
 

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use App\Eloquent\User;
+use App\Models\User;
+use App\Models\FriendshipRequest;
 use Illuminate\Http\Request;
 use App\Events\UpdateFriendList;
 use App\Events\UpdateFriendRequestList;
@@ -20,7 +21,8 @@ class FriendshipRequestController extends Controller
 
     public function getRecivedAll() 
     {
-        $friendshipRequests = $this->friendshipRequest->getRecivedAll();
+        $friendshipRequests = FriendshipRequest::recived()->get();
+
         return response()->json([
             'friendshipRequests' => $friendshipRequests
         ]);
@@ -28,7 +30,7 @@ class FriendshipRequestController extends Controller
 
     public function getSendedAll() 
     {
-        $friendshipRequests = $this->friendshipRequest->getSendedAll();
+        $friendshipRequests = FriendshipRequest::sended()->get();
         return response()->json([
             'friendshipRequests' => $friendshipRequests
         ]);

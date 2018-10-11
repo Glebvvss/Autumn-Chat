@@ -84,12 +84,12 @@ Route::group(['as' => 'friendship-request'], function() {
 });
 
 Route::group(['as' => 'group'], function() {
-    Route::get('/get-public-groups', [
-        'uses' => 'GroupController@getAllPublic'
+    Route::get('/get-groups', [
+        'uses' => 'GroupController@getAll'
     ]); 
 
     Route::post('/create-group', [
-        'uses' => 'GroupController@createPublic'
+        'uses' => 'GroupController@create'
     ]);
 
     Route::get('/get-members-of-group/{id}', [
@@ -102,5 +102,15 @@ Route::group(['as' => 'group'], function() {
 
     Route::get('/leave-group/{id}', [
         'uses' => 'GroupController@leave'
+    ]);
+});
+
+Route::group(['as' => 'message'], function() {
+    Route::get('/get-message-of-group/{groupId}', [
+        'uses' => 'MessageController@getAllOfGroup'
+    ]);
+
+    Route::post('/send-message', [
+        'uses' => 'MessageController@send'
     ]);
 });

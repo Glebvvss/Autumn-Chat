@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { makeUriForRequest } from '../../../../../functions.js';
+import { getMessagesOfGroup } from '../../../../../actions/messages';
 import { getGroups, 
          getMembersOfGroup, 
          getFriendsWhoNotInGroup } from '../../../../../actions/groups';
@@ -41,9 +42,10 @@ class Groups extends Component {
   selectGroup(event) {
     const selectedGroupId = event.target.attributes['data-id']['value'];
 
+    this.props.setSelectedGroupIdInStore(selectedGroupId);
+    this.props.getMembersOfGroup(selectedGroupId);
+    this.props.getMessagesOfGroup(selectedGroupId);
     this.props.getFriendsWhoNotInGroup(selectedGroupId);
-    this.props.setSelectedGroupId(selectedGroupId);
-    this.props.getMembersOfGroup(selectedGroupId);   
   }
 
   render() {
@@ -56,8 +58,7 @@ class Groups extends Component {
                 onClick={this.selectGroup.bind(this)} >
                 
               {item.group_name}
-            </li>
-          ))
+            </li> ))
         }
       </ul>
     );
@@ -81,8 +82,11 @@ export default connect(
     getMembersOfGroup: (groupId) => {
       dispatch(getMembersOfGroup(groupId));
     },
-    setSelectedGroupId: (groupId) => {
+    setSelectedGroupIdInStore: (groupId) => {
       dispatch({ type: 'SET_SELECTED_GROUP_ID', payload: groupId });
+    },
+    getMessagesOfGroup: (groupId) => {
+      dispatch( getMessagesOfGroup(groupId) );
     }
   })
 )(Groups);

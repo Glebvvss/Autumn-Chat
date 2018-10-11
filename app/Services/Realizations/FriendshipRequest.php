@@ -3,44 +3,16 @@
 namespace App\Services\Realizations;
 
 use Auth;
-use App\Eloquent\User;
-use App\Eloquent\Friend;
+use App\Models\User;
+use App\Models\Friend;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use App\Services\Realizations\GroupEditor;
-use App\Eloquent\FriendshipRequest as FriendRequestTable;
+use App\Models\FriendshipRequest as FriendRequestTable;
 use App\Services\Interfaces\FriendshipRequestService;
 
 class FriendshipRequest implements FriendshipRequestService
 {
-    public function getSendedAll() : array 
-    {
-        $friendshipRequests = FriendRequestTable::with(['userRecipient' => function($query) 
-        {
-            $query->select('id', 'username');
-        }
-        ])->select('id', 'sender_id', 'recipient_id')
-          ->where('sender_id', '=', Auth::user()->id)
-          ->get()
-          ->toArray();
-
-        return $friendshipRequests;
-    }
-
-    public function getRecivedAll() : array
-    {
-        $friendshipRequests = FriendRequestTable::with(['userSender' => function($query) 
-        {
-            $query->select('id', 'username');
-        }
-        ])->select('id', 'sender_id', 'recipient_id')
-          ->where('recipient_id', '=', Auth::user()->id)
-          ->get()
-          ->toArray();
-
-        return $friendshipRequests;
-    }
-
     public function sendTo( string $username ) : string
     {
         $user = $this->getUserByUsername($username);

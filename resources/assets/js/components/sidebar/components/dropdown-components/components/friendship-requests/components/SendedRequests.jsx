@@ -14,10 +14,10 @@ class SendedRequests extends Component {
   constructor(props) {
     super(props);
     this.props.getSendedFriendshipRequests();
-    this.socketMethod();
+    this.subscribeOnChangesInSendedRequestList();
   }
 
-  socketMethod() {
+  subscribeOnChangesInSendedRequestList() {
     fetch( makeUriForRequest('/get-user-id'), {
       method: 'get'
     }).then(response => {

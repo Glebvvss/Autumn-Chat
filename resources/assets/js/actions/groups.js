@@ -1,7 +1,7 @@
 import { scrfToken, makeUriForRequest } from '../functions.js';
 
 export const getGroups = () => dispatch => {
-  fetch( makeUriForRequest('/get-public-groups'), {
+  fetch( makeUriForRequest('/get-groups'), {
     method: 'get'
   })
   .then(response => {
@@ -39,7 +39,7 @@ export const getFriendsWhoNotInGroup = groupId => dispatch => {
   .then(response => {
     response.json().then(data => {
       dispatch({ 
-        type: 'FETCH_FRIENDS_WHO_NOT_IN_SELECTED_GROUP', 
+        type:   'FETCH_FRIENDS_WHO_NOT_IN_SELECTED_GROUP', 
         payload: data.friendsWhoNotInGroup
       });
     });
@@ -53,7 +53,7 @@ export const getMembersOfGroup = groupId => dispatch => {
   .then(response => {
     response.json().then(data => {
       dispatch({
-        type: 'FETCH_MEMBERS_OF_SELECTED_GROUP', 
+        type:   'FETCH_MEMBERS_OF_SELECTED_GROUP', 
         payload: data.membersOfGroup 
       });
     });

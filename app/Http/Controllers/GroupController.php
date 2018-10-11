@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use App\Eloquent\User;
-use App\Eloquent\Group;
-use App\Eloquent\Friend;
+use App\Models\User;
+use App\Models\Group;
+use App\Models\Friend;
 use Illuminate\Http\Request;
 use App\Services\Interfaces\GroupEditorService;
 
@@ -19,20 +19,19 @@ class GroupController extends Controller
         $this->groupEditor = $groupEditor;
     }
 
-    public function getAllPublic() 
+    public function getAll() 
     {
         $groups = User::find( Auth::user()->id )
             ->groups()
-            ->where('type', '=', 'public')
-            ->get()
-            ->toArray();
+            ->publicType()
+            ->get();
 
         return response()->json([
             'groups' => $groups
         ]);
     }
 
-    public function createPublic(Request $request) {
+    public function create(Request $request) {
         $groupMembersIdList = json_decode($request->groupMembersIdList);
         if ( $request->groupName === null ) {
             $request->groupName = '';
@@ -60,8 +59,7 @@ class GroupController extends Controller
     {
         $membersOfGroup = Group::find($request->id)
             ->users()
-            ->get()
-            ->toArray();
+            ->get();
 
         return response()->json([
           'membersOfGroup' => $membersOfGroup

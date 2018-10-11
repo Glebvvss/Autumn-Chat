@@ -8,9 +8,9 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use App\Eloquent\User;
-use App\Eloquent\Friend;
-use App\Eloquent\FriendshipRequest as FriendshipRequestTable;
+use App\Models\User;
+use App\Models\Friend;
+use App\Models\FriendshipRequest as FriendshipRequestTable;
 
 use App\Services\Realizations\FriendshipRequest;
 

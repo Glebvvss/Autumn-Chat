@@ -7,7 +7,7 @@ use Auth;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Eloquent\User;
+use App\Models\User;
 
 class AuthControllerTest extends TestCase
 {

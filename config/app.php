@@ -176,7 +176,6 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         //My service provider
-        App\Providers\Custom\SearchUserServiceProvider::class,
         App\Providers\Custom\FriendshipRequestServiceProvider::class,
         App\Providers\Custom\AuthenticationServiceProvider::class,
         App\Providers\Custom\GroupEditorServiceProvider::class,

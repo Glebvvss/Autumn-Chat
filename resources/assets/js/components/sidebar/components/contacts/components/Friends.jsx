@@ -8,10 +8,10 @@ class Friends extends Component {
   constructor(props) {
     super(props);
     this.props.getFriends();
-    this.socketMethod();
+    this.subscribeOnChangesInFreindList();
   }
 
-  socketMethod() {
+  subscribeOnChangesInFreindList() {
     fetch( makeUriForRequest('/get-user-id'), {
       method: 'get'
     }).then(response => {

@@ -4,8 +4,8 @@ namespace App\Services\Realizations;
 
 use DB;
 use Auth;
-use App\Eloquent\User;
-use App\Eloquent\Group;
+use App\Models\User;
+use App\Models\Group;
 use App\Services\Interfaces\ReciveFriendService;
 
 class ReciveFriend implements ReciveFriendService

@@ -5,10 +5,10 @@ namespace Tests\Feature\ControllerTests;
 use Hash;
 use Auth;
 use Tests\TestCase;
+use App\Models\User;
+use App\Models\Friend;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Eloquent\User;
-use App\Eloquent\Friend;
 
 class FriendControllerTest extends TestCase
 {

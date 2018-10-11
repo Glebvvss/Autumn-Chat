@@ -5,11 +5,11 @@ namespace Tests\Feature\ServiceTests\FriendshipRequestTests;
 use Hash;
 use Auth;
 use Tests\TestCase;
-use App\Eloquent\User;
-use App\Eloquent\Friend;
+use App\Models\User;
+use App\Models\Friend;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Eloquent\FriendshipRequest as FriendshipRequestTable;
+use App\Models\FriendshipRequest as FriendshipRequestTable;
 use App\Services\Realizations\FriendshipRequest;
 use Tests\Feature\ServiceTests\FriendshipRequestTests\Traits\TMockDataForTables;
 

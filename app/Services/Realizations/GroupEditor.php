@@ -3,8 +3,8 @@
 namespace App\Services\Realizations;
 
 use Auth;
-use App\Eloquent\User;
-use App\Eloquent\Group;
+use App\Models\User;
+use App\Models\Group;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use App\Services\Interfaces\GroupEditorService;

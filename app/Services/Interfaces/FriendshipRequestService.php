@@ -4,10 +4,6 @@ namespace App\Services\Interfaces;
 
 interface FriendshipRequestService
 {
-    public function getSendedAll();
-
-    public function getRecivedAll();
-
     public function sendTo( string $username );
 
     public function confirmFrom( int $id );

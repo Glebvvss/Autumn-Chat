@@ -4,20 +4,12 @@ namespace App\Http\Controllers;
 
 use Hash;
 use Auth;
-use App\Eloquent\User;
-use App\Eloquent\Friend;
+use App\Models\User;
+use App\Models\Friend;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\SearchUserService;
 
 class UserController extends Controller
 {
-    private $searchUser;
-
-    public function __construct(SearchUserService $searchUser) 
-    {
-        $this->searchUser = $searchUser;
-    }
-
     public function getUsername() 
     {
       return response()->json([
@@ -34,7 +26,10 @@ class UserController extends Controller
 
     public function searchByOccurrence(Request $request) 
     {
-        $matchUsernames = $this->searchUser->byOccurrence($request->usernameOccurrence);
+        $matchUsernames = User::select('username')
+            ->searchByOccurrence($request->usernameOccurrence)
+            ->get();
+
         return response()->json([
             'matchUsernames' => $matchUsernames
         ]);

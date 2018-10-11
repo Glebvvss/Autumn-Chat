@@ -595,7 +595,6 @@ ul.user-list-of-group li {
 .chat {
   position: absolute;
   left: 260px;
-  top: 60px;
 }
 
 form.message-form {

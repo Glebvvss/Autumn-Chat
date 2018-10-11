@@ -5,7 +5,6 @@ import LoginForm from './auth/LoginForm';
 import RegistrationForm from './auth/RegistrationForm';
 import { checkLogin } from '../actions/auth.js';
 import Notifications from './notifications/Notifications';
-import Header from './header/Header';
 import Chat from './chat/Chat';
 
 class Main extends Component {

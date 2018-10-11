@@ -10,10 +10,11 @@ import { groups } from './contacts/groups/groups.js';
 import { makeNewGroup } from './contacts/groups/makeNewGroup.js';
 import { selectedGroup } from './contacts/groups/selectedGroup.js';
 import { notification } from './notification';
-import { sidebarDropdownElements } from './contacts/sidebarDropdownElements.js';
+import { sidebarDropdownElements } from './sidebarDropdownElements.js';
+import { messages } from './messages.js';
 
 let reducers = {
-  //
+  //all notification messages of project
   notification,
 
   //auth
@@ -22,18 +23,25 @@ let reducers = {
   checkLogin,
   userInfo,
 
-  //cantacts
-  friends,
-  searchFriends,
-  friendshipRequests,
+  //> contacts
 
+    //friends
+    friends,
+    searchFriends,
+    friendshipRequests,
+
+    //groups
+    groups,
+    makeNewGroup,
+    selectedGroup,
+
+  //< contacts
+
+  //sidebar visible dropdown elements
   sidebarDropdownElements,  
 
-  groups,
-  makeNewGroup,
-  selectedGroup,
-  //communications
-
+  //messages
+  messages,
 };
 
 export default combineReducers(reducers);
