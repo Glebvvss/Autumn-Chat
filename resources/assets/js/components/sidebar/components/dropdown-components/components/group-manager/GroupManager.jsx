@@ -101,8 +101,7 @@ class GroupManager extends Component {
                     onClick={this.showSelectedTab.bind(this)}>
 
                   {item.title}
-                </li>
-              ))
+                </li> ))
             }
           </ul>
         </div>

@@ -12,6 +12,13 @@ class FriendListForExistsGroup extends Component {
     };
   }
 
+  componentDidMount() {
+    this.setState({
+      ...this.state,
+      friendsWhoNotInSelectedGroup: this.props.friendsWhoNotInSelectedGroup
+    });
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if ( this.props !== prevProps ) {
       this.setFriendsWhoNotInSelectedGroup();      

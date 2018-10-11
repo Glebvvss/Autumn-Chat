@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\ServiceTests\FriendshipRequestTests;
+namespace Tests\Feature\ServiceTests\FriendshipRequestServiceTests;
 
 use Hash;
 use Auth;
@@ -10,11 +10,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\User;
 use App\Models\Friend;
-use App\Models\FriendshipRequest as FriendshipRequestTable;
+use App\Models\FriendshipRequest;
 
-use App\Services\Realizations\FriendshipRequest;
+use App\Services\Realizations\FriendshipRequestService;
 
-use Tests\Feature\ServiceTests\FriendshipRequestTests\Traits\TMockDataForTables;
+use Tests\Feature\ServiceTests\FriendshipRequestServiceTests\Traits\TMockDataForTables;
 
 class SendFriendshipRequestTest extends TestCase
 {
@@ -29,8 +29,8 @@ class SendFriendshipRequestTest extends TestCase
             'password' => 'password',
         ]);
 
-        $friendshipRequest = new FriendshipRequest();
-        $resultMessage = $friendshipRequest->sendTo('testuser2');
+        $friendshipRequestService = new FriendshipRequestService();
+        $resultMessage = $friendshipRequestService->sendTo('testuser2');
 
         $this->assertEquals('Request has been sent.', $resultMessage);
         $this->assertTrue( $this->checkNewRequestInDatabase() );
@@ -43,7 +43,7 @@ class SendFriendshipRequestTest extends TestCase
         $sender    = User::where('username', '=', 'testuser1')->first();
         $recipient = User::where('username', '=', 'testuser2')->first();
 
-        $request = FriendshipRequestTable::where('sender_id', '=', $sender->id)
+        $request = FriendshipRequest::where('sender_id', '=', $sender->id)
             ->where('recipient_id', '=', $recipient->id)
             ->first();
 
@@ -62,8 +62,8 @@ class SendFriendshipRequestTest extends TestCase
             'password' => 'password',
         ]);
 
-        $friendshipRequest = new FriendshipRequest();
-        $resultMessage = $friendshipRequest->sendTo('nonexcistentUser');
+        $friendshipRequestService = new FriendshipRequestService();
+        $resultMessage = $friendshipRequestService->sendTo('nonexcistentUser');
 
         $this->assertEquals('This user is not exists.', $resultMessage);
 
@@ -79,8 +79,8 @@ class SendFriendshipRequestTest extends TestCase
             'password' => 'password',
         ]);
 
-        $friendshipRequest = new FriendshipRequest();
-        $resultMessage = $friendshipRequest->sendTo('testuser1');
+        $friendshipRequestService = new FriendshipRequestService();
+        $resultMessage = $friendshipRequestService->sendTo('testuser1');
 
         $this->assertEquals('You can`t send requests to yourself.', $resultMessage);
 
@@ -97,8 +97,8 @@ class SendFriendshipRequestTest extends TestCase
             'password' => 'password',
         ]);
 
-        $friendshipRequest = new FriendshipRequest();
-        $resultMessage = $friendshipRequest->sendTo('testuser2');
+        $friendshipRequestService = new FriendshipRequestService();
+        $resultMessage = $friendshipRequestService->sendTo('testuser2');
 
         $this->assertEquals('This user is already your friend.', $resultMessage);
 
@@ -109,18 +109,18 @@ class SendFriendshipRequestTest extends TestCase
     {
         $this->userTableMock();
 
-        $friendshipRequestTable = new FriendshipRequestTable();
-        $friendshipRequestTable->sender_id = User::where('username', '=', 'testuser1')->first()->id;
-        $friendshipRequestTable->recipient_id = User::where('username', '=', 'testuser2')->first()->id;
-        $friendshipRequestTable->save();
+        $friendshipRequest = new FriendshipRequest();
+        $friendshipRequest->sender_id = User::where('username', '=', 'testuser1')->first()->id;
+        $friendshipRequest->recipient_id = User::where('username', '=', 'testuser2')->first()->id;
+        $friendshipRequest->save();
 
         Auth::attempt([
             'username' => 'testuser1',
             'password' => 'password',
         ]);
 
-        $friendshipRequest = new FriendshipRequest();
-        $resultMessage = $friendshipRequest->sendTo('testuser2');
+        $friendshipRequestService = new FriendshipRequestService();
+        $resultMessage = $friendshipRequestService->sendTo('testuser2');
 
         $this->assertEquals('This request already has been sent.', $resultMessage);
 
@@ -131,18 +131,18 @@ class SendFriendshipRequestTest extends TestCase
     {
         $this->userTableMock();
 
-        $friendshipRequestTable = new FriendshipRequestTable();
-        $friendshipRequestTable->sender_id = User::where('username', '=', 'testuser2')->first()->id;
-        $friendshipRequestTable->recipient_id = User::where('username', '=', 'testuser1')->first()->id;
-        $friendshipRequestTable->save();
+        $friendshipRequest = new FriendshipRequest();
+        $friendshipRequest->sender_id = User::where('username', '=', 'testuser2')->first()->id;
+        $friendshipRequest->recipient_id = User::where('username', '=', 'testuser1')->first()->id;
+        $friendshipRequest->save();
 
         Auth::attempt([
             'username' => 'testuser1',
             'password' => 'password',
         ]);
 
-        $friendshipRequest = new FriendshipRequest();
-        $resultMessage = $friendshipRequest->sendTo('testuser2');
+        $friendshipRequestService = new FriendshipRequestService();
+        $resultMessage = $friendshipRequestService->sendTo('testuser2');
 
         $this->assertEquals('Already You have request from this user.', $resultMessage);
 

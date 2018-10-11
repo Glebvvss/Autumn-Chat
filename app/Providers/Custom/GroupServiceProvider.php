@@ -3,9 +3,9 @@
 namespace App\Providers\Custom;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\SearchUser;
+use App\Services\Realizations\GroupService;
 
-class SearchUserServiceProvider extends ServiceProvider
+class GroupServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -24,8 +24,8 @@ class SearchUserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\Interfaces\SearchUserService', function() {
-            return new SearchUser();
+        $this->app->bind('App\Services\Interfaces\IGroupService', function() {
+            return new GroupService();
         });
     }
 }

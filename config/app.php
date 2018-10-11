@@ -178,8 +178,9 @@ return [
         //My service provider
         App\Providers\Custom\FriendshipRequestServiceProvider::class,
         App\Providers\Custom\AuthenticationServiceProvider::class,
-        App\Providers\Custom\GroupEditorServiceProvider::class,
-        App\Providers\Custom\ReciveFriendServiceProvider::class,
+        App\Providers\Custom\FriendServiceProvider::class,
+        App\Providers\Custom\GroupServiceProvider::class,
+        App\Providers\Custom\DialogServiceProvider::class,
     ],
 
     /*

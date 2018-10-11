@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Friend;
 use Illuminate\Http\Request;
 
+use App\Services\Realizations\DialogService;
+
 class UserController extends Controller
 {
     public function getUsername() 

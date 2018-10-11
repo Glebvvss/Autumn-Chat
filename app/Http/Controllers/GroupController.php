@@ -7,16 +7,16 @@ use App\Models\User;
 use App\Models\Group;
 use App\Models\Friend;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\GroupEditorService;
+use App\Services\Interfaces\IGroupService as GroupService;
 
 class GroupController extends Controller
 {
 
-    private $groupEditor;
+    private $groupService;
 
-    public function __construct(GroupEditorService $groupEditor)
+    public function __construct(GroupService $groupService)
     {
-        $this->groupEditor = $groupEditor;
+        $this->groupService = $groupService;
     }
 
     public function getAll() 
@@ -37,19 +37,19 @@ class GroupController extends Controller
             $request->groupName = '';
         }
 
-        $result = $this->groupEditor->createPublic($request->groupName, $groupMembersIdList);
+        $result = $this->groupService->create($request->groupName, $groupMembersIdList);
         return response()->json([
             'message' => $result
         ]);
     }
 
     public function leave(Request $request) {
-        $this->groupEditor->leaveMemberFrom($request->id, Auth::user()->id);
+        $this->groupService->leaveMemberFrom($request->id, Auth::user()->id);
     }
 
     public function addNewMembersTo(Request $request) {
         $newGroupMembersIdList = json_decode($request->newGroupMembersIdList);
-        $result = $this->groupEditor->addNewMembersTo($request->groupId, $newGroupMembersIdList);
+        $result = $this->groupService->addNewMembersTo($request->groupId, $newGroupMembersIdList);
         return response()->json([
             'message' => $result,
         ]);

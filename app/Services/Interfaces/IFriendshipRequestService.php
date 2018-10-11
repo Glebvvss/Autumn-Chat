@@ -2,7 +2,7 @@
 
 namespace App\Services\Interfaces; 
 
-interface FriendshipRequestService
+interface IFriendshipRequestService
 {
     public function sendTo( string $username );
 

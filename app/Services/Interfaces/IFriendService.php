@@ -2,7 +2,7 @@
 
 namespace App\Services\Interfaces;
 
-interface ReciveFriendService
+interface IFriendService
 {
     public function getAllWhoNotInGroup(int $groupId);
 }

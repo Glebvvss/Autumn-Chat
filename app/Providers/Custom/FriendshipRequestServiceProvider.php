@@ -3,7 +3,7 @@
 namespace App\Providers\Custom;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\FriendshipRequest;
+use App\Services\Realizations\FriendshipRequestService;
 
 class FriendshipRequestServiceProvider extends ServiceProvider
 {
@@ -24,8 +24,8 @@ class FriendshipRequestServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\Interfaces\FriendshipRequestService', function() {
-            return new FriendshipRequest();
+        $this->app->bind('App\Services\Interfaces\IFriendshipRequestService', function() {
+            return new FriendshipRequestService();
         });
     }
 }

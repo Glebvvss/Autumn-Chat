@@ -1,11 +1,11 @@
-<?php
+<?php 
 
 namespace App\Providers\Custom;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\GroupEditor;
+use App\Services\Realizations\FriendService;
 
-class GroupEditorServiceProvider extends ServiceProvider
+class FriendServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -24,8 +24,8 @@ class GroupEditorServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\Interfaces\GroupEditorService', function() {
-            return new GroupEditor();
+        $this->app->bind('App\Services\Interfaces\IFriendService', function() {
+            return new FriendService();
         });
     }
 }

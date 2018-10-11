@@ -1,11 +1,10 @@
 <?php 
 
-namespace Tests\Feature\ServiceTests\FriendshipRequestTests\Traits;
+namespace Tests\Feature\ServiceTests\FriendshipRequestServiceTests\Traits;
 
 use Hash;
 use App\Models\User;
 use App\Models\Friend;
-use App\Models\FriendshipRequest as FriendshipRequestTable;
 
 trait TMockDataForTables
 {

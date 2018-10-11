@@ -7,7 +7,7 @@ use Hash;
 use Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\AuthenticationService;
+use App\Services\Interfaces\IAuthenticationService as AuthenticationService;
 
 class AuthController extends Controller {
 

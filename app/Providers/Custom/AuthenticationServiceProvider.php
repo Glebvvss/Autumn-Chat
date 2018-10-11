@@ -3,7 +3,7 @@
 namespace App\Providers\Custom;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\Authentication;
+use App\Services\Realizations\AuthenticationService;
 
 class AuthenticationServiceProvider extends ServiceProvider
 {
@@ -24,8 +24,8 @@ class AuthenticationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\Interfaces\AuthenticationService', function() {
-            return new Authentication();
+        $this->app->bind('App\Services\Interfaces\IAuthenticationService', function() {
+            return new AuthenticationService();
         });
     }
 }

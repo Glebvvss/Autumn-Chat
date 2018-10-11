@@ -5,13 +5,12 @@ namespace App\Services\Realizations;
 use Auth;
 use App\Models\User;
 use App\Models\Friend;
+use App\Models\FriendshipRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use App\Services\Realizations\GroupEditor;
-use App\Models\FriendshipRequest as FriendRequestTable;
-use App\Services\Interfaces\FriendshipRequestService;
+use App\Services\Interfaces\IFriendshipRequestService;
 
-class FriendshipRequest implements FriendshipRequestService
+class FriendshipRequestService implements IFriendshipRequestService
 {
     public function sendTo( string $username ) : string
     {
@@ -101,7 +100,7 @@ class FriendshipRequest implements FriendshipRequestService
 
     public function countNewRecived()
     {
-        $count = FriendRequestTable::where('recipient_id', '=', Auth::user()->id)
+        $count = FriendshipRequest::where('recipient_id', '=', Auth::user()->id)
             ->where('new', '=', 1)
             ->count();
 
@@ -110,7 +109,7 @@ class FriendshipRequest implements FriendshipRequestService
 
     public function readByRecipient()
     {
-        FriendRequestTable::where('recipient_id', '=', Auth::user()->id)->update([
+        FriendshipRequest::where('recipient_id', '=', Auth::user()->id)->update([
             'new' => 0
         ]);
     }
@@ -137,7 +136,7 @@ class FriendshipRequest implements FriendshipRequestService
 
     private function checkWasThisRequestSentEarlier( int $id ) : bool 
     {
-        $check = FriendRequestTable::where( 'sender_id', '=', Auth::user()->id )
+        $check = FriendshipRequest::where( 'sender_id', '=', Auth::user()->id )
             ->where( 'recipient_id', '=', $id )
             ->first();
 
@@ -149,7 +148,7 @@ class FriendshipRequest implements FriendshipRequestService
 
     private function checkRequestWasReceivedFromThisUser( int $id ) : bool 
     {
-        $check = FriendRequestTable::where( 'sender_id', '=', $id )
+        $check = FriendshipRequest::where( 'sender_id', '=', $id )
             ->where( 'recipient_id', '=', Auth::user()->id )
             ->first();
 
@@ -161,7 +160,7 @@ class FriendshipRequest implements FriendshipRequestService
 
     private function storeRequestIntoDatabase( int $id ) 
     {
-        $friendshipRequest = new FriendRequestTable();
+        $friendshipRequest = new FriendshipRequest();
         $friendshipRequest->sender_id = Auth::user()->id;
         $friendshipRequest->recipient_id = $id;
         $friendshipRequest->save();
@@ -169,26 +168,23 @@ class FriendshipRequest implements FriendshipRequestService
 
     private function getRequestBySender( int $id ) 
     {
-        return FriendRequestTable::where( 'sender_id', '=', $id )
+        return FriendshipRequest::where( 'sender_id', '=', $id )
             ->where( 'recipient_id', '=', Auth::user()->id )
             ->first();   
     }
 
     private function getRequestByRecipient( int $id ) 
     {
-        return FriendRequestTable::where( 'recipient_id', '=', $id )
+        return FriendshipRequest::where( 'recipient_id', '=', $id )
             ->where( 'sender_id', '=', Auth::user()->id )
             ->first();   
     }
 
-    private function buildFriendshipsContact( FriendRequestTable $request, int $idSender ) 
+    private function buildFriendshipsContact( FriendshipRequest $request, int $idSender ) 
     {
         $this->dropRequestFromBb($request);
         $this->addFriendRowForRecipient($idSender);
         $this->addFriendRowForSender($idSender);
-
-        $groupEditor = new GroupEditor();
-        $groupEditor->createIndividualBetween( Auth::user()->id, $idSender );
     }
 
     private function addFriendRowForRecipient( int $id ) 
@@ -207,9 +203,9 @@ class FriendshipRequest implements FriendshipRequestService
         $friend->save();
     }
 
-    private function dropRequestFromBb( FriendRequestTable $request ) 
+    private function dropRequestFromBb( FriendshipRequest $request ) 
     {
-        FriendRequestTable::where('id', '=', $request->id)->delete();
+        FriendshipRequest::where('id', '=', $request->id)->delete();
     }
 
 }

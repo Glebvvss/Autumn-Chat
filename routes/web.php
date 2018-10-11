@@ -106,8 +106,14 @@ Route::group(['as' => 'group'], function() {
 });
 
 Route::group(['as' => 'message'], function() {
-    Route::get('/get-message-of-group/{groupId}', [
+    Route::get('/get-messages-of-group/{groupId}', [
         'uses' => 'MessageController@getAllOfGroup'
+    ]);
+
+    //Route::get('/get-dialog-group-id-bu-friend/{griendId}');
+
+    Route::get('/get-messages-of-dialog/{friendId}', [
+        'uses' => 'MessageController@getAllOfDialog'
     ]);
 
     Route::post('/send-message', [

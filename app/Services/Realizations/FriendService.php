@@ -6,9 +6,9 @@ use DB;
 use Auth;
 use App\Models\User;
 use App\Models\Group;
-use App\Services\Interfaces\ReciveFriendService;
+use App\Services\Interfaces\IFriendService;
 
-class ReciveFriend implements ReciveFriendService
+class FriendService implements IFriendService
 {
     public function getAllWhoNotInGroup(int $groupId) 
     {

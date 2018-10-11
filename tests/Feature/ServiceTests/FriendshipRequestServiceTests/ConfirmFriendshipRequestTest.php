@@ -10,11 +10,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\User;
 use App\Models\Friend;
-use App\Models\FriendshipRequest as FriendshipRequestTable;
+use App\Models\FriendshipRequest;
 
-use App\Services\Realizations\FriendshipRequest;
+use App\Services\Realizations\FriendshipRequestService;
 
-use Tests\Feature\ServiceTests\FriendshipRequestTests\Traits\TMockDataForTables;
+use Tests\Feature\ServiceTests\FriendshipRequestServiceTests\Traits\TMockDataForTables;
 
 class ConfirmFriendshipRequestTest extends TestCase
 {
@@ -28,8 +28,8 @@ class ConfirmFriendshipRequestTest extends TestCase
             'password' => 'password',
         ]);
 
-        $friendshipRequest = new FriendshipRequest();
-        $resultMessage = $friendshipRequest->confirmFrom(999999);
+        $friendshipRequestService = new FriendshipRequestService();
+        $resultMessage = $friendshipRequestService->confirmFrom(999999);
 
         $this->assertEquals('Sender is not valid.', $resultMessage);
 
@@ -46,8 +46,8 @@ class ConfirmFriendshipRequestTest extends TestCase
 
         $senderId = User::where('username', '=', 'testuser2')->first()->id;
 
-        $friendshipRequest = new FriendshipRequest();
-        $resultMessage = $friendshipRequest->confirmFrom($senderId);
+        $friendshipRequestService = new FriendshipRequestService();
+        $resultMessage = $friendshipRequestService->confirmFrom($senderId);
 
         $this->assertEquals('Request is not exists.', $resultMessage);
 
@@ -60,10 +60,10 @@ class ConfirmFriendshipRequestTest extends TestCase
         $sender    = User::where('username', '=', 'testuser2')->first();
         $recipient = User::where('username', '=', 'testuser1')->first();
 
-        $friendshipRequestTable = new FriendshipRequestTable();
-        $friendshipRequestTable->sender_id    = $sender->id;
-        $friendshipRequestTable->recipient_id = $recipient->id;
-        $friendshipRequestTable->save();
+        $friendshipRequest = new FriendshipRequest();
+        $friendshipRequest->sender_id    = $sender->id;
+        $friendshipRequest->recipient_id = $recipient->id;
+        $friendshipRequest->save();
 
         Auth::attempt([
             'username' => 'testuser1',
@@ -72,8 +72,8 @@ class ConfirmFriendshipRequestTest extends TestCase
 
         $senderId = User::where('username', '=', 'testuser2')->first()->id;
 
-        $friendshipRequest = new FriendshipRequest();
-        $resultMessage = $friendshipRequest->confirmFrom($senderId);
+        $friendshipRequestService = new FriendshipRequestService();
+        $resultMessage = $friendshipRequestService->confirmFrom($senderId);
 
         $this->assertEquals('Friend added!', $resultMessage);
         $this->assertTrue( $this->checkNewFriendRowsInDatabase($sender->id, $recipient->id) );

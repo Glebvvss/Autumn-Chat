@@ -7,15 +7,15 @@ use Auth;
 use App\Models\User;
 use App\Models\Group;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\ReciveFriendService;
+use App\Services\Interfaces\IFriendService as FriendService;
 
 class FriendController extends Controller
 {
-    private $reciveFriend;
+    private $friendService;
 
-    public function __construct(ReciveFriendService $reciveFriend)
+    public function __construct(FriendService $friendService)
     {
-        $this->reciveFriend = $reciveFriend;
+        $this->friendService = $friendService;
     }
 
     public function getAll()
@@ -31,7 +31,7 @@ class FriendController extends Controller
 
     public function getAllWhoNotInGroup(Request $request) 
     {
-        $friendsWhoNotInGroup = $reciveFriend->getAllWhoNotInGroup($request->groupId);
+        $friendsWhoNotInGroup = $this->friendService->getAllWhoNotInGroup($request->groupId);
         return response()->json([
             'friendsWhoNotInGroup' => $friendsWhoNotInGroup
         ]);

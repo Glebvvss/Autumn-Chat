@@ -30,4 +30,17 @@ class MessageController extends Controller
         ]);
     }
 
+    public function getAllOfDialog(Request $request)
+    {
+        $groupId = Group::where('group_name', '=', '');
+
+        $messages = Message::where('group_id', '=', $request->friendId)
+            ->with('user')
+            ->get();
+
+        return response()->json([
+            'messages' => $messages
+        ]);
+    }
+
 }

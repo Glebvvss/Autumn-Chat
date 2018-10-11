@@ -7,9 +7,9 @@ use Hash;
 use Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\AuthenticationService;
+use App\Services\Interfaces\IAuthenticationService;
 
-class Authentication implements AuthenticationService
+class AuthenticationService implements IAuthenticationService
 {
 
     public function login(Request $request) : array
