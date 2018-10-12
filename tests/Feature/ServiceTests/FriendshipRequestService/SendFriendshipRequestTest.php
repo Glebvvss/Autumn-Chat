@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\ServiceTests\FriendshipRequestServiceTests;
+namespace Tests\Feature\ServiceTests\FriendshipRequestService;
 
 use Hash;
 use Auth;
@@ -14,7 +14,7 @@ use App\Models\FriendshipRequest;
 
 use App\Services\Realizations\FriendshipRequestService;
 
-use Tests\Feature\ServiceTests\FriendshipRequestServiceTests\Traits\TMockDataForTables;
+use Tests\Feature\Mocks\Traits\TMockDataForTables;
 
 class SendFriendshipRequestTest extends TestCase
 {

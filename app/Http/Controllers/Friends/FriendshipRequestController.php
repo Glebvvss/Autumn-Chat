@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Friends;
 
 use Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Events\UpdateFriendList;
 use App\Models\FriendshipRequest;
+use App\Http\Controllers\Controller;
 use App\Events\UpdateFriendRequestList;
 use App\Services\Interfaces\IDialogService as DialogService;
 use App\Services\Interfaces\IFriendshipRequestService as FriendshipRequestService;

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Groups;
 
 use Auth;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Friend;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Services\Interfaces\IGroupService as GroupService;
 
 class GroupController extends Controller
 {
-
     private $groupService;
 
     public function __construct(GroupService $groupService)

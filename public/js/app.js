@@ -16065,7 +16065,7 @@ var autoReplace = function autoReplace() {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getMessagesOfGroup; });
 /* unused harmony export getMessagesOfDialog */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return sendMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return sendMessageToGroup; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_js__ = __webpack_require__(11);
 
 
@@ -16101,9 +16101,9 @@ var getMessagesOfDialog = function getMessagesOfDialog(friendId) {
   };
 };
 
-var sendMessage = function sendMessage(groupId, text) {
+var sendMessageToGroup = function sendMessageToGroup(groupId, text) {
   return function (dispatch) {
-    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["b" /* makeUriForRequest */])('/send-message'), {
+    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["b" /* makeUriForRequest */])('/send-message-to-group'), {
       method: 'post',
       headers: {
         'X-CSRF-TOKEN': Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["c" /* scrfToken */])(),
@@ -63729,7 +63729,7 @@ var NewMessageForm = function (_Component) {
       this.blockDefaultEnterEventInTextarea(event);
 
       if (event.key === 'Enter' && text !== '') {
-        this.props.sendMessage(this.props.selectedGroupId, text);
+        this.props.sendMessageToGroup(this.props.selectedGroupId, text);
         this.clearTextarea();
       }
     }
@@ -63781,8 +63781,8 @@ var NewMessageForm = function (_Component) {
   };
 }, function (dispatch) {
   return {
-    sendMessage: function sendMessage(groupId, text) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["b" /* sendMessage */])(groupId, text));
+    sendMessageToGroup: function sendMessageToGroup(groupId, text) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["b" /* sendMessageToGroup */])(groupId, text));
     }
   };
 })(NewMessageForm));

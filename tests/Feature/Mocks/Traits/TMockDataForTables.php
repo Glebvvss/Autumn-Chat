@@ -1,6 +1,6 @@
 <?php 
 
-namespace Tests\Feature\ServiceTests\FriendshipRequestServiceTests\Traits;
+namespace Tests\Feature\Mocks\Traits;
 
 use Hash;
 use App\Models\User;
@@ -21,6 +21,11 @@ trait TMockDataForTables
         $user->email    = 'testuser2@example.com';
         $user->password = Hash::make('password');
         $user->save();
+    }
+
+    protected function getMOcketUsers()
+    {
+
     }
 
     protected function friendTableMock()

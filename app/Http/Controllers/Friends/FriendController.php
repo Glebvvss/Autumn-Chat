@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Friends;
 
 use DB;
 use Auth;
 use App\Models\User;
 use App\Models\Group;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Services\Interfaces\IFriendService as FriendService;
 
 class FriendController extends Controller

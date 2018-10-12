@@ -9,7 +9,17 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    public function send(Request $request)
+    public function sendToGroup(Request $request)
+    {
+        $message = new Message();
+
+        $message->text     = $request->text;
+        $message->user_id  = Auth::user()->id;
+        $message->group_id = $request->groupId;
+        $message->save();
+    }
+
+    public function sendToDialog(Request $request)
     {
         $message = new Message();
 
@@ -32,11 +42,28 @@ class MessageController extends Controller
 
     public function getAllOfDialog(Request $request)
     {
-        $groupId = Group::where('group_name', '=', '');
+        $userId      = Auth::user()->id;
+        $otherUserId = $request->friendId;
 
-        $messages = Message::where('group_id', '=', $request->friendId)
-            ->with('user')
-            ->get();
+        $dialogName = 'DIALOG_BETWEEN_'.$userId.'_AND_'.$otherUserId;
+        $alternativeDialogName = 'DIALOG_BETWEEN_'.$otherUserId.'_AND_'.$userId;
+
+        $dialogId = Group::where('group_name', '=', $dialogName)->first()->id;
+
+        if ( $dialogId ) {
+
+            $messages = Message::where('group_id', '=', $dialogId)
+                ->with('user')
+                ->get();
+                
+        } else {
+
+            $dialogId = Group::where('group_name', '=', $alternativeDialogName)->first()->id;
+
+            $messages = Message::where('group_id', '=', $dialogId)
+                ->with('user')
+                ->get();
+        }
 
         return response()->json([
             'messages' => $messages

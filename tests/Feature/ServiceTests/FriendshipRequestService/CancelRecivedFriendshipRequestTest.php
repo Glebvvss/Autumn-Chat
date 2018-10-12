@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\ServiceTests\FriendshipRequestServiceTests;
+namespace Tests\Feature\ServiceTests\FriendshipRequestService;
 
 use Hash;
 use Auth;
@@ -11,13 +11,13 @@ use App\Models\FriendshipRequest;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Services\Realizations\FriendshipRequestService;
-use Tests\Feature\ServiceTests\FriendshipRequestServiceTests\Traits\TMockDataForTables;
+use Tests\Feature\Mocks\Traits\TMockDataForTables;
 
-class CancelSendedFriendshipRequestTest extends TestCase
+class CancelRecivedFriendshipRequestTest extends TestCase
 {
     use RefreshDatabase, TMockDataForTables;
 
-    public function testCancelSendedToInvalidSender() 
+    public function testCancelRecivedFromInvalidSender() 
     {
         $this->userTableMock();
 
@@ -27,14 +27,14 @@ class CancelSendedFriendshipRequestTest extends TestCase
         ]);
 
         $friendshipRequestService = new FriendshipRequestService();
-        $resultMessage = $friendshipRequestService->cancelSendedTo(999999);
+        $resultMessage = $friendshipRequestService->cancelRecivedFrom(999999);
 
         $this->assertEquals('Sender is not valid.', $resultMessage);
 
         Auth::logout();
     }
 
-    public function testCancelSendedToNonexistentRequest() 
+    public function testCancelRecivedFromNonexistentRequest() 
     {
         $this->userTableMock();
 
@@ -46,14 +46,14 @@ class CancelSendedFriendshipRequestTest extends TestCase
         $senderId = User::where('username', '=', 'testuser2')->first()->id;
 
         $friendshipRequestService = new FriendshipRequestService();
-        $resultMessage = $friendshipRequestService->cancelSendedTo($senderId);
+        $resultMessage = $friendshipRequestService->cancelRecivedFrom($senderId);
 
         $this->assertEquals('Request is not valid.', $resultMessage);
 
         Auth::logout();
     }
 
-    public function testSuccessCancelSendedToSender() 
+    public function testSuccessCancelRecivedFromSender() 
     {
         $this->userTableMock();
         $this->mockDataForFriendshipRequest();
@@ -66,7 +66,7 @@ class CancelSendedFriendshipRequestTest extends TestCase
         $senderId = User::where('username', '=', 'testuser2')->first()->id;
 
         $friendshipRequestService = new FriendshipRequestService();
-        $resultMessage = $friendshipRequestService->cancelSendedTo($senderId);
+        $resultMessage = $friendshipRequestService->cancelRecivedFrom($senderId);
 
         $this->assertEquals('Friendship request canceled.', $resultMessage);
         $this->assertTrue($this->checkDatabaseAfterSuccessCancel('testuser2', 'testuser1'));
@@ -90,8 +90,9 @@ class CancelSendedFriendshipRequestTest extends TestCase
 
     private function mockDataForFriendshipRequest() {
         $friendshipRequest = new FriendshipRequest();
-        $friendshipRequest->sender_id = User::where('username', '=', 'testuser1')->first()->id;
-        $friendshipRequest->recipient_id = User::where('username', '=', 'testuser2')->first()->id;
+        $friendshipRequest->sender_id = User::where('username', '=', 'testuser2')->first()->id;
+        $friendshipRequest->recipient_id = User::where('username', '=', 'testuser1')->first()->id;
         $friendshipRequest->save();
     }
+
 }

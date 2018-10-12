@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use Auth;
 use Hash;
 use Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Services\Interfaces\IAuthenticationService as AuthenticationService;
 
 class AuthController extends Controller {

@@ -33,8 +33,8 @@ export const getMessagesOfDialog = (friendId) => dispatch => {
   });
 };
 
-export const sendMessage = (groupId, text) => dispatch => {
-  fetch( makeUriForRequest('/send-message'), {
+export const sendMessageToGroup = (groupId, text) => dispatch => {
+  fetch( makeUriForRequest('/send-message-to-group'), {
     method: 'post',
     headers: {
       'X-CSRF-TOKEN': scrfToken(),
