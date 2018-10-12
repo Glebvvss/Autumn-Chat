@@ -16,7 +16,6 @@ class DialogService implements IDialogService
     public function getMessagesBetween(int $userId, int $otherUserId) : Collection
     {
         $dialogId = $this->getDialogIdBetween($userId, $otherUserId);
-
         $messages = Message::where('group_id', '=', $dialogId)
             ->with('user')
             ->get();
@@ -75,7 +74,7 @@ class DialogService implements IDialogService
             return $dialog->id;
         } 
 
-        $alternativeDialog = $this->findDialog($otherUserId, $otherUserId);
+        $alternativeDialog = $this->findDialog($otherUserId, $userId);
         if ( $alternativeDialog ) {
             return $alternativeDialog->id;
         }
@@ -86,6 +85,7 @@ class DialogService implements IDialogService
     public function findDialog(int $userId, int $otherUserId)
     {
         $dialogName = $this->generateDialogName($userId, $otherUserId);
+
         return Group::where('group_name', '=', $dialogName)
                     ->where('type', '=', 'dialog')
                     ->first();

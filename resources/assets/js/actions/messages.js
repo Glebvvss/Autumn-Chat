@@ -13,12 +13,13 @@ export const getMessagesOfGroup = groupId => dispatch => {
         type:    'FETCH_MESSAGES_OF_SELECTED_CONTACT',
         payload: data.messages 
       });
+      dispatch({ type: 'SET_CONTACT_TYPE', payload: 'PUBLIC' });
       scrollDocumentToBottom();
     });
   });
 };
 
-export const getMessagesOfDialog = (friendId) => dispatch => {
+export const getMessagesOfDialog = friendId => dispatch => {
   fetch( makeUriForRequest('/get-messages-of-dialog/' + friendId), {
     method: 'get'
   })
@@ -28,6 +29,7 @@ export const getMessagesOfDialog = (friendId) => dispatch => {
         type:    'FETCH_MESSAGES_OF_SELECTED_CONTACT',
         payload: data.messages 
       });
+      dispatch({ type: 'SET_CONTACT_TYPE', payload: 'DIALOG' });
       scrollDocumentToBottom();
     });
   });

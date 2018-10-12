@@ -103,6 +103,16 @@ Route::group(['as' => 'friendship-request'], function() {
     ]);
 });
 
+Route::group(['as' => 'dialog-messages'], function() {
+    Route::get('/get-messages-of-dialog/{friendId}', [
+        'uses' => 'Friends\DialogMessageController@getAll'
+    ]);
+
+    Route::get('/send-message-to-dialog', [
+        'uses' => 'Friends\DialogMessageController@send'
+    ]);
+});
+
 Route::group(['as' => 'groups'], function() {
     Route::get('/get-groups', [
         'uses' => 'Groups\GroupController@getAll'
@@ -123,7 +133,9 @@ Route::group(['as' => 'groups'], function() {
     Route::get('/leave-group/{id}', [
         'uses' => 'Groups\GroupController@leave'
     ]);
+});
 
+Route::group(['as' => 'droup-messages'], function() {
     Route::get('/get-messages-of-group/{groupId}', [
         'uses' => 'Groups\GroupMessageController@getAll'
     ]);

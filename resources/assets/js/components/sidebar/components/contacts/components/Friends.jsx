@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getFriends } from '../../../../../actions/friends';
+import { getMessagesOfDialog } from '../../../../../actions/messages';
 import { scrfToken, makeUriForRequest } from '../../../../../functions.js';
 
 class Friends extends Component {
@@ -35,8 +36,9 @@ class Friends extends Component {
     
   }
 
-  openDialog() {
-
+  selectDialog(event) {
+    let friendId = event.target.attributes['data-friendID']['value'];
+    this.props.getMessagesOfDialog(friendId);
   }
 
   renderNewStatus(newStatus) {
@@ -64,14 +66,15 @@ class Friends extends Component {
       <ul>
         {
           this.props.friends.map((item, index) => (
-            <li key={index} 
-                onClick={this.openDialog.bind(this)} >
+            <li key={index}
+                data-friendID={item.id}
+                onClick={this.selectDialog.bind(this)}>
+
               {item.username}
               <div className="right-contacts-li-element">
                 {this.renderOnlineStatus(item.online)}
               </div>
-            </li>
-          ))
+            </li> ))
         }
       </ul>
     );
@@ -86,6 +89,9 @@ export default connect(
   dispatch => ({
     getFriends: () => {
       dispatch(getFriends());
+    },
+    getMessagesOfDialog: friendId => {
+      dispatch( getMessagesOfDialog(friendId) );
     },
   })
 )(Friends);

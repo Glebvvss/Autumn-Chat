@@ -73,20 +73,20 @@ export default connect(
     friendsWhoNotInSelectedGroup: state.selectedGroup.friendsWhoNotInSelectedGroup,
   }),
   dispatch => ({
-    getFriendsWhoNotInGroup: (groupId) => {
+    getFriendsWhoNotInGroup: groupId => {
       dispatch(getFriendsWhoNotInGroup(groupId));
     },
     getGroups: () => {
       dispatch(getGroups());
     },
-    getMembersOfGroup: (groupId) => {
+    getMembersOfGroup: groupId => {
       dispatch(getMembersOfGroup(groupId));
     },
-    setSelectedGroupIdInStore: (groupId) => {
+    setSelectedGroupIdInStore: groupId => {
       dispatch({ type: 'SET_SELECTED_GROUP_ID', payload: groupId });
     },
-    getMessagesOfGroup: (groupId) => {
+    getMessagesOfGroup: groupId => {
       dispatch( getMessagesOfGroup(groupId) );
-    }
+    },
   })
 )(Groups);

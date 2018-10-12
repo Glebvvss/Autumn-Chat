@@ -16063,9 +16063,9 @@ var autoReplace = function autoReplace() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getMessagesOfGroup; });
-/* unused harmony export getMessagesOfDialog */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return sendMessageToGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getMessagesOfGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getMessagesOfDialog; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return sendMessageToGroup; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_js__ = __webpack_require__(11);
 
 
@@ -16079,6 +16079,7 @@ var getMessagesOfGroup = function getMessagesOfGroup(groupId) {
           type: 'FETCH_MESSAGES_OF_SELECTED_CONTACT',
           payload: data.messages
         });
+        dispatch({ type: 'SET_CONTACT_TYPE', payload: 'PUBLIC' });
         Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["d" /* scrollDocumentToBottom */])();
       });
     });
@@ -16095,6 +16096,7 @@ var getMessagesOfDialog = function getMessagesOfDialog(friendId) {
           type: 'FETCH_MESSAGES_OF_SELECTED_CONTACT',
           payload: data.messages
         });
+        dispatch({ type: 'SET_CONTACT_TYPE', payload: 'DIALOG' });
         Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["d" /* scrollDocumentToBottom */])();
       });
     });
@@ -59104,6 +59106,7 @@ function symbolObservablePonyfill(root) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__notification__ = __webpack_require__(249);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__sidebarDropdownElements_js__ = __webpack_require__(250);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__messages_js__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__messages_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__messages_js__);
 
 
 
@@ -59147,7 +59150,7 @@ var reducers = {
   sidebarDropdownElements: __WEBPACK_IMPORTED_MODULE_12__sidebarDropdownElements_js__["a" /* sidebarDropdownElements */],
 
   //messages
-  messages: __WEBPACK_IMPORTED_MODULE_13__messages_js__["a" /* messages */]
+  messages: __WEBPACK_IMPORTED_MODULE_13__messages_js__["messages"]
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_0_redux__["c" /* combineReducers */])(reducers));
@@ -59542,27 +59545,10 @@ function sidebarDropdownElements() {
 
 /***/ }),
 /* 251 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, __webpack_exports__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = messages;
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var defaultState = {
-  messagesOfSelectedContact: []
-};
-
-function messages() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
-  var action = arguments[1];
-
-  if (action.type === 'FETCH_MESSAGES_OF_SELECTED_CONTACT') {
-    return _extends({}, state, {
-      messagesOfSelectedContact: action.payload
-    });
-  }
-  return state;
-};
+throw new Error("Module build failed: SyntaxError: Unexpected token, expected , (3:2)\n\n\u001b[0m \u001b[90m 1 | \u001b[39mlet defaultState \u001b[33m=\u001b[39m {\n \u001b[90m 2 | \u001b[39m  contactType\u001b[33m:\u001b[39m \u001b[32m''\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 3 | \u001b[39m  messagesOfSelectedContact\u001b[33m:\u001b[39m []\n \u001b[90m   | \u001b[39m  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 4 | \u001b[39m}\u001b[33m;\u001b[39m\n \u001b[90m 5 | \u001b[39m\n \u001b[90m 6 | \u001b[39m\u001b[36mexport\u001b[39m \u001b[36mfunction\u001b[39m messages(state \u001b[33m=\u001b[39m defaultState\u001b[33m,\u001b[39m action) {\u001b[0m\n");
 
 /***/ }),
 /* 252 */
@@ -61647,7 +61633,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_friends__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_messages__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__functions_js__ = __webpack_require__(11);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -61655,6 +61642,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -61679,7 +61667,7 @@ var Friends = function (_Component) {
     value: function subscribeOnChangesInFreindList() {
       var _this2 = this;
 
-      fetch(Object(__WEBPACK_IMPORTED_MODULE_3__functions_js__["b" /* makeUriForRequest */])('/get-user-id'), {
+      fetch(Object(__WEBPACK_IMPORTED_MODULE_4__functions_js__["b" /* makeUriForRequest */])('/get-user-id'), {
         method: 'get'
       }).then(function (response) {
         response.json().then(function (httpData) {
@@ -61700,8 +61688,11 @@ var Friends = function (_Component) {
     key: 'highlightActiveItem',
     value: function highlightActiveItem() {}
   }, {
-    key: 'openDialog',
-    value: function openDialog() {}
+    key: 'selectDialog',
+    value: function selectDialog(event) {
+      var friendId = event.target.attributes['data-friendID']['value'];
+      this.props.getMessagesOfDialog(friendId);
+    }
   }, {
     key: 'renderNewStatus',
     value: function renderNewStatus(newStatus) {
@@ -61734,7 +61725,8 @@ var Friends = function (_Component) {
           return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'li',
             { key: index,
-              onClick: _this3.openDialog.bind(_this3) },
+              'data-friendID': item.id,
+              onClick: _this3.selectDialog.bind(_this3) },
             item.username,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'div',
@@ -61758,6 +61750,9 @@ var Friends = function (_Component) {
   return {
     getFriends: function getFriends() {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends__["e" /* getFriends */])());
+    },
+    getMessagesOfDialog: function getMessagesOfDialog(friendId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_messages__["a" /* getMessagesOfDialog */])(friendId));
     }
   };
 })(Friends));
@@ -61877,7 +61872,7 @@ var Groups = function (_Component) {
       dispatch({ type: 'SET_SELECTED_GROUP_ID', payload: groupId });
     },
     getMessagesOfGroup: function getMessagesOfGroup(groupId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_messages__["a" /* getMessagesOfGroup */])(groupId));
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_messages__["b" /* getMessagesOfGroup */])(groupId));
     }
   };
 })(Groups));
@@ -63782,7 +63777,7 @@ var NewMessageForm = function (_Component) {
 }, function (dispatch) {
   return {
     sendMessageToGroup: function sendMessageToGroup(groupId, text) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["b" /* sendMessageToGroup */])(groupId, text));
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["c" /* sendMessageToGroup */])(groupId, text));
     }
   };
 })(NewMessageForm));
