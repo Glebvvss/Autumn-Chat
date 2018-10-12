@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ReactScrollbar from 'react-scrollbar-js';
 import { connect } from 'react-redux';
-import CreateNewGroup from './components/CreateNewGroup/CreateNewGroup';
-import AddFriendsToExistsGroup from './components/AddFriendsToExistsGroup/AddFriendsToExistsGroup';
-import LeaveGroup from './components/LeaveGroup';
+import ReactScrollbar from 'react-scrollbar-js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { createGroup } from '../../../../../../actions/groups.js';
+
+import CreateNewGroup from './components/CreateNewGroup/CreateNewGroup.jsx';
+import AddFriendsToExistsGroup from './components/AddFriendsToExistsGroup/AddFriendsToExistsGroup.jsx';
+import LeaveGroup from './components/LeaveGroup.jsx';
 
 const scrollbar = {
   width: 260,

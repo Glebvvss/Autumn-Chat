@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import { sendMessageToGroup } from '../../../actions/messages';
 
 class NewMessageForm extends Component {

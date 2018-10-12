@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import MessageList from './components/MessageList/MessageList';
-import NewMessageForm from './components/NewMessageForm';
+
+import MessageList from './components/MessageList/MessageList.jsx';
+import NewMessageForm from './components/NewMessageForm.jsx';
 
 class Chat extends Component {
 

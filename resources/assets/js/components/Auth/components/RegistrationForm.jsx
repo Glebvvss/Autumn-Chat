@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { registrationAction } from '../../actions/auth';
+import { registrationAction } from '../../../actions/auth.js';
 
 class RegistrationForm extends Component {
 

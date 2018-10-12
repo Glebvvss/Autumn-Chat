@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import SidebarHead from './components/sidebar-head/SidebarHead';
-import SearchFriends from './components/SearchFriends';
-import Contacts from './components/contacts/Contacts';
-import Friends from './components/contacts/components/Friends';
-import Groups from './components/contacts/components/Groups';
 import ReactScrollbar from 'react-scrollbar-js';
+
+import { connect } from 'react-redux';
 import { getFriends } from '../../actions/friends';
-import DropdownComponents from './components/dropdown-components/DropdownComponents';
+
+import Contacts from './components/Contacts/Contacts.jsx';
+import SearchFriends from './components/SearchFriends.jsx';
+import Groups from './components/Contacts/components/Groups.jsx';
+import Friends from './components/Contacts/components/Friends.jsx';
+import SidebarHead from './components/SidebarHead.jsx';
+import DropdownComponents from './components/DropdownComponents/DropdownComponents.jsx';
 
 const scrollbar = {
   width: 260,

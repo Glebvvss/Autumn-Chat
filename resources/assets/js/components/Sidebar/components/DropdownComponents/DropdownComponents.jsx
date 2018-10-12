@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import FrienshipRequests from './components/friendship-requests/FriendshipRequests';
-import GroupManager from './components/group-manager/GroupManager';
+
+import FrienshipRequests from './components/FriendshipRequests/FriendshipRequests.jsx';
+import GroupManager from './components/GroupManager/GroupManager.jsx';
 
 class DropdownComponents extends Component {
 

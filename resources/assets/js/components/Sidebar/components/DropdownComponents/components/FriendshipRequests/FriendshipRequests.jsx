@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactScrollbar from 'react-scrollbar-js';
-import RecivedRequests from './components/RecivedRequests';
-import SendedRequests from './components/SendedRequests';
+
+import RecivedRequests from './components/RecivedRequests.jsx';
+import SendedRequests from './components/SendedRequests.jsx';
 
 const scrollbar = {
   width: 260,

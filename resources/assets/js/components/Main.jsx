@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+
 import { connect } from 'react-redux';
-import Sidebar from './sidebar/Sidebar';
-import LoginForm from './auth/LoginForm';
-import RegistrationForm from './auth/RegistrationForm';
 import { checkLogin } from '../actions/auth.js';
-import Notifications from './notifications/Notifications';
-import Chat from './chat/Chat';
+
+import Chat from './Chat/Chat.jsx';
+import Auth from './Auth/Auth.jsx';
+import Sidebar from './Sidebar/Sidebar.jsx';
+import Notifications from './Notifications/Notifications.jsx';
 
 class Main extends Component {
 	constructor(props) {
@@ -16,8 +17,7 @@ class Main extends Component {
 	renderAuthForms() {
 		return (
 			<div className="auth">
-				<LoginForm />
-				<RegistrationForm />
+				<Auth />
 			</div>
 		);
 	}

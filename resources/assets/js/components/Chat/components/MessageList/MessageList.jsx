@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import Message from './components/Message.jsx';
 
 class MessageList extends Component {

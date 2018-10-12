@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactScrollbar from 'react-scrollbar-js';
+
 import { makeUriForRequest } from '../../../../../../../functions';
 import { getRecivedFriendshipRequests, 
          comfirmFriendRequest,

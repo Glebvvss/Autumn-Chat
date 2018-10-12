@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { logoutAction, getUsername } from '../../../../actions/auth';
+import { logoutAction, getUsername } from '../../../actions/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getCountNewRecivedFriendshipRequests,
-         readNewRecivedFriendshipRequests } from '../../../../actions/friends';
+         readNewRecivedFriendshipRequests } from '../../../actions/friends';
 
 class SidebarHead extends Component {
 
