@@ -18,7 +18,7 @@ class NewMessageForm extends Component {
     this.blockDefaultEnterEventInTextarea(event);
 
     if ( event.key === 'Enter' && text !== '' ) {
-      this.props.sendMessageToGroup(this.props.selectedGroupId, text);
+      this.props.sendMessageToGroup(this.props.selectedContactId, text);
       this.clearTextarea();
     }
   }
@@ -62,7 +62,7 @@ class NewMessageForm extends Component {
 
 export default connect(
   state => ({
-    selectedGroupId: state.selectedGroup.selectedGroupId
+    selectedContactId: state.selectedContact.id
   }),
   dispatch => ({
     sendMessageToGroup: (groupId, text) => {

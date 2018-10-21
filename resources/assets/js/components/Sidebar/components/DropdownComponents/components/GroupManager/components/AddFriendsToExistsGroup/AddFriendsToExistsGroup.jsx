@@ -24,7 +24,7 @@ class AddFriendsToExistsGroup extends Component {
 
   initialAddSelectedFriendsToGroup() {
     this.props.addSelectedMembersToGroup(
-      this.props.selectedGroupId, 
+      this.props.selectedContactId, 
       this.props.newMembersIdToGroupList
     );
   }
@@ -56,7 +56,7 @@ class AddFriendsToExistsGroup extends Component {
   }
 
   render() {
-    if ( this.props.selectedGroupId === null ) {
+    if ( this.props.selectedContactId === null ) {
       return this.renderIfGroupNoSelected();
     }
     return this.renderIfGroupSelected();
@@ -66,10 +66,10 @@ class AddFriendsToExistsGroup extends Component {
 
 export default connect(
   state => ({
-    groupMembersIdList: state.makeNewGroup.groupMembersIdList,
-    friendsWhoNotInSelectedGroup: state.selectedGroup.friendsWhoNotInSelectedGroup,
-    selectedGroupId: state.selectedGroup.selectedGroupId,
-    newMembersIdToGroupList: state.selectedGroup.newMembersIdToGroupList,
+    groupMembersIdList:           state.makeNewGroup.groupMembersIdList,
+    friendsWhoNotInSelectedGroup: state.selectedContact.friendsWhoNotInSelectedContact,
+    selectedContactId:            state.selectedContact.id,
+    newMembersIdToGroupList:      state.selectedContact.newMembersIdToContactList,
   }),
   dispatch => ({
     addSelectedMembersToGroup: (groupId, newGroupMembersIdList) => {

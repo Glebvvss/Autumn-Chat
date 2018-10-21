@@ -8,27 +8,27 @@ class FriendListForExistsGroup extends Component {
     super(props);
 
     this.state = {
-      friendsWhoNotInSelectedGroup: []
+      friendsWhoNotInSelectedContact: []
     };
   }
 
   componentDidMount() {
     this.setState({
       ...this.state,
-      friendsWhoNotInSelectedGroup: this.props.friendsWhoNotInSelectedGroup
+      friendsWhoNotInSelectedContact: this.props.friendsWhoNotInSelectedContact
     });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if ( this.props !== prevProps ) {
-      this.setFriendsWhoNotInSelectedGroup();      
+      this.setfriendsWhoNotInSelectedContact();      
     }
   }
 
-  setFriendsWhoNotInSelectedGroup() {
+  setfriendsWhoNotInSelectedContact() {
     this.setState({
       ...this.state,
-      friendsWhoNotInSelectedGroup: this.props.friendsWhoNotInSelectedGroup
+      friendsWhoNotInSelectedContact: this.props.friendsWhoNotInSelectedContact
     });
   }
 
@@ -39,17 +39,17 @@ class FriendListForExistsGroup extends Component {
 
   addOrRomoveCheckMarker(event) {
     const numberOfList = event.target.attributes['data-key']['value'];
-    let element = this.props.friendsWhoNotInSelectedGroup[numberOfList];
+    let element = this.props.friendsWhoNotInSelectedContact[numberOfList];
 
     if ( element.hasOwnProperty('selected') && element['selected'] === true ) {
-      this.props.friendsWhoNotInSelectedGroup[numberOfList]['selected'] = false;
+      this.props.friendsWhoNotInSelectedContact[numberOfList]['selected'] = false;
     } else {
-      this.props.friendsWhoNotInSelectedGroup[numberOfList]['selected'] = true;
+      this.props.friendsWhoNotInSelectedContact[numberOfList]['selected'] = true;
     }
 
     this.setState({
       ...this.state,
-      friendsWhoNotInSelectedGroup: this.props.friendsWhoNotInSelectedGroup
+      friendsWhoNotInSelectedContact: this.props.friendsWhoNotInSelectedContact
     });
   }
 
@@ -80,7 +80,7 @@ class FriendListForExistsGroup extends Component {
       <div className="list-select-member-to-group">
         <ul>
           {
-            this.state.friendsWhoNotInSelectedGroup.map((item, index) => (
+            this.state.friendsWhoNotInSelectedContact.map((item, index) => (
               <li key={index}
                   data-key={index}
                   onClick={this.addSelectedFriendsToGroup.bind(this)}
@@ -101,10 +101,10 @@ class FriendListForExistsGroup extends Component {
 
 export default connect(
   state => ({
-    friends:                      state.friends.friends,
-    notification:                 state.notification.message,
-    newMembersIdToGroupList:      state.selectedGroup.newMembersIdToGroupList,
-    friendsWhoNotInSelectedGroup: state.selectedGroup.friendsWhoNotInSelectedGroup,
+    friends:                        state.friends.friends,
+    notification:                   state.notification.message,
+    newMembersIdToGroupList:        state.selectedContact.newMembersIdToCantact,
+    friendsWhoNotInSelectedContact: state.selectedContact.friendsWhoNotInSelectedContact,
   }),
   dispatch => ({
     changeFroupMemberList: (clickedFriendId) => {
@@ -112,7 +112,7 @@ export default connect(
     },
     updateNewMambersIdToGroupList: (clickedFriendId) => {
       dispatch({ 
-        type:    'UPDATE_NEW_MEMBERS_ID_TO_GROUP_LIST',
+        type:    'UPDATE_NEW_MEMBERS_ID_TO_CONTACT_LIST',
         payload: clickedFriendId 
       });
     }

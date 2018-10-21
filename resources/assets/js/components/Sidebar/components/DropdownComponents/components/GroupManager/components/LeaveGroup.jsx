@@ -56,7 +56,7 @@ class LeaveGroup extends Component {
 
 export default connect(
   state => ({
-    selectedGroupId: state.selectedGroup.selectedGroupId
+    selectedGroupId: state.selectedContact.id
   }),
   dispatch => ({
     leaveGroup: groupId => {

@@ -8,39 +8,42 @@ import { searchFriends } from './contacts/friends/searchFriends.js';
 import { friends } from './contacts/friends/friends.js';
 import { groups } from './contacts/groups/groups.js';
 import { makeNewGroup } from './contacts/groups/makeNewGroup.js';
+
 import { selectedGroup } from './contacts/groups/selectedGroup.js';
+import { selectedContact } from './contacts/selectedContact.js';
+
 import { notification } from './notification';
 import { sidebarDropdownElements } from './sidebarDropdownElements.js';
 import { messages } from './messages.js';
 
 let reducers = {
-  //all notification messages of project
+
   notification,
 
-  //auth
+  //>auth
   login,
-  registration,
-  checkLogin,
   userInfo,
+  checkLogin,
+  registration,
+  //<
 
   //> contacts
-
-    //friends
+    //> friends
     friends,
     searchFriends,
     friendshipRequests,
+    //<
 
-    //groups
+    //> groups
     groups,
     makeNewGroup,
-    selectedGroup,
+    //<
 
-  //< contacts
+    selectedContact,
+  //<
 
-  //sidebar visible dropdown elements
-  sidebarDropdownElements,  
+  sidebarDropdownElements,
 
-  //messages
   messages,
 };
 

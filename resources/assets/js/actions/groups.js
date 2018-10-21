@@ -39,7 +39,7 @@ export const getFriendsWhoNotInGroup = groupId => dispatch => {
   .then(response => {
     response.json().then(data => {
       dispatch({ 
-        type:   'FETCH_FRIENDS_WHO_NOT_IN_SELECTED_GROUP', 
+        type:   'FETCH_FRIENDS_WHO_NOT_IN_SELECTED_CONTACT', 
         payload: data.friendsWhoNotInGroup
       });
     });
@@ -52,10 +52,22 @@ export const getMembersOfGroup = groupId => dispatch => {
   })
   .then(response => {
     response.json().then(data => {
+
       dispatch({
-        type:   'FETCH_MEMBERS_OF_SELECTED_GROUP', 
+        type:   'FETCH_MEMBERS_OF_SELECTED_CONTACT', 
         payload: data.membersOfGroup 
       });
+
+      dispatch({
+        type:   'SET_SELECTED_CONTACT_ID', 
+        payload: groupId
+      });
+      
+      dispatch({
+        type:   'SET_SELECTED_CONTACT_TYPE', 
+        payload: 'group'
+      });
+
     });
   });
 };
@@ -87,6 +99,6 @@ export const leaveGroup = groupId => dispatch => {
   })
   .then(response => {
     dispatch(getGroups());
-    dispatch({ type: 'SET_SELECTED_GROUP_ID', payload: null });
+    dispatch({ type: 'SET_SELECTED_CONTACT_ID', payload: null });
   });
 };

@@ -3,6 +3,7 @@ let defaultState = {
 }
 
 export function registration(state = defaultState, action) {
+
 	if ( action.type === 'REGISTRATION_ACTION' ) {
 		if ( action.payload.hasOwnProperty('errors') ) {
 			return {
@@ -13,6 +14,7 @@ export function registration(state = defaultState, action) {
 			return defaultState;
 		}
 	}
+	
 	if ( action.type === 'CLEAR_REGISTRATION_FORM_ERRORS' ) {
 		return defaultState;
 	}

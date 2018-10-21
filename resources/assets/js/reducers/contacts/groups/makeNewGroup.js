@@ -5,6 +5,7 @@ let defaultState = {
 };
 
 export function makeNewGroup( state = defaultState, action ) {
+
   if ( action.type === 'CHANGE_GROUP_MEMBER_LIST_BEFORE_CREATED' ) {
 
     let clickedFriendId = action.payload;
@@ -21,11 +22,13 @@ export function makeNewGroup( state = defaultState, action ) {
       groupMembersIdList: cloneObject(state.groupMembersIdList)
     };
   }
+
   if ( action.type === 'CLEAR_GROUP_MEMBERS_ID_LIST_AFTER_CREATED' ) {
     return {
       ...state,
       groupMembersIdList: []
     };
   }
+  
   return state;
 }

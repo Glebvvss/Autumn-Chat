@@ -69,8 +69,8 @@ class Groups extends Component {
 export default connect(
   state => ({
     groups:                       state.groups.groups,
-    membersOfGroup:               state.selectedGroup.membersOfSelectedGroup,
-    friendsWhoNotInSelectedGroup: state.selectedGroup.friendsWhoNotInSelectedGroup,
+    membersOfGroup:               state.selectedContact.members,
+    friendsWhoNotInSelectedGroup: state.selectedContact.friendsWhoNotInSelectedContact,
   }),
   dispatch => ({
     getFriendsWhoNotInGroup: groupId => {
