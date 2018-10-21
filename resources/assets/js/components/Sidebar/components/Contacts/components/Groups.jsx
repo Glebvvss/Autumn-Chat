@@ -35,14 +35,10 @@ class Groups extends Component {
     }
   }
 
-  highlightActiveItem() {
-    
-  }
-
   selectGroup(event) {
     const selectedGroupId = event.target.attributes['data-id']['value'];
 
-    this.props.setSelectedGroupIdInStore(selectedGroupId);
+    this.props.setSelectedGroupParams(selectedGroupId);
     this.props.getMembersOfGroup(selectedGroupId);
     this.props.getMessagesOfGroup(selectedGroupId);
     this.props.getFriendsWhoNotInGroup(selectedGroupId);
@@ -55,8 +51,9 @@ class Groups extends Component {
           this.props.groups.map((item, index) => (
             <li key={index}
                 data-id={item.id}
-                onClick={this.selectGroup.bind(this)} >
-                
+                onClick={this.selectGroup.bind(this)} 
+                className={( this.props.selectedContactId == item.id ) ? 'active-contact' : null} >
+              
               {item.group_name}
             </li> ))
         }
@@ -70,6 +67,7 @@ export default connect(
   state => ({
     groups:                       state.groups.groups,
     membersOfGroup:               state.selectedContact.members,
+    selectedContactId:            state.selectedContact.id,
     friendsWhoNotInSelectedGroup: state.selectedContact.friendsWhoNotInSelectedContact,
   }),
   dispatch => ({
@@ -82,8 +80,9 @@ export default connect(
     getMembersOfGroup: groupId => {
       dispatch(getMembersOfGroup(groupId));
     },
-    setSelectedGroupIdInStore: groupId => {
-      dispatch({ type: 'SET_SELECTED_GROUP_ID', payload: groupId });
+    setSelectedGroupParams: groupId => {
+      dispatch({ type: 'SET_SELECTED_CONTACT_ID',   payload: groupId });
+      dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'GROUP' });
     },
     getMessagesOfGroup: groupId => {
       dispatch( getMessagesOfGroup(groupId) );

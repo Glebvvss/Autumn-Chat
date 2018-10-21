@@ -381,9 +381,10 @@ ul.user-list-of-group li {
   border-left: 2px solid #36393F;
 }
 
-.contacts .list ul .active-connect {
+.contacts .list ul .active-contact {
   border-left: 4px solid #E88C01;
-  padding-left: 6px !important;
+  padding-left: 16px !important;
+  color: #E88C01;
 }
 
 .contacts .list ul li {

@@ -32,12 +32,9 @@ class Friends extends Component {
     
   }
 
-  highlightActiveItem() {
-    
-  }
-
   selectDialog(event) {
     let friendId = event.target.attributes['data-friendID']['value'];
+    this.props.setSelectedDialogParams(friendId);
     this.props.getMessagesOfDialog(friendId);
   }
 
@@ -68,7 +65,8 @@ class Friends extends Component {
           this.props.friends.map((item, index) => (
             <li key={index}
                 data-friendID={item.id}
-                onClick={this.selectDialog.bind(this)}>
+                onClick={this.selectDialog.bind(this)}
+                className={( this.props.selectedContactId == item.id ) ? 'active-contact' : null} >
 
               {item.username}
               <div className="right-contacts-li-element">
@@ -84,7 +82,8 @@ class Friends extends Component {
 
 export default connect(
   state => ({
-    friends: state.friends.friends
+    friends:           state.friends.friends,
+    selectedContactId: state.selectedContact.id,
   }),
   dispatch => ({
     getFriends: () => {
@@ -92,6 +91,10 @@ export default connect(
     },
     getMessagesOfDialog: friendId => {
       dispatch( getMessagesOfDialog(friendId) );
+    },
+    setSelectedDialogParams: friendId => {
+      dispatch({ type: 'SET_SELECTED_CONTACT_ID',   payload: friendId });
+      dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
     },
   })
 )(Friends);
