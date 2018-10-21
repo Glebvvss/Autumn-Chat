@@ -5,7 +5,7 @@ let defaultState = {
   type: null,
   members: [],
   friendsWhoNotInSelectedContact: [],
-  newMembersIdToCantact: [],
+  newMembersIdToContact: [],
 };
 
 export function selectedContact(state = defaultState, action) {
@@ -51,7 +51,7 @@ export function selectedContact(state = defaultState, action) {
 
     return {
       ...state,
-      newMembersIdToCantact: cloneObject(state.newMembersIdToContact)
+      newMembersIdToCantact: cloneObject(state.newMembersIdToCantact)
     };
   }
   

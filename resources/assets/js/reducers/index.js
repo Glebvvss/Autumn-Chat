@@ -8,8 +8,6 @@ import { searchFriends } from './contacts/friends/searchFriends.js';
 import { friends } from './contacts/friends/friends.js';
 import { groups } from './contacts/groups/groups.js';
 import { makeNewGroup } from './contacts/groups/makeNewGroup.js';
-
-import { selectedGroup } from './contacts/groups/selectedGroup.js';
 import { selectedContact } from './contacts/selectedContact.js';
 
 import { notification } from './notification';
@@ -28,6 +26,7 @@ let reducers = {
   //<
 
   //> contacts
+
     //> friends
     friends,
     searchFriends,
@@ -39,7 +38,7 @@ let reducers = {
     makeNewGroup,
     //<
 
-    selectedContact,
+  selectedContact,
   //<
 
   sidebarDropdownElements,

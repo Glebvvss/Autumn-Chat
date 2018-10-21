@@ -25,7 +25,7 @@ class AddFriendsToExistsGroup extends Component {
   initialAddSelectedFriendsToGroup() {
     this.props.addSelectedMembersToGroup(
       this.props.selectedContactId, 
-      this.props.newMembersIdToGroupList
+      this.props.newMembersIdToGroup
     );
   }
 
@@ -69,7 +69,7 @@ export default connect(
     groupMembersIdList:           state.makeNewGroup.groupMembersIdList,
     friendsWhoNotInSelectedGroup: state.selectedContact.friendsWhoNotInSelectedContact,
     selectedContactId:            state.selectedContact.id,
-    newMembersIdToGroupList:      state.selectedContact.newMembersIdToContactList,
+    newMembersIdToGroup:          state.selectedContact.newMembersIdToContact,
   }),
   dispatch => ({
     addSelectedMembersToGroup: (groupId, newGroupMembersIdList) => {

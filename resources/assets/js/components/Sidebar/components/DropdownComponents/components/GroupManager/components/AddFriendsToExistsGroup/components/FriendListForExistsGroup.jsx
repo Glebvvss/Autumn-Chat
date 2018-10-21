@@ -103,14 +103,14 @@ export default connect(
   state => ({
     friends:                        state.friends.friends,
     notification:                   state.notification.message,
-    newMembersIdToGroupList:        state.selectedContact.newMembersIdToCantact,
+    newMembersIdToGroupList:        state.selectedContact.newMembersIdToContact,
     friendsWhoNotInSelectedContact: state.selectedContact.friendsWhoNotInSelectedContact,
   }),
   dispatch => ({
-    changeFroupMemberList: (clickedFriendId) => {
+    changeFroupMemberList: clickedFriendId => {
       dispatch({ type: 'CHANGE_GROUP_MEMBER_LIST_BEFORE_CREATED', payload: clickedFriendId });
     },
-    updateNewMambersIdToGroupList: (clickedFriendId) => {
+    updateNewMambersIdToGroupList: clickedFriendId => {
       dispatch({ 
         type:    'UPDATE_NEW_MEMBERS_ID_TO_CONTACT_LIST',
         payload: clickedFriendId 

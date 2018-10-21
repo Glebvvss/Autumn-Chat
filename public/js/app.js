@@ -59113,13 +59113,10 @@ function symbolObservablePonyfill(root) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__contacts_friends_friends_js__ = __webpack_require__(245);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__contacts_groups_groups_js__ = __webpack_require__(246);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__contacts_groups_makeNewGroup_js__ = __webpack_require__(247);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__contacts_groups_selectedGroup_js__ = __webpack_require__(248);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__contacts_selectedContact_js__ = __webpack_require__(249);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__notification__ = __webpack_require__(250);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__sidebarDropdownElements_js__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__messages_js__ = __webpack_require__(252);
-
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__contacts_selectedContact_js__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__notification__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__sidebarDropdownElements_js__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__messages_js__ = __webpack_require__(252);
 
 
 
@@ -59138,7 +59135,7 @@ function symbolObservablePonyfill(root) {
 
 var reducers = {
 
-  notification: __WEBPACK_IMPORTED_MODULE_12__notification__["a" /* notification */],
+  notification: __WEBPACK_IMPORTED_MODULE_11__notification__["a" /* notification */],
 
   //>auth
   login: __WEBPACK_IMPORTED_MODULE_4__auth_login_js__["a" /* login */],
@@ -59148,6 +59145,7 @@ var reducers = {
   //<
 
   //> contacts
+
   //> friends
   friends: __WEBPACK_IMPORTED_MODULE_7__contacts_friends_friends_js__["a" /* friends */],
   searchFriends: __WEBPACK_IMPORTED_MODULE_6__contacts_friends_searchFriends_js__["a" /* searchFriends */],
@@ -59159,12 +59157,12 @@ var reducers = {
   makeNewGroup: __WEBPACK_IMPORTED_MODULE_9__contacts_groups_makeNewGroup_js__["a" /* makeNewGroup */],
   //<
 
-  selectedContact: __WEBPACK_IMPORTED_MODULE_11__contacts_selectedContact_js__["a" /* selectedContact */],
+  selectedContact: __WEBPACK_IMPORTED_MODULE_10__contacts_selectedContact_js__["a" /* selectedContact */],
   //<
 
-  sidebarDropdownElements: __WEBPACK_IMPORTED_MODULE_13__sidebarDropdownElements_js__["a" /* sidebarDropdownElements */],
+  sidebarDropdownElements: __WEBPACK_IMPORTED_MODULE_12__sidebarDropdownElements_js__["a" /* sidebarDropdownElements */],
 
-  messages: __WEBPACK_IMPORTED_MODULE_14__messages_js__["a" /* messages */]
+  messages: __WEBPACK_IMPORTED_MODULE_13__messages_js__["a" /* messages */]
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_0_redux__["c" /* combineReducers */])(reducers));
@@ -59454,12 +59452,7 @@ function makeNewGroup() {
 }
 
 /***/ }),
-/* 248 */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/var/www/rest-api/resources/assets/js/reducers/contacts/groups/selectedGroup.js'");
-
-/***/ }),
+/* 248 */,
 /* 249 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -59475,7 +59468,7 @@ var defaultState = {
   type: null,
   members: [],
   friendsWhoNotInSelectedContact: [],
-  newMembersIdToCantact: []
+  newMembersIdToContact: []
 };
 
 function selectedContact() {
@@ -59519,7 +59512,7 @@ function selectedContact() {
     }
 
     return _extends({}, state, {
-      newMembersIdToCantact: Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* cloneObject */])(state.newMembersIdToContact)
+      newMembersIdToCantact: Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* cloneObject */])(state.newMembersIdToCantact)
     });
   }
 
@@ -63503,7 +63496,7 @@ var AddFriendsToExistsGroup = function (_Component) {
   _createClass(AddFriendsToExistsGroup, [{
     key: 'initialAddSelectedFriendsToGroup',
     value: function initialAddSelectedFriendsToGroup() {
-      this.props.addSelectedMembersToGroup(this.props.selectedContactId, this.props.newMembersIdToGroupList);
+      this.props.addSelectedMembersToGroup(this.props.selectedContactId, this.props.newMembersIdToGroup);
     }
   }, {
     key: 'renderIfGroupSelected',
@@ -63559,7 +63552,7 @@ var AddFriendsToExistsGroup = function (_Component) {
     groupMembersIdList: state.makeNewGroup.groupMembersIdList,
     friendsWhoNotInSelectedGroup: state.selectedContact.friendsWhoNotInSelectedContact,
     selectedContactId: state.selectedContact.id,
-    newMembersIdToGroupList: state.selectedContact.newMembersIdToContactList
+    newMembersIdToGroup: state.selectedContact.newMembersIdToContact
   };
 }, function (dispatch) {
   return {
@@ -63708,7 +63701,7 @@ var FriendListForExistsGroup = function (_Component) {
   return {
     friends: state.friends.friends,
     notification: state.notification.message,
-    newMembersIdToGroupList: state.selectedContact.newMembersIdToCantact,
+    newMembersIdToGroupList: state.selectedContact.newMembersIdToContact,
     friendsWhoNotInSelectedContact: state.selectedContact.friendsWhoNotInSelectedContact
   };
 }, function (dispatch) {
