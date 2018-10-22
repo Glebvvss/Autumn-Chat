@@ -5,12 +5,19 @@ namespace App\Services\Realizations;
 use Auth;
 use App\Models\User;
 use App\Models\Group;
+use App\Models\Message;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use App\Services\Interfaces\IGroupService;
 
 class GroupService implements IGroupService
 {
+
+    public function getMembers(int $groupId) : Collection
+    {
+        return Group::find($groupId)->users()->get();
+    }
+
     public function create(string $groupName, array $memberListId)
     {
         if ( $groupName === '' ) {

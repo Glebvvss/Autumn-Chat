@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Friends;
+namespace App\Http\Controllers;
 
 use DB;
 use Auth;

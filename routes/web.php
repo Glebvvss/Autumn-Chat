@@ -49,86 +49,84 @@ Route::group(['as' => 'user'], function() {
 
 Route::group(['as' => 'friends'], function() {
     Route::get('/get-friends', [ 
-        'uses' => 'Friends\FriendController@getAll'
+        'uses' => 'FriendController@getAll'
     ]);
 
     Route::get('/get-friends-who-not-in-group/{groupId}', [ 
-        'uses' => 'Friends\FriendController@getAllWhoNotInGroup'
+        'uses' => 'FriendController@getAllWhoNotInGroup'
     ]);
 
     Route::get('/get-all-friends-who-not-in-group/{groupId}', [
-        'uses' => 'Friends\FriendController@getAllWhoNotInGroup'
-    ]);
-});
-
-Route::group(['as' => 'dialogs'], function() {
-    Route::get('/get-dialog-id/{friendId}', [
-        'uses' => 'Friends\DialogController@getDialogId'
+        'uses' => 'FriendController@getAllWhoNotInGroup'
     ]);
 });
 
 Route::group(['as' => 'friendship-requests'], function() {
     Route::get('/get-recived-friendship-requests', [
-        'uses' => 'Friends\FriendshipRequestController@getRecivedAll'
+        'uses' => 'FriendshipRequestController@getRecivedAll'
     ]);
 
     Route::get('/get-sended-friendship-requests', [
-        'uses' => 'Friends\FriendshipRequestController@getSendedAll'
+        'uses' => 'FriendshipRequestController@getSendedAll'
     ]);
 
     Route::get('/send-friendship-request/{username}', [
-        'uses' => 'Friends\FriendshipRequestController@send'
+        'uses' => 'FriendshipRequestController@send'
     ]);
 
     Route::get('/confirm-friendship-request/{senderId}', [
-        'uses' => 'Friends\FriendshipRequestController@confirm'
+        'uses' => 'FriendshipRequestController@confirm'
     ]);
 
     Route::get('/cancel-recived-friendship-request/{senderId}', [
-        'uses' => 'Friends\FriendshipRequestController@cancelRecived'
+        'uses' => 'FriendshipRequestController@cancelRecived'
     ]);
 
     Route::get('/cancel-sended-friendship-request/{recipientId}', [
-        'uses' => 'Friends\FriendshipRequestController@cancelSended'
+        'uses' => 'FriendshipRequestController@cancelSended'
     ]);
 
     Route::get('/get-count-new-recived-friendship-requests', [
-        'uses' => 'Friends\FriendshipRequestController@getCountNewRecived'
+        'uses' => 'FriendshipRequestController@getCountNewRecived'
     ]);
 
     Route::get('/read-new-recived-friendship-requests', [
-        'uses' => 'Friends\FriendshipRequestController@readNewRecived'
+        'uses' => 'FriendshipRequestController@readNewRecived'
     ]);
 });
 
 Route::group(['as' => 'groups'], function() {
     Route::get('/get-groups', [
-        'uses' => 'GroupController@getAll'
+        'uses' => 'GroupController@getPublicTypeAll'
     ]); 
 
+    Route::get('/get-dialog-id/{friendId}', [
+        'uses' => 'GroupController@getIdOfDialogType'
+    ]);
+
     Route::post('/create-group', [
-        'uses' => 'GroupController@create'
+        'uses' => 'GroupController@createPublicType'
     ]);
 
     Route::get('/get-members-of-group/{id}', [
-        'uses' => 'GroupController@getMembersOfGroup'
+        'uses' => 'GroupController@getMembersOfPublicType'
     ]);
 
     Route::post('/add-new-members-to-group', [
-        'uses' => 'GroupController@addNewMembersTo'
+        'uses' => 'GroupController@addNewMembersToPublicType'
     ]);
 
     Route::get('/leave-group/{id}', [
-        'uses' => 'GroupController@leave'
+        'uses' => 'GroupController@leaveFromPublicType'
     ]);
 });
 
-Route::group(['as' => 'chat-messages'], function() {
+Route::group(['as' => 'messages'], function() {
     Route::get('/get-messages-of-contact/{contactId}', [
-        'uses' => 'ChatMessageController@getAll'
+        'uses' => 'MessageController@getAllOfContact'
     ]);
 
     Route::post('/send-message', [
-        'uses' => 'ChatMessageController@send'
+        'uses' => 'MessageController@sendToContact'
     ]);
 });

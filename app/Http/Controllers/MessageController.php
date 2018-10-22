@@ -8,19 +8,9 @@ Use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ChatMessageController extends Controller
+class MessageController extends Controller
 {
-    public function send(Request $request)
-    {
-        $message = new Message();
-
-        $message->text     = $request->text;
-        $message->user_id  = Auth::user()->id;
-        $message->group_id = $request->contactId;
-        $message->save();
-    }
-
-    public function getAll(Request $request)
+    public function getAllOfContact(Request $request)
     {
         $messages = Message::where('group_id', '=', $request->contactId)
             ->with('user')
@@ -29,6 +19,16 @@ class ChatMessageController extends Controller
         return response()->json([
             'messages' => $messages
         ]);
+    }
+
+    public function sendToContact(Request $request)
+    {
+        $message = new Message();
+
+        $message->text     = $request->text;
+        $message->user_id  = Auth::user()->id;
+        $message->group_id = $request->contactId;
+        $message->save();
     }
 
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UnreadMessageLink extends Model
 {
-    protected $table = 'read_status_messages';
+    protected $table = 'unread_message_links';
 
     public function message() 
     {

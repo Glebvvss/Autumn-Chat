@@ -9,17 +9,20 @@ use App\Models\Friend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Interfaces\IGroupService as GroupService;
+use App\Services\Interfaces\IDialogService as DialogService;
 
 class GroupController extends Controller
 {
     private $groupService;
 
-    public function __construct(GroupService $groupService)
-    {
+    public function __construct(
+        GroupService  $groupService,
+        DialogService $dialogService
+    ){
         $this->groupService = $groupService;
     }
 
-    public function getAll() 
+    public function getPublicTypeAll() 
     {
         $groups = User::find( Auth::user()->id )
             ->groups()
@@ -31,7 +34,19 @@ class GroupController extends Controller
         ]);
     }
 
-    public function create(Request $request) {
+    public function getIdOfDialogType(Request $request)
+    {
+        $dialogId = $this->dialogService->getDialogIdBetween(
+            Auth::user()->id, 
+            $request->friendId
+        );
+
+        return response()->json([
+            'dialogId' => $dialogId
+        ]);
+    }
+
+    public function createPublicType(Request $request) {
         $groupMembersIdList = json_decode($request->groupMembersIdList);
         if ( $request->groupName === null ) {
             $request->groupName = '';
@@ -43,11 +58,11 @@ class GroupController extends Controller
         ]);
     }
 
-    public function leave(Request $request) {
+    public function leaveFromPublicType(Request $request) {
         $this->groupService->leaveMemberFrom($request->id, Auth::user()->id);
     }
 
-    public function addNewMembersTo(Request $request) {
+    public function addNewMembersToPublicType(Request $request) {
         $newGroupMembersIdList = json_decode($request->newGroupMembersIdList);
         $result = $this->groupService->addNewMembersTo($request->groupId, $newGroupMembersIdList);
         return response()->json([
@@ -55,7 +70,7 @@ class GroupController extends Controller
         ]);
     }
 
-    public function getMembersOfGroup(Request $request)
+    public function getMembersOfPublicType(Request $request)
     {
         $membersOfGroup = Group::find($request->id)
             ->users()
