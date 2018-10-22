@@ -20,12 +20,7 @@ class DialogMessageController extends Controller
 
     public function send(Request $request)
     {
-        $message = new Message();
-
-        $message->text     = $request->text;
-        $message->user_id  = Auth::user()->id;
-        $message->group_id = $request->groupId;
-        $message->save();
+        
     }
 
     public function getAll(Request $request)

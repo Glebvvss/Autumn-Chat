@@ -13,6 +13,17 @@ use Illuminate\Database\Eloquent\Collection;
 
 class DialogService implements IDialogService
 {
+    public function sendFromTo(int $userId, int $otherUserId, string $text)
+    {
+        $dialogId = $this->getDialogIdBetween($userId, $otherUserId);
+
+        $message = new Message();
+        $message->text = $text;
+        $message->user_id = $userId;
+        $message->group_id = $dialogId;
+        $message->save();
+    }
+
     public function getMessagesBetween(int $userId, int $otherUserId) : Collection
     {
         $dialogId = $this->getDialogIdBetween($userId, $otherUserId);
