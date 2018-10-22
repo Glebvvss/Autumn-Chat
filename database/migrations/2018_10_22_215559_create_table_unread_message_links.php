@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMessagesMetaTable extends Migration
+class CreateTableUnreadMessageLinks extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateMessagesMetaTable extends Migration
      */
     public function up()
     {
-        Schema::create('messages_meta', function (Blueprint $table) {
+        Schema::create('unread_message_links', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('taxonomy');
             $table->unsignedInteger('message_id');
+            $table->unsignedInteger('group_id');
             $table->unsignedInteger('user_id');
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ class CreateMessagesMetaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages_meta');
+        Schema::dropIfExists('unread_message_links');
     }
 }

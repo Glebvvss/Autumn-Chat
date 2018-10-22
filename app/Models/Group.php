@@ -18,5 +18,10 @@ class Group extends Model
     public function users() {
     	return $this->belongsToMany('App\Models\User');
     }
+
+    public function unreadMessageLinks()
+    {
+        return $this->hasMany('App\Models\UnreadMessageLink');
+    }
 }
   

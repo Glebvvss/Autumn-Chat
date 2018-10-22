@@ -68,6 +68,14 @@ class Groups extends Component {
                              this.props.selectedContactType == 'GROUP' ) ? 'active-contact' : null} >
               
               {item.group_name}
+              <span 
+                    style={{
+                      color: 'red',
+                      float: 'right'
+                    }}>
+
+                NEW
+              </span>
             </li> ))
         }
       </ul>

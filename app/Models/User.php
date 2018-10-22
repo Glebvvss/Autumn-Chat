@@ -21,28 +21,39 @@ class User extends Authenticatable {
 
     protected $table = 'users';
 
-    public function messages() {
+    public function messages() 
+    {
     	return $this->hasMany('App\Models\Message');
     }
 
-    public function messagesMeta() {
+    public function messagesMeta() 
+    {
     	return $this->hasMany('App\Models\MessageMeta');
     }
 
-    public function groups() {
+    public function groups() 
+    {
     	return $this->belongsToMany('App\Models\Group');
     }
 
-    public function friendshopRequestSenders() {
+    public function friendshopRequestSenders() 
+    {
         return $this->hasMany('App\Models\FriendshipRequest', 'id', 'sender_id');
     }
 
-    public function friendshopRequestRecipients() {
+    public function friendshopRequestRecipients() 
+    {
         return $this->hasMany('App\Models\FriendshipRequest', 'id', 'recipient_id');
     }
 
-    public function friends() {
+    public function friends() 
+    {
         return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_user_id');
+    }
+
+    public function unreadMessageLinks()
+    {
+        return $this->hasMany('App\Models\UnreadMessageLink');
     }
 
 }
