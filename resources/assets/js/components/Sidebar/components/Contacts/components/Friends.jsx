@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getFriends } from '../../../../../actions/friends';
-import { getMessagesOfDialog } from '../../../../../actions/messages';
+import { getMessages } from '../../../../../actions/messages';
 import { scrfToken, makeUriForRequest } from '../../../../../functions.js';
+
+import { getFriends, 
+         getDialogIdAndGetMessagesOfDialog } from '../../../../../actions/friends';
 
 class Friends extends Component {
 
@@ -10,6 +12,10 @@ class Friends extends Component {
     super(props);
     this.props.getFriends();
     this.subscribeOnChangesInFreindList();
+
+    this.state = {
+      selectedFriendId: null
+    };
   }
 
   subscribeOnChangesInFreindList() {
@@ -28,14 +34,33 @@ class Friends extends Component {
     });
   }
 
-  componentDidUpdate() {
-    
+  componentDidUpdate(prevProps) {
+    if ( this.props !== prevProps && 
+         this.props.selectedContactType !== 'DIALOG' ) {
+
+      this.resetHighlightMarkers();
+    }
+  }
+
+  resetHighlightMarkers() {
+    this.setState({
+      ...this.state,
+      selectedFriendId: null
+    });
+  }
+
+  highlightSelectedFriend(friendId) {
+    this.setState({
+      ...this.state,
+      selectedFriendId: friendId
+    });
   }
 
   selectDialog(event) {
     let friendId = event.target.attributes['data-friendID']['value'];
-    this.props.setSelectedDialogParams(friendId);
-    this.props.getMessagesOfDialog(friendId);
+
+    this.props.getDialogIdAndGetMessagesOfDialog(friendId);
+    this.highlightSelectedFriend(friendId);
   }
 
   renderNewStatus(newStatus) {
@@ -66,7 +91,8 @@ class Friends extends Component {
             <li key={index}
                 data-friendID={item.id}
                 onClick={this.selectDialog.bind(this)}
-                className={( this.props.selectedContactId == item.id ) ? 'active-contact' : null} >
+                className={( this.state.selectedFriendId == item.id &&
+                             this.props.selectedContactType === 'DIALOG' ) ? 'active-contact' : null} >
 
               {item.username}
               <div className="right-contacts-li-element">
@@ -82,18 +108,19 @@ class Friends extends Component {
 
 export default connect(
   state => ({
-    friends:           state.friends.friends,
-    selectedContactId: state.selectedContact.id,
+    friends:             state.friends.friends,
+    selectedContactId:   state.selectedContact.id,
+    selectedContactType: state.selectedContact.type,
   }),
   dispatch => ({
     getFriends: () => {
       dispatch(getFriends());
     },
-    getMessagesOfDialog: friendId => {
-      dispatch( getMessagesOfDialog(friendId) );
+    getMessages: dialogId => {
+      dispatch( getMessages(dialogId) );
     },
-    setSelectedDialogParams: friendId => {
-      dispatch({ type: 'SET_SELECTED_CONTACT_ID',   payload: friendId });
+    getDialogIdAndGetMessagesOfDialog: friendId => {
+      dispatch( getDialogIdAndGetMessagesOfDialog(friendId) );
       dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
     },
   })

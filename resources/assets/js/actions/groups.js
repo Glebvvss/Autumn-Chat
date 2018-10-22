@@ -57,17 +57,6 @@ export const getMembersOfGroup = groupId => dispatch => {
         type:   'FETCH_MEMBERS_OF_SELECTED_CONTACT', 
         payload: data.membersOfGroup 
       });
-
-      dispatch({
-        type:   'SET_SELECTED_CONTACT_ID', 
-        payload: groupId
-      });
-      
-      dispatch({
-        type:   'SET_SELECTED_CONTACT_TYPE', 
-        payload: 'group'
-      });
-
     });
   });
 };

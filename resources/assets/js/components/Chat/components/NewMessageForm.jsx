@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { sendMessageToGroup } from '../../../actions/messages';
+import { sendMessage } from '../../../actions/messages';
 
 class NewMessageForm extends Component {
 
@@ -18,7 +18,7 @@ class NewMessageForm extends Component {
     this.blockDefaultEnterEventInTextarea(event);
 
     if ( event.key === 'Enter' && text !== '' ) {
-      this.props.sendMessageToGroup(this.props.selectedContactId, text);
+      this.props.sendMessage(this.props.selectedContactId, text);
       this.clearTextarea();
     }
   }
@@ -65,8 +65,8 @@ export default connect(
     selectedContactId: state.selectedContact.id
   }),
   dispatch => ({
-    sendMessageToGroup: (groupId, text) => {
-      dispatch( sendMessageToGroup(groupId, text) );
+    sendMessage: (contactId, text) => {
+      dispatch( sendMessage(contactId, text) );
     }
   }),
 )(NewMessageForm);

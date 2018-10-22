@@ -3,8 +3,8 @@ import { scrfToken,
          scrollDocumentToBottom } from '../functions.js';
 
 
-export const getMessagesOfGroup = groupId => dispatch => {
-  fetch( makeUriForRequest('/get-messages-of-group/' + groupId), {
+export const getMessages = contactId => dispatch => {
+  fetch( makeUriForRequest('/get-messages-of-contact/' + contactId), {
     method: 'get'
   })
   .then(response => {
@@ -13,41 +13,24 @@ export const getMessagesOfGroup = groupId => dispatch => {
         type:    'FETCH_MESSAGES_OF_SELECTED_CONTACT',
         payload: data.messages 
       });
-      dispatch({ type: 'SET_CONTACT_TYPE', payload: 'PUBLIC' });
       scrollDocumentToBottom();
     });
   });
 };
 
-export const getMessagesOfDialog = friendId => dispatch => {
-  fetch( makeUriForRequest('/get-messages-of-dialog/' + friendId), {
-    method: 'get'
-  })
-  .then(response => {
-    response.json().then(data => {
-      dispatch({ 
-        type:    'FETCH_MESSAGES_OF_SELECTED_CONTACT',
-        payload: data.messages 
-      });
-      dispatch({ type: 'SET_CONTACT_TYPE', payload: 'DIALOG' });
-      scrollDocumentToBottom();
-    });
-  });
-};
-
-export const sendMessageToGroup = (groupId, text) => dispatch => {
-  fetch( makeUriForRequest('/send-message-to-group'), {
+export const sendMessage = (contactId, text) => dispatch => {
+  fetch( makeUriForRequest('/send-message'), {
     method: 'post',
     headers: {
       'X-CSRF-TOKEN': scrfToken(),
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     body: 
-      'groupId=' + groupId + '&' +
-      'text='    + text
+      'contactId=' + contactId + '&' +
+      'text='      + text
 
   })
   .then(response => {
-    dispatch( getMessagesOfGroup(groupId) );
+    dispatch( getMessages(contactId) );
   });
 }

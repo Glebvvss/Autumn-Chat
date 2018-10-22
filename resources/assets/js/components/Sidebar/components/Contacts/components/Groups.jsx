@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { makeUriForRequest } from '../../../../../functions.js';
-import { getMessagesOfGroup } from '../../../../../actions/messages';
+import { getMessages } from '../../../../../actions/messages';
 import { getGroups, 
          getMembersOfGroup, 
          getFriendsWhoNotInGroup } from '../../../../../actions/groups';
@@ -11,6 +11,10 @@ class Groups extends Component {
   constructor(props) {
     super(props);
     this.props.getGroups();
+
+    this.state = {
+      selectedGroupId: null
+    };
   }
 
   socketMethod() {
@@ -35,13 +39,21 @@ class Groups extends Component {
     }
   }
 
+  highlightSelectedGroup(groupId) {
+    this.setState({
+      ...this.state,
+      selectedGroupId: groupId
+    });
+  }
+
   selectGroup(event) {
     const selectedGroupId = event.target.attributes['data-id']['value'];
 
+    this.highlightSelectedGroup(selectedGroupId);
     this.props.setSelectedGroupParams(selectedGroupId);
     this.props.getMembersOfGroup(selectedGroupId);
-    this.props.getMessagesOfGroup(selectedGroupId);
     this.props.getFriendsWhoNotInGroup(selectedGroupId);
+    this.props.getMessages(selectedGroupId);
   }
 
   render() {
@@ -52,7 +64,8 @@ class Groups extends Component {
             <li key={index}
                 data-id={item.id}
                 onClick={this.selectGroup.bind(this)} 
-                className={( this.props.selectedContactId == item.id ) ? 'active-contact' : null} >
+                className={( this.state.selectedGroupId     == item.id &&
+                             this.props.selectedContactType == 'GROUP' ) ? 'active-contact' : null} >
               
               {item.group_name}
             </li> ))
@@ -67,7 +80,7 @@ export default connect(
   state => ({
     groups:                       state.groups.groups,
     membersOfGroup:               state.selectedContact.members,
-    selectedContactId:            state.selectedContact.id,
+    selectedContactType:          state.selectedContact.type,
     friendsWhoNotInSelectedGroup: state.selectedContact.friendsWhoNotInSelectedContact,
   }),
   dispatch => ({
@@ -84,8 +97,8 @@ export default connect(
       dispatch({ type: 'SET_SELECTED_CONTACT_ID',   payload: groupId });
       dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'GROUP' });
     },
-    getMessagesOfGroup: groupId => {
-      dispatch( getMessagesOfGroup(groupId) );
+    getMessages: groupId => {
+      dispatch( getMessages(groupId) );
     },
   })
 )(Groups);

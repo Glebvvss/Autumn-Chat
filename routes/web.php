@@ -17,19 +17,19 @@ Route::get('/', function () {
 
 Route::group(['as' => 'auth'], function() {
     Route::post('/login', [
-        'uses' => 'Auth\AuthController@login'
+        'uses' => 'AuthController@login'
     ]);
 
     Route::post('/registration', [
-        'uses' => 'Auth\AuthController@registration'
+        'uses' => 'AuthController@registration'
     ]);
 
     Route::get('/logout', [
-        'uses' => 'Auth\AuthController@logout'
+        'uses' => 'AuthController@logout'
     ]);
 
     Route::get('/check-login', [
-        'uses' => 'Auth\AuthController@checkLogin'
+        'uses' => 'AuthController@checkLogin'
     ]);
 });
 
@@ -61,7 +61,13 @@ Route::group(['as' => 'friends'], function() {
     ]);
 });
 
-Route::group(['as' => 'friendship-request'], function() {
+Route::group(['as' => 'dialogs'], function() {
+    Route::get('/get-dialog-id/{friendId}', [
+        'uses' => 'Friends\DialogController@getDialogId'
+    ]);
+});
+
+Route::group(['as' => 'friendship-requests'], function() {
     Route::get('/get-recived-friendship-requests', [
         'uses' => 'Friends\FriendshipRequestController@getRecivedAll'
     ]);
@@ -93,62 +99,36 @@ Route::group(['as' => 'friendship-request'], function() {
     Route::get('/read-new-recived-friendship-requests', [
         'uses' => 'Friends\FriendshipRequestController@readNewRecived'
     ]);
-
-    Route::get('/get-messages-of-group/{groupId}', [
-        'uses' => 'Groups\GroupMessageController@getAll'
-    ]);
-
-    Route::post('/send-message', [
-        'uses' => 'Groups\GroupMessageController@send'
-    ]);
-});
-
-Route::group(['as' => 'dialog-messages'], function() {
-    Route::get('/get-dialog-id', [
-        'uses' => 'Friends\DialogMessageController@getDialogId'
-    ]);
-
-    Route::get('/get-messages-of-dialog/{friendId}', [
-        'uses' => 'Friends\DialogMessageController@getAll'
-    ]);
-
-    Route::get('/send-message-to-dialog-by-friend-id', [
-        'uses' => 'Friends\DialogMessageController@sendTo'
-    ]);
-
-    Route::get('/send-message-to-dialog-by-dialog-id', [
-        'uses' => 'Friends\DialogMessageController@sendToDialogByDialogId'
-    ]);
 });
 
 Route::group(['as' => 'groups'], function() {
     Route::get('/get-groups', [
-        'uses' => 'Groups\GroupController@getAll'
+        'uses' => 'GroupController@getAll'
     ]); 
 
     Route::post('/create-group', [
-        'uses' => 'Groups\GroupController@create'
+        'uses' => 'GroupController@create'
     ]);
 
     Route::get('/get-members-of-group/{id}', [
-        'uses' => 'Groups\GroupController@getMembersOfGroup'
+        'uses' => 'GroupController@getMembersOfGroup'
     ]);
 
     Route::post('/add-new-members-to-group', [
-        'uses' => 'Groups\GroupController@addNewMembersTo'
+        'uses' => 'GroupController@addNewMembersTo'
     ]);
 
     Route::get('/leave-group/{id}', [
-        'uses' => 'Groups\GroupController@leave'
+        'uses' => 'GroupController@leave'
     ]);
 });
 
-Route::group(['as' => 'droup-messages'], function() {
-    Route::get('/get-messages-of-group/{groupId}', [
-        'uses' => 'Groups\GroupMessageController@getAll'
+Route::group(['as' => 'chat-messages'], function() {
+    Route::get('/get-messages-of-contact/{contactId}', [
+        'uses' => 'ChatMessageController@getAll'
     ]);
 
-    Route::post('/send-message-to-group', [
-        'uses' => 'Groups\GroupMessageController@send'
+    Route::post('/send-message', [
+        'uses' => 'ChatMessageController@send'
     ]);
 });

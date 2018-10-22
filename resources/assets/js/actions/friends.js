@@ -1,4 +1,5 @@
 import { scrfToken, makeUriForRequest } from '../functions.js';
+import { getMessages } from './messages.js';
 
 export const getFriends = () => dispatch => {
   fetch( makeUriForRequest('/get-friends'), {
@@ -119,4 +120,16 @@ export const getCountNewRecivedFriendshipRequests = () => dispatch => {
       });
     });
   });
+};
+
+export const getDialogIdAndGetMessagesOfDialog = friendId => dispatch => {
+  fetch( makeUriForRequest('/get-dialog-id/' + friendId), {
+    method: 'get'
+  })
+  .then(response => {
+    response.json().then(data => {
+      dispatch({ type: 'SET_SELECTED_CONTACT_ID', payload: data.dialogId });
+      dispatch( getMessages(data.dialogId) );
+    });
+  })
 };
