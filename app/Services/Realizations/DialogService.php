@@ -61,6 +61,21 @@ class DialogService implements IDialogService
         $this->removeDialogFromDatabase($dialogId);
     }
 
+    public function getDialogIdBetween(int $userId, int $otherUserId) : int
+    {
+        $dialog = $this->findDialog($userId, $otherUserId);
+        if ( $dialog ) {
+            return $dialog->id;
+        } 
+
+        $alternativeDialog = $this->findDialog($otherUserId, $userId);
+        if ( $alternativeDialog ) {
+            return $alternativeDialog->id;
+        }
+
+        throw new \Exception('Dialog is not exists.');
+    }
+
     private function deleteAllMessagesOfDialog(int $dialogId)
     {
         Message::where('group_id', '=', $dialogId)->delete();
@@ -76,21 +91,6 @@ class DialogService implements IDialogService
     private function removeDialogFromDatabase(int $dialogId)
     {
         Group::find($dialogId)->delete();
-    }
-
-    private function getDialogIdBetween(int $userId, int $otherUserId) : int
-    {
-        $dialog = $this->findDialog($userId, $otherUserId);
-        if ( $dialog ) {
-            return $dialog->id;
-        } 
-
-        $alternativeDialog = $this->findDialog($otherUserId, $userId);
-        if ( $alternativeDialog ) {
-            return $alternativeDialog->id;
-        }
-
-        throw new \Exception('Dialog is not exists.');
     }
 
     public function findDialog(int $userId, int $otherUserId)

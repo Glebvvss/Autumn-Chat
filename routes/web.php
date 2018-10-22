@@ -104,12 +104,20 @@ Route::group(['as' => 'friendship-request'], function() {
 });
 
 Route::group(['as' => 'dialog-messages'], function() {
+    Route::get('/get-dialog-id', [
+        'uses' => 'Friends\DialogMessageController@getDialogId'
+    ]);
+
     Route::get('/get-messages-of-dialog/{friendId}', [
         'uses' => 'Friends\DialogMessageController@getAll'
     ]);
 
-    Route::get('/send-message-to-dialog', [
-        'uses' => 'Friends\DialogMessageController@send'
+    Route::get('/send-message-to-dialog-by-friend-id', [
+        'uses' => 'Friends\DialogMessageController@sendTo'
+    ]);
+
+    Route::get('/send-message-to-dialog-by-dialog-id', [
+        'uses' => 'Friends\DialogMessageController@sendToDialogByDialogId'
     ]);
 });
 

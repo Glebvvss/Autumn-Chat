@@ -18,9 +18,28 @@ class DialogMessageController extends Controller
         $this->dialogService = $dialogService;
     }
 
-    public function send(Request $request)
+    public function getDialogId() {
+        $dialogId = $this->dialogService->getDialogIdBetween(
+            Auth::user()->id, $friendId
+        );
+
+        return response()->json([
+            'dialogId' => $dialogId
+        ]);
+    }
+
+    public function sendToDialogByDialogId(Request $request)
     {
         
+    }
+
+    public function sendTo(Request $request)
+    {
+        $this->dialogService->sendFromTo(
+            Auth::user()->id,
+            $request->friendId,
+            $request->text
+        );
     }
 
     public function getAll(Request $request)
