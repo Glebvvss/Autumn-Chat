@@ -8,8 +8,8 @@ use App\Models\Group;
 use App\Models\Friend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Interfaces\IPublicTypeGroupService as PublicTypeGroupService;
-use App\Services\Interfaces\IDialogTypeGroupService as DialogTypeGroupService;
+use App\Services\Interfaces\IGroupServices\IPublicTypeGroupService as PublicTypeGroupService;
+use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService as DialogTypeGroupService;
 
 class GroupController extends Controller
 {

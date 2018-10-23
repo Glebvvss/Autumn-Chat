@@ -9,8 +9,8 @@ use App\Events\UpdateFriendList;
 use App\Models\FriendshipRequest;
 use App\Http\Controllers\Controller;
 use App\Events\UpdateFriendRequestList;
-use App\Services\Interfaces\IDialogTypeGroupService as DialogTypeGroupService;
-use App\Services\Interfaces\IFriendshipRequestService as FriendshipRequestService;
+use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService as DialogTypeGroupService;
+use App\Services\Interfaces\IGroupServices\IFriendshipRequestService as FriendshipRequestService;
 
 class FriendshipRequestController extends Controller 
 {

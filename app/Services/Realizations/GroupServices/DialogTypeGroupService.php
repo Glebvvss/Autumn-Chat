@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Realizations;
+namespace App\Services\Realizations\GroupServices;
 
 use DB;
 use Auth;
@@ -9,9 +9,9 @@ use App\Models\Group;
 use App\Models\Message;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use App\Services\Interfaces\IDialogTypeGroupService;
+use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService;
 
-class DialogTypeGroupService implements IDialogTypeGroupService
+class DialogTypeGroupService extends BaseGroupService implements IDialogTypeGroupService
 {
     public function createBetween(int $userId, int $otherUserId)
     {

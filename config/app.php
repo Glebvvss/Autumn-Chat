@@ -179,8 +179,9 @@ return [
         App\Providers\Custom\FriendshipRequestServiceProvider::class,
         App\Providers\Custom\AuthenticationServiceProvider::class,
         App\Providers\Custom\FriendServiceProvider::class,
-        App\Providers\Custom\PublicTypeGroupServiceProvider::class,
-        App\Providers\Custom\DialogTypeGroupServiceProvider::class,
+
+        App\Providers\Custom\GroupServiceProviders\PublicTypeGroupServiceProvider::class,
+        App\Providers\Custom\GroupServiceProviders\DialogTypeGroupServiceProvider::class,
     ],
 
     /*

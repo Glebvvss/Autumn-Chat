@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Providers\Custom;
+namespace App\Providers\Custom\GroupServiceProviders;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\PublicTypeGroupService;
+use App\Services\Realizations\GroupServices\PublicTypeGroupService;
 
 class PublicTypeGroupServiceProvider extends ServiceProvider
 {
@@ -24,7 +24,7 @@ class PublicTypeGroupServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\Interfaces\IPublicTypeGroupService', function() {
+        $this->app->bind('App\Services\Interfaces\IGroupServices\IPublicTypeGroupService', function() {
             return new PublicTypeGroupService();
         });
     }

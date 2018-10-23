@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Realizations;
+namespace App\Services\Realizations\GroupServices;
 
 use Auth;
 use App\Models\User;
@@ -8,11 +8,10 @@ use App\Models\Group;
 use App\Models\Message;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use App\Services\Interfaces\IPublicTypeGroupService;
+use App\Services\Interfaces\IGroupServices\IPublicTypeGroupService;
 
-class PublicTypeGroupService implements IPublicTypeGroupService
+class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGroupService
 {
-
     public function getMembers(int $groupId) : Collection
     {
         return Group::find($groupId)->users()->get();
