@@ -9,20 +9,20 @@ use App\Events\UpdateFriendList;
 use App\Models\FriendshipRequest;
 use App\Http\Controllers\Controller;
 use App\Events\UpdateFriendRequestList;
-use App\Services\Interfaces\IDialogService as DialogService;
+use App\Services\Interfaces\IDialogTypeGroupService as DialogTypeGroupService;
 use App\Services\Interfaces\IFriendshipRequestService as FriendshipRequestService;
 
 class FriendshipRequestController extends Controller 
 {
     protected $friendshipRequestService;
-    protected $dialogService;
+    protected $dialogTypeGroupService;
 
     public function __construct (
         FriendshipRequestService $friendshipRequestService,
-        DialogService $dialogService
+        DialogTypeGroupService   $dialogTypeGroupService
     ){
         $this->friendshipRequestService = $friendshipRequestService;
-        $this->dialogService = $dialogService;
+        $this->dialogTypeGroupService = $dialogTypeGroupService;
     }
 
     public function getRecivedAll() 
@@ -59,7 +59,7 @@ class FriendshipRequestController extends Controller
     public function confirm(Request $request)
     {        
         $result = $this->friendshipRequestService->confirmFrom($request->senderId);
-        $this->dialogService->createBetween($request->senderId, Auth::user()->id);
+        $this->dialogTypeGroupService->createBetween($request->senderId, Auth::user()->id);
 
         if ( $result === 'Friend added!' ) {
             event( new UpdateFriendRequestList($request->senderId, 'sended') );

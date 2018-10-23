@@ -3,9 +3,9 @@
 namespace App\Providers\Custom;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\DialogService;
+use App\Services\Realizations\DialogTypeGroupService;
 
-class DialogServiceProvider extends ServiceProvider
+class DialogTypeGroupServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -24,8 +24,8 @@ class DialogServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\Interfaces\IDialogService', function() {
-            return new DialogService();
+        $this->app->bind('App\Services\Interfaces\IDialogTypeGroupService', function() {
+            return new DialogTypeGroupService();
         });
     }
 }

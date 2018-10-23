@@ -8,18 +8,20 @@ use App\Models\Group;
 use App\Models\Friend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Interfaces\IGroupService as GroupService;
-use App\Services\Interfaces\IDialogService as DialogService;
+use App\Services\Interfaces\IPublicTypeGroupService as PublicTypeGroupService;
+use App\Services\Interfaces\IDialogTypeGroupService as DialogTypeGroupService;
 
 class GroupController extends Controller
 {
-    private $groupService;
+    private $publicTypeGroupService;
+    private $dialogTypeGroupService;
 
     public function __construct(
-        GroupService  $groupService,
-        DialogService $dialogService
+        PublicTypeGroupService  $publicTypeGroupService,
+        DialogTypeGroupService  $dialogTypeGroupService
     ){
-        $this->groupService = $groupService;
+        $this->publicTypeGroupService = $publicTypeGroupService;
+        $this->dialogTypeGroupService = $dialogTypeGroupService;
     }
 
     public function getPublicTypeAll() 
@@ -36,7 +38,7 @@ class GroupController extends Controller
 
     public function getIdOfDialogType(Request $request)
     {
-        $dialogId = $this->dialogService->getDialogIdBetween(
+        $dialogId = $this->dialogTypeGroupService->getDialogIdBetween(
             Auth::user()->id, 
             $request->friendId
         );
@@ -52,19 +54,19 @@ class GroupController extends Controller
             $request->groupName = '';
         }
 
-        $result = $this->groupService->create($request->groupName, $groupMembersIdList);
+        $result = $this->publicTypeGroupService->create($request->groupName, $groupMembersIdList);
         return response()->json([
             'message' => $result
         ]);
     }
 
     public function leaveFromPublicType(Request $request) {
-        $this->groupService->leaveMemberFrom($request->id, Auth::user()->id);
+        $this->publicTypeGroupService->leaveMemberFrom($request->id, Auth::user()->id);
     }
 
     public function addNewMembersToPublicType(Request $request) {
         $newGroupMembersIdList = json_decode($request->newGroupMembersIdList);
-        $result = $this->groupService->addNewMembersTo($request->groupId, $newGroupMembersIdList);
+        $result = $this->publicTypeGroupService->addNewMembersTo($request->groupId, $newGroupMembersIdList);
         return response()->json([
             'message' => $result,
         ]);

@@ -2,7 +2,7 @@
 
 namespace App\Services\Interfaces;
 
-interface IGroupService
+interface IPublicTypeGroupService
 {
     public function create(string $groupName, array $memberListId);
 

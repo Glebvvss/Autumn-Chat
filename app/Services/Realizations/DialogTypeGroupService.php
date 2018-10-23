@@ -8,10 +8,10 @@ use App\Models\User;
 use App\Models\Group;
 use App\Models\Message;
 use Illuminate\Database\Eloquent\Model;
-use App\Services\Interfaces\IDialogService;
 use Illuminate\Database\Eloquent\Collection;
+use App\Services\Interfaces\IDialogTypeGroupService;
 
-class DialogService implements IDialogService
+class DialogTypeGroupService implements IDialogTypeGroupService
 {
     public function createBetween(int $userId, int $otherUserId)
     {

@@ -8,9 +8,9 @@ use App\Models\Group;
 use App\Models\Message;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use App\Services\Interfaces\IGroupService;
+use App\Services\Interfaces\IPublicTypeGroupService;
 
-class GroupService implements IGroupService
+class PublicTypeGroupService implements IPublicTypeGroupService
 {
 
     public function getMembers(int $groupId) : Collection

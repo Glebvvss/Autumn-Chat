@@ -3,9 +3,9 @@
 namespace App\Providers\Custom;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\GroupService;
+use App\Services\Realizations\PublicTypeGroupService;
 
-class GroupServiceProvider extends ServiceProvider
+class PublicTypeGroupServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -24,8 +24,8 @@ class GroupServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\Interfaces\IGroupService', function() {
-            return new GroupService();
+        $this->app->bind('App\Services\Interfaces\IPublicTypeGroupService', function() {
+            return new PublicTypeGroupService();
         });
     }
 }

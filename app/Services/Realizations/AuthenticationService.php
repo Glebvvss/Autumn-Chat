@@ -11,14 +11,12 @@ use App\Services\Interfaces\IAuthenticationService;
 
 class AuthenticationService implements IAuthenticationService
 {
-
     public function login(Request $request) : array
     {
         $validator = Validator::make($request->all(), [
             'username' => 'required',
             'password' => 'required'
         ]);
-
         $validator->after(function($validator) use ($request) {
             if ( !Auth::attempt(['username' => $request->username, 
                                  'password' => $request->password ])) {
@@ -26,22 +24,18 @@ class AuthenticationService implements IAuthenticationService
                 $validator->errors()->add('password', 'Incorrect username or password');
             }
         });
-
         if ( $validator->fails() ) {
             return [
                 'errors' => $validator->errors()
             ];
         }
-
         return [
             'login' => 'complete'
         ];
     }
-
     public function registration(Request $request) : array
     {
         $errors = $this->validateRegistrationRequest($request);
-
         if ( $errors ) {
             return $errors;
         }
@@ -49,7 +43,6 @@ class AuthenticationService implements IAuthenticationService
         $this->addNewUserModelToDb($request);
         return [];
     }
-
     private function validateRegistrationRequest( Request $request ) : array 
     {
         $validator = Validator::make($request->all(), [
@@ -58,7 +51,6 @@ class AuthenticationService implements IAuthenticationService
             'password'        => 'required',
             'confirmPassword' => 'required',
         ]);
-
         $validator->after(function($validator) use ($request) {
             if ( $request->password !== $request->confirmPassword ) {
                 $validator
@@ -66,7 +58,6 @@ class AuthenticationService implements IAuthenticationService
                     ->add('confirmPassword', 'Password fields in not match.');
             }
         });
-
         if ( $validator->fails() ) {
             return [
                 'errors' => $validator->errors()
@@ -75,7 +66,6 @@ class AuthenticationService implements IAuthenticationService
         
         return [];
     }
-
     private function addNewUserModelToDb(Request $request) 
     {
         $user = new User();

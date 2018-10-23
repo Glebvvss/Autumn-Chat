@@ -2,7 +2,7 @@
 
 namespace App\Services\Interfaces;
 
-interface IDialogService 
+interface IDialogTypeGroupService 
 {
     public function createBetween(int $userId, int $otherUserId);
 
