@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UnreadMessageLink extends Model
+class UnreadMassageLink extends Model
 {
     protected $table = 'unread_message_links';
 

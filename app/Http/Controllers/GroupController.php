@@ -6,22 +6,27 @@ use Auth;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Friend;
+use App\Models\UnreadMessageLink;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\Interfaces\IUnreadMessageLinkService as UnreadMessageLinkService;
 use App\Services\Interfaces\IGroupServices\IPublicTypeGroupService as PublicTypeGroupService;
 use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService as DialogTypeGroupService;
 
 class GroupController extends Controller
 {
-    private $publicTypeGroupService;
-    private $dialogTypeGroupService;
+    protected $publicTypeGroupService;
+    protected $dialogTypeGroupService;
+    protected $unreadMessageLinkService;
 
     public function __construct(
-        PublicTypeGroupService  $publicTypeGroupService,
-        DialogTypeGroupService  $dialogTypeGroupService
+        PublicTypeGroupService   $publicTypeGroupService,
+        DialogTypeGroupService   $dialogTypeGroupService,
+        UnreadMessageLinkService $unreadMessageLinkService
     ){
-        $this->publicTypeGroupService = $publicTypeGroupService;
-        $this->dialogTypeGroupService = $dialogTypeGroupService;
+        $this->publicTypeGroupService   = $publicTypeGroupService;
+        $this->dialogTypeGroupService   = $dialogTypeGroupService;
+        $this->unreadMessageLinkService = $unreadMessageLinkService;
     }
 
     public function getPublicTypeAll() 
@@ -29,10 +34,13 @@ class GroupController extends Controller
         $groups = User::find( Auth::user()->id )
             ->groups()
             ->publicType()
-            ->get();
+            ->get()
+            ->toArray();
+
+        $groupsWithMessageLinks = $this->unreadMessageLinkService->attachAll($groups);
 
         return response()->json([
-            'groups' => $groups
+            'groups' => $groupsWithMessageLinks
         ]);
     }
 
@@ -54,7 +62,11 @@ class GroupController extends Controller
             $request->groupName = '';
         }
 
-        $result = $this->publicTypeGroupService->create($request->groupName, $groupMembersIdList);
+        $result = $this->publicTypeGroupService->create(
+            $request->groupName, 
+            $groupMembersIdList
+        );
+
         return response()->json([
             'message' => $result
         ]);
@@ -66,7 +78,12 @@ class GroupController extends Controller
 
     public function addNewMembersToPublicType(Request $request) {
         $newGroupMembersIdList = json_decode($request->newGroupMembersIdList);
-        $result = $this->publicTypeGroupService->addNewMembersTo($request->groupId, $newGroupMembersIdList);
+
+        $result = $this->publicTypeGroupService->addNewMembersTo(
+            $request->groupId, 
+            $newGroupMembersIdList
+        );
+        
         return response()->json([
             'message' => $result,
         ]);

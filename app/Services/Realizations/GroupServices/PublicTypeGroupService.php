@@ -10,13 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use App\Services\Interfaces\IGroupServices\IPublicTypeGroupService;
 
-class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGroupService
+class PublicTypeGroupService extends ABaseGroupService implements IPublicTypeGroupService
 {
-    public function getMembers(int $groupId) : Collection
-    {
-        return Group::find($groupId)->users()->get();
-    }
-
     public function create(string $groupName, array $memberListId)
     {
         if ( $groupName === '' ) {

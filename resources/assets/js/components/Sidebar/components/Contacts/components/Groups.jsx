@@ -56,6 +56,21 @@ class Groups extends Component {
     this.props.getMessages(selectedGroupId);
   }
 
+  renderIfHaveUnreadMessagesMarker(item) {
+    if ( item.unread_message_exists === true ) {
+      return (
+        <span 
+              style={{
+                color: 'red',
+                float: 'right'
+              }}>
+
+          NEW
+        </span>
+      );
+    }
+  }
+
   render() {
     return (
       <ul>
@@ -68,14 +83,7 @@ class Groups extends Component {
                              this.props.selectedContactType == 'GROUP' ) ? 'active-contact' : null} >
               
               {item.group_name}
-              <span 
-                    style={{
-                      color: 'red',
-                      float: 'right'
-                    }}>
-
-                NEW
-              </span>
+              {this.renderIfHaveUnreadMessagesMarker(item)}
             </li> ))
         }
       </ul>

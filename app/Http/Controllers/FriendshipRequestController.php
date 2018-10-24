@@ -9,8 +9,8 @@ use App\Events\UpdateFriendList;
 use App\Models\FriendshipRequest;
 use App\Http\Controllers\Controller;
 use App\Events\UpdateFriendRequestList;
+use App\Services\Interfaces\IFriendshipRequestService as FriendshipRequestService;
 use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService as DialogTypeGroupService;
-use App\Services\Interfaces\IGroupServices\IFriendshipRequestService as FriendshipRequestService;
 
 class FriendshipRequestController extends Controller 
 {
@@ -37,6 +37,7 @@ class FriendshipRequestController extends Controller
     public function getSendedAll() 
     {
         $friendshipRequests = FriendshipRequest::sended()->get();
+        
         return response()->json([
             'friendshipRequests' => $friendshipRequests
         ]);
@@ -45,6 +46,7 @@ class FriendshipRequestController extends Controller
     public function send(Request $request)
     {
         $result = $this->friendshipRequestService->sendTo($request->username);
+
         if ( $result === 'Request has been sent.' ) {
             $recipient = User::where('username', '=', $request->username)->first();
             event( new UpdateFriendRequestList($recipient->id, 'recived') );
@@ -59,7 +61,11 @@ class FriendshipRequestController extends Controller
     public function confirm(Request $request)
     {        
         $result = $this->friendshipRequestService->confirmFrom($request->senderId);
-        $this->dialogTypeGroupService->createBetween($request->senderId, Auth::user()->id);
+
+        $this->dialogTypeGroupService->createBetween(
+            $request->senderId, 
+            Auth::user()->id
+        );
 
         if ( $result === 'Friend added!' ) {
             event( new UpdateFriendRequestList($request->senderId, 'sended') );
@@ -74,6 +80,7 @@ class FriendshipRequestController extends Controller
     public function cancelRecived(Request $request)
     {
         $result = $this->friendshipRequestService->cancelRecivedFrom($request->senderId);
+
         if ( $result === 'Friendship request canceled.' ) {
             event( new UpdateFriendRequestList($request->senderId, 'sended') );
         }
@@ -86,6 +93,7 @@ class FriendshipRequestController extends Controller
     public function cancelSended(Request $request)
     {
         $result = $this->friendshipRequestService->cancelSendedTo($request->recipientId);
+
         if ( $result === 'Friendship request canceled.' ) {
             event( new UpdateFriendRequestList($request->recipientId, 'recived') );
         }

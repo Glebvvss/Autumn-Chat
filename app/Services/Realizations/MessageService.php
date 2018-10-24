@@ -9,9 +9,9 @@ use App\Models\Message;
 use App\Models\UnreadMassageLink;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use App\Services\Interfaces\IGroupService;
+use App\Services\Interfaces\IMessageService;
 
-class MessageService implements IGroupService
+class MessageService implements IMessageService
 {
     public function sendTo(int $contactId, string $text)
     {
@@ -20,23 +20,25 @@ class MessageService implements IGroupService
         $message->text     = $text;
         $message->user_id  = Auth::user()->id;
         $message->group_id = $contactId;
-        
-        $messageId = $message->save();
+        $message->save();
 
-        $this->createUnreadMassageLinks($contactId, $messageId);
+        $this->createUnreadMassageLinks($contactId);
     }
 
-    private function createUnreadMassageLinks(int $contactId, int $messageId)
+    private function createUnreadMassageLinks(int $contactId)
     {
         $contactMembers = $this->getMembersOfContact($contactId);
 
         foreach( $contactMembers as $contactMember ) {
+            if ( $contactMember->id === Auth::user()->id ) {
+                continue;
+            }
+
             $unreadMassageLink = new UnreadMassageLink();
 
-            $unreadMassageLink->message_id = $messageId;
-            $unreadMassageLink->user_id = $contactMember->id;
-            $unreadMassageLink->group_id = $contactId;
-            $unreadMassageLink->save()
+            $unreadMassageLink->user_id    = $contactMember->id;
+            $unreadMassageLink->group_id   = $contactId;
+            $unreadMassageLink->save();
         }
     }
 

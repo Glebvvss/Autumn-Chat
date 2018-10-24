@@ -9,22 +9,31 @@ use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Interfaces\IFriendService as FriendService;
+use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService as DialogTypeGroupService;
+use App\Services\Interfaces\IUnreadMessageLinkService as UnreadMessageLinkService;
 
 class FriendController extends Controller
 {
-    private $friendService;
+    protected $friendService;
+    protected $unreadMessageLinkService;
 
-    public function __construct(FriendService $friendService)
-    {
+    public function __construct(
+        FriendService $friendService,
+        UnreadMessageLinkService $unreadMessageLinkService
+    ){
         $this->friendService = $friendService;
+        $this->unreadMessageLinkService = $unreadMessageLinkService;
     }
 
     public function getAll()
     {
         $friends = User::find(Auth::user()->id)
             ->friends()
-            ->get();
+            ->get()
+            ->toArray();
 
+        $friends = $this->unreadMessageLinkService->attachToFriendListByDialogs($friends);
+        
         return response()->json([
             'friends' => $friends
         ]);

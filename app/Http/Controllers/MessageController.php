@@ -7,9 +7,17 @@ use App\Models\Group;
 Use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\Interfaces\IMessageService as MessageService;
 
 class MessageController extends Controller
 {
+    protected $messageService;
+
+    public function __construct(MessageService $messageService)
+    {
+        $this->messageService = $messageService;
+    }
+
     public function getAllOfContact(Request $request)
     {
         $messages = Message::where('group_id', '=', $request->contactId)
@@ -23,12 +31,10 @@ class MessageController extends Controller
 
     public function sendToContact(Request $request)
     {
-        $message = new Message();
-
-        $message->text     = $request->text;
-        $message->user_id  = Auth::user()->id;
-        $message->group_id = $request->contactId;
-        $message->save();
+        $this->messageService->sendTo(
+            $request->contactId, 
+            $request->text
+        );
     }
 
 }

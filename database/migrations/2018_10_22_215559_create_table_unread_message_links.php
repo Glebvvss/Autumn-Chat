@@ -15,7 +15,6 @@ class CreateTableUnreadMessageLinks extends Migration
     {
         Schema::create('unread_message_links', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('message_id');
             $table->unsignedInteger('group_id');
             $table->unsignedInteger('user_id');
             $table->timestamps();

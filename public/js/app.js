@@ -62273,6 +62273,21 @@ var Groups = function (_Component) {
       this.props.getMessages(selectedGroupId);
     }
   }, {
+    key: 'renderIfHaveUnreadMessagesMarker',
+    value: function renderIfHaveUnreadMessagesMarker(item) {
+      if (item.unread_message_exists === true) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'span',
+          {
+            style: {
+              color: 'red',
+              float: 'right'
+            } },
+          'NEW'
+        );
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -62288,15 +62303,7 @@ var Groups = function (_Component) {
               onClick: _this2.selectGroup.bind(_this2),
               className: _this2.state.selectedGroupId == item.id && _this2.props.selectedContactType == 'GROUP' ? 'active-contact' : null },
             item.group_name,
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'span',
-              {
-                style: {
-                  color: 'red',
-                  float: 'right'
-                } },
-              'NEW'
-            )
+            _this2.renderIfHaveUnreadMessagesMarker(item)
           );
         })
       );

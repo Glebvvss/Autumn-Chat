@@ -11,8 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService;
 
-class DialogTypeGroupService extends BaseGroupService implements IDialogTypeGroupService
+class DialogTypeGroupService extends ABaseGroupService implements IDialogTypeGroupService
 {
+    public function getAll()
+    {
+        
+    }
+
     public function createBetween(int $userId, int $otherUserId)
     {
         if ( !$userId || !$otherUserId ) {
@@ -55,6 +60,15 @@ class DialogTypeGroupService extends BaseGroupService implements IDialogTypeGrou
         throw new \Exception('Dialog is not exists.');
     }
 
+    public function findDialog(int $userId, int $otherUserId)
+    {
+        $dialogName = $this->generateDialogName($userId, $otherUserId);
+
+        return Group::where('group_name', '=', $dialogName)
+                    ->where('type', '=', 'dialog')
+                    ->first();
+    }
+
     private function deleteAllMessagesOfDialog(int $dialogId)
     {
         Message::where('group_id', '=', $dialogId)->delete();
@@ -70,15 +84,6 @@ class DialogTypeGroupService extends BaseGroupService implements IDialogTypeGrou
     private function removeDialogFromDatabase(int $dialogId)
     {
         Group::find($dialogId)->delete();
-    }
-
-    public function findDialog(int $userId, int $otherUserId)
-    {
-        $dialogName = $this->generateDialogName($userId, $otherUserId);
-
-        return Group::where('group_name', '=', $dialogName)
-                    ->where('type', '=', 'dialog')
-                    ->first();
     }
 
     private function generateDialogName(int $userId, int $otherUserId) : string
