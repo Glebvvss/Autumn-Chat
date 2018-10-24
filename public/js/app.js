@@ -60797,7 +60797,9 @@ var Chat = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_messages_js__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Message_jsx__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_friends_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_groups_js__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Message_jsx__ = __webpack_require__(276);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -60805,6 +60807,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
 
 
 
@@ -60841,7 +60845,7 @@ var MessageList = function (_Component) {
         'div',
         { className: 'message-list' },
         this.props.messages.map(function (item, index) {
-          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Message_jsx__["a" /* default */], { key: index, messageDetails: item });
+          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Message_jsx__["a" /* default */], { key: index, messageDetails: item });
         })
       );
     }
@@ -60859,6 +60863,12 @@ var MessageList = function (_Component) {
   return {
     getMessages: function getMessages(selectedContactId) {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages_js__["a" /* getMessages */])(selectedContactId));
+    },
+    updateFriendList: function updateFriendList() {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_friends_js__["f" /* getFriends */])());
+    },
+    updateGroupList: function updateGroupList() {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_groups_js__["d" /* getGroups */])());
     }
   };
 })(MessageList));
@@ -61518,9 +61528,13 @@ var Sidebar = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fortawesome_react_fontawesome__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_animate_height__ = __webpack_require__(283);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_animate_height___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_animate_height__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fortawesome_react_fontawesome__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_animate_height__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_animate_height___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_animate_height__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__functions_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions_friends_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__actions_groups_js__ = __webpack_require__(31);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -61535,6 +61549,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
+
+
 var Contacts = function (_Component) {
 	_inherits(Contacts, _Component);
 
@@ -61542,6 +61560,8 @@ var Contacts = function (_Component) {
 		_classCallCheck(this, Contacts);
 
 		var _this = _possibleConstructorReturn(this, (Contacts.__proto__ || Object.getPrototypeOf(Contacts)).call(this, props));
+
+		_this.subscribeOnChangesInUnreadMessageMarkers();
 
 		_this.state = {
 			communicationListVisible: true,
@@ -61552,6 +61572,26 @@ var Contacts = function (_Component) {
 	}
 
 	_createClass(Contacts, [{
+		key: 'subscribeOnChangesInUnreadMessageMarkers',
+		value: function subscribeOnChangesInUnreadMessageMarkers() {
+			var _this2 = this;
+
+			fetch(Object(__WEBPACK_IMPORTED_MODULE_4__functions_js__["b" /* makeUriForRequest */])('/get-user-id'), {
+				method: 'get'
+			}).then(function (response) {
+				response.json().then(function (httpData) {
+					var socket = io(':3001'),
+					    userId = httpData.userId,
+					    room = 'update-unread-message-merkers-of-user-id:' + userId;
+
+					socket.on(room, function (socketData) {
+						_this2.props.updateFriends();
+						_this2.props.updatePublicGroups();
+					});
+				});
+			});
+		}
+	}, {
 		key: 'hideOrShowContacts',
 		value: function hideOrShowContacts() {
 			if (this.state.communicationListVisible === true) {
@@ -61586,11 +61626,11 @@ var Contacts = function (_Component) {
 						'span',
 						{ className: this.state.arrowCssClass,
 							onClick: this.hideOrShowContacts.bind(this) },
-						__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__fortawesome_react_fontawesome__["a" /* FontAwesomeIcon */], { icon: 'arrow-circle-up' })
+						__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__fortawesome_react_fontawesome__["a" /* FontAwesomeIcon */], { icon: 'arrow-circle-up' })
 					)
 				),
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-					__WEBPACK_IMPORTED_MODULE_2_react_animate_height___default.a,
+					__WEBPACK_IMPORTED_MODULE_3_react_animate_height___default.a,
 					{
 						duration: 300,
 						height: this.state.heightList },
@@ -61607,7 +61647,18 @@ var Contacts = function (_Component) {
 	return Contacts;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Contacts);
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
+	return {};
+}, function (dispatch) {
+	return {
+		updateFriends: function updateFriends() {
+			dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends_js__["f" /* getFriends */])());
+		},
+		updatePublicGroups: function updatePublicGroups() {
+			dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__actions_groups_js__["d" /* getGroups */])());
+		}
+	};
+})(Contacts));
 
 /***/ }),
 /* 283 */

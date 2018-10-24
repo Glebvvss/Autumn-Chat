@@ -14,7 +14,7 @@ class UpdateFriendRequestList implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $idUser;
+    public $userId;
     public $type;
 
     /**
@@ -22,9 +22,9 @@ class UpdateFriendRequestList implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct( $idUser, $type )
+    public function __construct( $userId, $type )
     {
-        $this->idUser = $idUser;
+        $this->userId = $userId;
         $this->type = $type;
     }
 

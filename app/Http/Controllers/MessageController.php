@@ -7,6 +7,7 @@ use App\Models\Group;
 Use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Events\UpdateMessageList;
+use App\Events\UpdateUnreadMessageMarkers;
 use App\Http\Controllers\Controller;
 use App\Services\Interfaces\IMessageService as MessageService;
 use App\Services\Interfaces\IGroupServices\IBaseGroupService as BaseGroupService;
@@ -37,16 +38,20 @@ class MessageController extends Controller
 
     public function sendToContact(Request $request)
     {
-        $this->messageService->sendTo(
-            $request->contactId, 
-            $request->text
-        );
+        $this->messageService->sendTo($request->contactId, $request->text);
 
         event( new UpdateMessageList($request->contactId) );
+
+        $userIdList = $this->baseGroupService->getMembersIdWithoutSender($request->contactId);
+
+        event( new UpdateUnreadMessageMarkers($userIdList) );
     }
 
-    public function test() {
-        event( new UpdateMessageList(2) );
+    public function test()
+    {
+        $userIdList = $this->baseGroupService->getMembersIdWithoutSender(2);
+        dump($userIdList);
+        //event( new UpdateUnreadMessageMarkers([1, 2, 3, 4]) );
     }
 
 }

@@ -14,11 +14,11 @@ class UpdateFriendList implements ShouldBroadcast {
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $idUser;
+    public $userId;
     public $type;
 
-    public function __construct($idUser, $type) {
-        $this->idUser = $idUser;
+    public function __construct($userId, $type) {
+        $this->userId = $userId;
         $this->type = $type;
     }
 

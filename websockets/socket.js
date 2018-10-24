@@ -3,33 +3,47 @@ let io    = require('socket.io')(3001),
     redis = new Redis();
 
 io.on('connection', (socket) => {
-
   redis.psubscribe('*', (error, count) => {
     
-  });
+    redis.on('pmessage', (pattern, chanel, message) => {
+      let messageJSON = JSON.parse(message);
 
-  redis.on('pmessage', (pattern, chanel, message) => {
-    let messageJSON = JSON.parse(message);
+      console.log(messageJSON);
 
-    if ( messageJSON.event === 'UPDATE_MESSAGE_LIST' ) {
-      updateMessageList(socket, messageJSON);
-    }
+      if ( messageJSON.event === 'UPDATE_UNREAD_MESSAGE_MARKERS' ) {
+        updateUnreadMessageMarkers(socket, messageJSON);
+      }
 
-    if ( messageJSON.event === 'UPDATE_FRIENDSHIP_REQUEST_LIST' ) {
-      updateFriendshipRequestList(socket, messageJSON);      
-    }
+      if ( messageJSON.event === 'UPDATE_MESSAGE_LIST' ) {
+        updateMessageList(socket, messageJSON);
+      }
 
-    if ( messageJSON.event === 'UPDATE_FRIEND_LIST' ) {
-      updateFriendList(socket, messageJSON);
-    }
+      if ( messageJSON.event === 'UPDATE_FRIENDSHIP_REQUEST_LIST' ) {
+        updateFriendshipRequestList(socket, messageJSON);      
+      }
+
+      if ( messageJSON.event === 'UPDATE_FRIEND_LIST' ) {
+        updateFriendList(socket, messageJSON);
+      }
+    });
+
   });
 });
 
-function updateMessageList(socket, messageJSON) {
-  let groupId = messageJSON.data.idGroup,
-      room    = 'messages-of-contact:' + groupId;
+function updateUnreadMessageMarkers(socket, messageJSON) {
+  let userIdList = messageJSON.data.userIdList;
 
-  console.log(messageJSON);
+  console.log(userIdList);
+
+  userIdList.map(userId => {
+    let room    = 'update-unread-message-merkers-of-user-id:' + userId;
+    socket.emit(room, 'update');
+  });
+}
+
+function updateMessageList(socket, messageJSON) {
+  let groupId = messageJSON.data.groupId,
+      room    = 'messages-of-contact:' + groupId;
 
   socket.emit(room, 'update');
 }
@@ -37,13 +51,13 @@ function updateMessageList(socket, messageJSON) {
 function updateFriendshipRequestList(socket, messageJSON) {
 
   if ( messageJSON.data.type === 'sended' ) {
-    let userId = messageJSON.data.idUser;
+    let userId = messageJSON.data.userId;
         room   = 'sended-friend-requests-of:' + userId;
 
     socket.emit(room, 'update');
 
   } else if ( messageJSON.data.type === 'recived' ) {
-    let userId = messageJSON.data.idUser;
+    let userId = messageJSON.data.userId;
         room   = 'recivied-friend-requests-of:' + userId;
 
     socket.emit(room, 'update');
@@ -51,7 +65,7 @@ function updateFriendshipRequestList(socket, messageJSON) {
 }
 
 function updateFriendList(socket, messageJSON) {
-  let userId = messageJSON.data.idUser,
+  let userId = messageJSON.data.userId,
       room   = 'friends-by-user-id:' + userId;
 
   socket.emit(room, 'update');

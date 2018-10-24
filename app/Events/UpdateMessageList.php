@@ -14,10 +14,10 @@ class UpdateMessageList implements ShouldBroadcast {
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $idGroup;
+    public $groupId;
 
-    public function __construct(int $idGroup) {
-        $this->idGroup = $idGroup;
+    public function __construct(int $groupId) {
+        $this->groupId = $groupId;
     }
 
     public function broadcastOn() {

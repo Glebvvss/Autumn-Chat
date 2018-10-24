@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { getMessages } from '../../../../actions/messages.js';
+import { getFriends } from '../../../../actions/friends.js';
+import { getGroups } from '../../../../actions/groups.js';
 import Message from './components/Message.jsx';
 
 class MessageList extends Component {
@@ -42,6 +44,12 @@ export default connect(
   dispatch => ({
     getMessages: selectedContactId => {
       dispatch( getMessages(selectedContactId) );
+    },
+    updateFriendList: () => {
+      dispatch( getFriends() );
+    },
+    updateGroupList: () => {
+      dispatch( getGroups() );
     }
   })
 )(MessageList);

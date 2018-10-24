@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('app');
 });
 
+Route::get('/test', 'MessageController@test');
+
 Route::group(['as' => 'auth'], function() {
     Route::post('/login', [
         'uses' => 'AuthController@login'

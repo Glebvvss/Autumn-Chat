@@ -10,20 +10,20 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UpdatePublicTypeGroupList implements ShouldBroadcast
+class UpdateUnreadMessageMarkers implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $idUser;
+    public $userIdList;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct( $idUser )
+    public function __construct( $userIdList )
     {
-        $this->idUser = $idUser;
+        $this->userIdList = $userIdList;
     }
 
     /**
@@ -37,6 +37,6 @@ class UpdatePublicTypeGroupList implements ShouldBroadcast
     }
 
     public function broadcastAs() {
-        return 'UPDATE_PUBLIC_TYPE_GROUP_LIST';
+        return 'UPDATE_UNREAD_MESSAGE_MARKERS';
     }
 }

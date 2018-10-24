@@ -2,6 +2,8 @@
 
 namespace App\Services\Realizations\GroupServices;
 
+use DB;
+use Auth;
 use App\Models\Group;
 use App\Services\Interfaces\IGroupServices\IBaseGroupService;
 
@@ -18,6 +20,17 @@ class BaseGroupService implements IBaseGroupService
                         ->users()
                         ->get()
                         ->toArray();
+
+        return $this->generateMembersIdArray($members);
+    }
+
+    public function getMembersIdWithoutSender(int $groupId) : array
+    {
+        $members = Group::find($groupId)
+                        ->users()
+                        ->where('users.id', '<>', Auth::user()->id)
+                        ->get()
+                        ->toArray();        
 
         return $this->generateMembersIdArray($members);
     }
