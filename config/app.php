@@ -182,6 +182,7 @@ return [
         App\Providers\Custom\MessageServiceProvider::class,
         App\Providers\Custom\UnreadMessageLinkServiceProvider::class,
 
+        App\Providers\Custom\GroupServiceProviders\BaseGroupServiceProvider::class,
         App\Providers\Custom\GroupServiceProviders\PublicTypeGroupServiceProvider::class,
         App\Providers\Custom\GroupServiceProviders\DialogTypeGroupServiceProvider::class,
     ],

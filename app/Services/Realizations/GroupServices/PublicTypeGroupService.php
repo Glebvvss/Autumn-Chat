@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use App\Services\Interfaces\IGroupServices\IPublicTypeGroupService;
 
-class PublicTypeGroupService extends ABaseGroupService implements IPublicTypeGroupService
+class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGroupService
 {
     public function create(string $groupName, array $memberListId)
     {

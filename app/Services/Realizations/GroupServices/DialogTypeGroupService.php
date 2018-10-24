@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService;
 
-class DialogTypeGroupService extends ABaseGroupService implements IDialogTypeGroupService
+class DialogTypeGroupService extends BaseGroupService implements IDialogTypeGroupService
 {
     public function getAll()
     {

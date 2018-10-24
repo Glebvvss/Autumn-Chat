@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { getMessages } from '../../../../actions/messages.js';
 import Message from './components/Message.jsx';
 
 class MessageList extends Component {
@@ -9,12 +10,22 @@ class MessageList extends Component {
     super(props);
   }
 
+  subscribeOnChangesInMessageList() {
+    let socket = io(':3001'),
+        room   = 'messages-of-contact:' + this.props.selectedContactId;
+
+    socket.on(room, (socketData) => {
+      this.props.getMessages(this.props.selectedContactId);
+    });
+  }
+
   render() {
+    this.subscribeOnChangesInMessageList();
     return (
       <div className="message-list">
         {
           this.props.messages.map((item, index) => (
-            <Message key={index} messageDetails={item} />
+            <Message key={index} messageDetails={item} /> 
           ))
         }
       </div>
@@ -25,6 +36,12 @@ class MessageList extends Component {
 
 export default connect(
   state => ({
-    messages: state.messages.messagesOfSelectedContact
+    messages:          state.messages.messagesOfSelectedContact,
+    selectedContactId: state.selectedContact.id
+  }), 
+  dispatch => ({
+    getMessages: selectedContactId => {
+      dispatch( getMessages(selectedContactId) );
+    }
   })
 )(MessageList);
