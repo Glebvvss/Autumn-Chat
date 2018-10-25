@@ -1,7 +1,10 @@
+import { getFriends, 
+         getDialogId } from './friends';
+
+import { getGroups } from './groups';
 import { scrfToken, 
          makeUriForRequest, 
          scrollDocumentToBottom } from '../functions.js';
-
 
 export const getMessages = contactId => dispatch => {
   fetch( makeUriForRequest('/get-messages-of-contact/' + contactId), {
@@ -15,6 +18,14 @@ export const getMessages = contactId => dispatch => {
       });
       scrollDocumentToBottom();
     });
+  });
+};
+
+export const getMessagesOfDialog = friendId => dispatch => {
+  getDialogId(friendId).then(response => {
+    response.json().then(data => {
+      dispatch( getMessages(data.dialogId) );
+    })
   });
 };
 
@@ -34,3 +45,21 @@ export const sendMessage = (contactId, text) => dispatch => {
     dispatch( getMessages(contactId) );
   });
 }
+
+export const dropUnreadMessageLink = contactId => dispatch => {
+  fetch( makeUriForRequest('/drop-unread-message-link/' + contactId), {
+    method: 'get'
+  })
+  .then(response => {
+    dispatch( getFriends() );
+    dispatch( getGroups() );
+  });
+};
+
+export const dropUnreadMessageLinkOfDialog = friendId => dispatch => {
+  getDialogId(friendId).then(response => {
+    response.json().then(data => {
+      dispatch( dropUnreadMessageLink(data.dialogId) );
+    });
+  });
+};

@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getMessages } from '../../../../../actions/messages';
-import { scrfToken, makeUriForRequest } from '../../../../../functions.js';
+import { getMessagesOfDialog } from '../../../../../actions/messages';
+import { dropUnreadMessageLink,
+         dropUnreadMessageLinkOfDialog } from '../../../../../actions/messages';
+
+import { scrfToken, 
+         makeUriForRequest } from '../../../../../functions.js';
 
 import { getFriends, 
-         getDialogIdAndGetMessagesOfDialog } from '../../../../../actions/friends';
+         setDialogId } from '../../../../../actions/friends';
 
 class Friends extends Component {
 
@@ -14,7 +18,7 @@ class Friends extends Component {
     this.subscribeOnChangesInFreindList();
 
     this.state = {
-      selectedFriendId: null
+      selectedFriendId: 2
     };
   }
 
@@ -34,22 +38,8 @@ class Friends extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
-    if ( this.props !== prevProps && 
-         this.props.selectedContactType !== 'DIALOG' ) {
-
-      this.resetHighlightMarkers();
-    }
-  }
-
-  resetHighlightMarkers() {
-    this.setState({
-      ...this.state,
-      selectedFriendId: null
-    });
-  }
-
   highlightSelectedFriend(friendId) {
+    console.log(friendId);
     this.setState({
       ...this.state,
       selectedFriendId: friendId
@@ -59,12 +49,14 @@ class Friends extends Component {
   selectDialog(event) {
     let friendId = event.target.attributes['data-friendID']['value'];
 
-    this.props.getDialogIdAndGetMessagesOfDialog(friendId);
+    this.props.setDialogId(friendId);
+    this.props.getMessagesOfDialog(friendId);
+    this.props.dropUnreadMessageLinkOfDialog(friendId);
     this.highlightSelectedFriend(friendId);
   }
 
-  renderNewStatus(newStatus) {
-    if ( newStatus === 1 ) {
+  renderIfHaveUnreadMessagesMarker(item) {
+    if ( item.unread_message_exists === true ) {
       return (
         <div className="notice-new">NEW</div>
       );
@@ -95,6 +87,8 @@ class Friends extends Component {
                              this.props.selectedContactType === 'DIALOG' ) ? 'active-contact' : null} >
 
               {item.username}
+              {this.renderIfHaveUnreadMessagesMarker(item)}
+
               <div className="right-contacts-li-element">
                 {this.renderOnlineStatus(item.online)}
               </div>
@@ -116,12 +110,18 @@ export default connect(
     getFriends: () => {
       dispatch(getFriends());
     },
-    getMessages: dialogId => {
-      dispatch( getMessages(dialogId) );
-    },
     getDialogIdAndGetMessagesOfDialog: friendId => {
       dispatch( getDialogIdAndGetMessagesOfDialog(friendId) );
       dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
     },
+    dropUnreadMessageLinkOfDialog: friendId => {
+      dispatch( dropUnreadMessageLinkOfDialog(friendId) );
+    },
+    getMessagesOfDialog: friendId => {
+      dispatch( getMessagesOfDialog(friendId) );
+    },
+    setDialogId: friendId => {
+      dispatch( setDialogId(friendId) );
+    }
   })
 )(Friends);

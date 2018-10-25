@@ -407,12 +407,14 @@ ul.user-list-of-group li {
 }
 
 .notice-new {
-  margin-right: 10px;
-  margin-top: -5px;
+  margin-left: 5px;
+  border-radius: 5px;
   padding: 5px;
-  float: right;
+  width: 30px;
+  font-size: 0.6em;
+  display: inline;
   background: #E88C01;
-  color: #36393F;
+  color: white;
 }
 
 .online-status {

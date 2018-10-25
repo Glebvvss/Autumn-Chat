@@ -15,8 +15,6 @@ Route::get('/', function () {
     return view('app');
 });
 
-Route::get('/test', 'MessageController@test');
-
 Route::group(['as' => 'auth'], function() {
     Route::post('/login', [
         'uses' => 'AuthController@login'
@@ -134,7 +132,7 @@ Route::group(['as' => 'messages'], function() {
 });
 
 Route::group(['as' => 'unread-message-link'], function() {
-    Route::post('/drop-unread-message-link/{contactId}', [
+    Route::get('/drop-unread-message-link/{contactId}', [
         'uses' => 'UnreadMessageLinkController@drop'
     ]); 
 });

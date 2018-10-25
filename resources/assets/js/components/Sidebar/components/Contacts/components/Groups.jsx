@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { makeUriForRequest } from '../../../../../functions.js';
-import { getMessages } from '../../../../../actions/messages';
+
+import { getMessages,
+         dropUnreadMessageLink } from '../../../../../actions/messages';
+
 import { getGroups, 
          getMembersOfGroup, 
          getFriendsWhoNotInGroup } from '../../../../../actions/groups';
@@ -49,24 +52,18 @@ class Groups extends Component {
   selectGroup(event) {
     const selectedGroupId = event.target.attributes['data-id']['value'];
 
-    this.highlightSelectedGroup(selectedGroupId);
     this.props.setSelectedGroupParams(selectedGroupId);
     this.props.getMembersOfGroup(selectedGroupId);
     this.props.getFriendsWhoNotInGroup(selectedGroupId);
     this.props.getMessages(selectedGroupId);
+    this.props.dropUnreadMessageLink(selectedGroupId);
+    this.highlightSelectedGroup(selectedGroupId);
   }
 
   renderIfHaveUnreadMessagesMarker(item) {
     if ( item.unread_message_exists === true ) {
       return (
-        <span 
-              style={{
-                color: 'red',
-                float: 'right'
-              }}>
-
-          NEW
-        </span>
+        <div className="notice-new">NEW</div>
       );
     }
   }
@@ -116,5 +113,8 @@ export default connect(
     getMessages: groupId => {
       dispatch( getMessages(groupId) );
     },
+    dropUnreadMessageLink: groupId => {
+      dispatch( dropUnreadMessageLink(groupId) );
+    }
   })
 )(Groups);

@@ -9,9 +9,9 @@ class UnreadMessageLinkController
 {
     protected $unreadMessageLinkService;
 
-    public function (UnreadMessageLinkService $unreadMessageLinkService)
+    public function __construct(UnreadMessageLinkService $unreadMessageLinkService)
     {
-        $this->unreadMessageLinkService = $unreadMessageLinkService
+        $this->unreadMessageLinkService = $unreadMessageLinkService;
     }
 
     public function create()

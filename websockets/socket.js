@@ -8,8 +8,6 @@ io.on('connection', (socket) => {
     redis.on('pmessage', (pattern, chanel, message) => {
       let messageJSON = JSON.parse(message);
 
-      console.log(messageJSON);
-
       if ( messageJSON.event === 'UPDATE_UNREAD_MESSAGE_MARKERS' ) {
         updateUnreadMessageMarkers(socket, messageJSON);
       }
@@ -32,8 +30,6 @@ io.on('connection', (socket) => {
 
 function updateUnreadMessageMarkers(socket, messageJSON) {
   let userIdList = messageJSON.data.userIdList;
-
-  console.log(userIdList);
 
   userIdList.map(userId => {
     let room    = 'update-unread-message-merkers-of-user-id:' + userId;

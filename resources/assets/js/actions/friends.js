@@ -122,14 +122,20 @@ export const getCountNewRecivedFriendshipRequests = () => dispatch => {
   });
 };
 
-export const getDialogIdAndGetMessagesOfDialog = friendId => dispatch => {
+export const getDialogId = friendId => {
+  return fetch( makeUriForRequest('/get-dialog-id/' + friendId), {
+    method: 'get'
+  });
+};
+
+export const setDialogId = friendId => dispatch => {
   fetch( makeUriForRequest('/get-dialog-id/' + friendId), {
     method: 'get'
   })
   .then(response => {
     response.json().then(data => {
       dispatch({ type: 'SET_SELECTED_CONTACT_ID', payload: data.dialogId });
-      dispatch( getMessages(data.dialogId) );
+      dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
     });
-  })
+  });
 };

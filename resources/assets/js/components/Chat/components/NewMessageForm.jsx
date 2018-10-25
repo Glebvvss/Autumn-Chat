@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { sendMessage } from '../../../actions/messages';
+import { sendMessage,
+         dropUnreadMessageLink } from '../../../actions/messages';
 
 class NewMessageForm extends Component {
 
@@ -43,6 +44,10 @@ class NewMessageForm extends Component {
     });
   }
 
+  initialDropUnreadMessageLink() {
+    this.props.dropUnreadMessageLink(this.props.selectedContactId);
+  }
+
   render() {
     return (
       <form className="message-form">
@@ -50,7 +55,8 @@ class NewMessageForm extends Component {
           <textarea wrap="off"
                     value={this.state.messageTextarea} 
                     onChange={this.hangleTextarea.bind(this)}
-                    onKeyDown={this.addMessageByEnterClick.bind(this)}>
+                    onKeyDown={this.addMessageByEnterClick.bind(this)}
+                    onClick={this.initialDropUnreadMessageLink.bind(this)}>
             
           </textarea>
         </div>
@@ -67,6 +73,9 @@ export default connect(
   dispatch => ({
     sendMessage: (contactId, text) => {
       dispatch( sendMessage(contactId, text) );
+    },
+    dropUnreadMessageLink: contactId => {
+      dispatch( dropUnreadMessageLink(contactId) );
     }
   }),
 )(NewMessageForm);
