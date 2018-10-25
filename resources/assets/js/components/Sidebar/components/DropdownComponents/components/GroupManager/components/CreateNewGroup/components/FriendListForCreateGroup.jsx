@@ -8,8 +8,6 @@ class FriendListForCreateGroup extends Component {
   constructor(props) {
     super(props);
     this.props.getFriends();
-
-
   }
 
   addFriendToGroup(event) {

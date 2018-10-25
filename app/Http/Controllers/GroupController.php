@@ -6,9 +6,10 @@ use Auth;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Friend;
-use App\Models\UnreadMessageLink;
 use Illuminate\Http\Request;
+use App\Models\UnreadMessageLink;
 use App\Http\Controllers\Controller;
+use App\Events\NewPublicGroupCreated;
 use App\Services\Interfaces\IUnreadMessageLinkService as UnreadMessageLinkService;
 use App\Services\Interfaces\IGroupServices\IPublicTypeGroupService as PublicTypeGroupService;
 use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService as DialogTypeGroupService;
@@ -67,6 +68,10 @@ class GroupController extends Controller
             $groupMembersIdList
         );
 
+        if ( $result === 'Group created!' ) {
+            event( new NewPublicGroupCreated($groupMembersIdList) );
+        }
+
         return response()->json([
             'message' => $result
         ]);
@@ -89,14 +94,14 @@ class GroupController extends Controller
         ]);
     }
 
-    public function getMembersOfPublicType(Request $request)
+    public function getMembers(Request $request)
     {
-        $membersOfGroup = Group::find($request->id)
+        $groupMembers = Group::find($request->id)
             ->users()
             ->get();
 
         return response()->json([
-          'membersOfGroup' => $membersOfGroup
+          'groupMembers' => $groupMembers
         ]);
     }
 }

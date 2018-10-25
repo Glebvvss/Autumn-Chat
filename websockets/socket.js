@@ -8,6 +8,10 @@ io.on('connection', (socket) => {
     redis.on('pmessage', (pattern, chanel, message) => {
       let messageJSON = JSON.parse(message);
 
+      if ( messageJSON.event === 'NEW_PUBLIC_GROUP_CREATED' ) {
+        newPublicGroupCreated(socket, messageJSON);
+      }
+
       if ( messageJSON.event === 'UPDATE_UNREAD_MESSAGE_MARKERS' ) {
         updateUnreadMessageMarkers(socket, messageJSON);
       }
@@ -27,6 +31,15 @@ io.on('connection', (socket) => {
 
   });
 });
+
+function newPublicGroupCreated(socket, messageJSON) {
+  let memberIdList = messageJSON.data.memberIdList;
+
+  memberIdList.map(memberId => {
+    let room    = 'new-public-group-created:' + memberId;
+    socket.emit(room, 'update');
+  });
+}
 
 function updateUnreadMessageMarkers(socket, messageJSON) {
   let userIdList = messageJSON.data.userIdList;

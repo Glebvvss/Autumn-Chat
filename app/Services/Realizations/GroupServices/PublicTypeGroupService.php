@@ -12,25 +12,25 @@ use App\Services\Interfaces\IGroupServices\IPublicTypeGroupService;
 
 class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGroupService
 {
-    public function create(string $groupName, array $memberListId)
+    public function create(string $groupName, array $memberIdList)
     {
         if ( $groupName === '' ) {
             return 'Group name cannot be empty.';
         }
 
-        if ( empty($memberListId) ) {
+        if ( empty($memberIdList) ) {
             return 'No users in member list of group.';
         }
 
         $newGroupId = $this->createNewEmptyGroup($groupName);
-        $this->associateUsersWithGroups($newGroupId, $memberListId);
+        $this->associateUsersWithGroups($newGroupId, $memberIdList);
 
         return 'Group created!';
     }
 
-    public function addNewMembersTo(int $groupId, array $listUserId) 
+    public function addNewMembersTo(int $groupId, array $userIdList) : string
     {        
-        foreach( $listUserId as $userId ) {
+        foreach( $userIdList as $userId ) {
             $user = User::find($userId);
 
             $group = Group::find($groupId);
@@ -60,11 +60,11 @@ class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGrou
         return $group->id;
     }
 
-    private function associateUsersWithGroups(int $groupId, array $memberListId)
+    private function associateUsersWithGroups(int $groupId, array $memberIdList)
     {
-        $memberListIdWithCreator = $this->addGroupCreatorToMemberList($memberListId);
+        $memberIdListWithCreator = $this->addGroupCreatorToMemberList($memberIdList);
 
-        foreach( $memberListIdWithCreator as $memberId ) {
+        foreach( $memberIdListWithCreator as $memberId ) {
             $user = User::find($memberId);
 
             $group = Group::find($groupId);
@@ -73,10 +73,10 @@ class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGrou
         }
     }
 
-    private function addGroupCreatorToMemberList($memberListId) 
+    private function addGroupCreatorToMemberList(array $memberIdList) : array
     {
-        $memberListId[] = Auth::user()->id;
-        return $memberListId;
+        $memberIdList[] = Auth::user()->id;
+        return $memberIdList;
     }
 
 }

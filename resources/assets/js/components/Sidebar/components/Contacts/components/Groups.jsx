@@ -14,23 +14,24 @@ class Groups extends Component {
   constructor(props) {
     super(props);
     this.props.getGroups();
+    this.subscribeOnChangesInGroupList();
 
     this.state = {
       selectedGroupId: null
     };
   }
 
-  socketMethod() {
+  subscribeOnChangesInGroupList() {
     fetch( makeUriForRequest('/get-user-id'), {
       method: 'get'
     }).then(response => {
       response.json().then(httpData => {
         let socket = io(':3001'),
             userId = httpData.userId,
-            room   = 'friends-by-user-id:' + userId;
+            room   = 'new-public-group-created:' + userId;
 
         socket.on(room, (socketData) => {
-          
+          this.props.getGroups();
         });
       });
     });

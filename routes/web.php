@@ -109,7 +109,7 @@ Route::group(['as' => 'groups'], function() {
     ]);
 
     Route::get('/get-members-of-group/{id}', [
-        'uses' => 'GroupController@getMembersOfPublicType'
+        'uses' => 'GroupController@getMembers'
     ]);
 
     Route::post('/add-new-members-to-group', [
