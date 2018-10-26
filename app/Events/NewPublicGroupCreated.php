@@ -21,7 +21,7 @@ class NewPublicGroupCreated implements ShouldBroadcast {
     }
 
     public function broadcastOn() {
-        return ['friend'];
+        return ['none'];
     }
 
     public function broadcastAs() {

@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactScrollbar from 'react-scrollbar-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { createGroup } from '../../../../../../actions/groups.js';
-
 import CreateNewGroup from './components/CreateNewGroup/CreateNewGroup.jsx';
 import AddFriendsToExistsGroup from './components/AddFriendsToExistsGroup/AddFriendsToExistsGroup.jsx';
 import LeaveGroup from './components/LeaveGroup.jsx';

@@ -28,7 +28,7 @@ class Groups extends Component {
       response.json().then(httpData => {
         let socket = io(':3001'),
             userId = httpData.userId,
-            room   = 'new-public-group-created:' + userId;
+            room   = 'update-group-list:' + userId;
 
         socket.on(room, (socketData) => {
           this.props.getGroups();

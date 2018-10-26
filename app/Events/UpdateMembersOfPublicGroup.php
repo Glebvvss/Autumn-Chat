@@ -10,33 +10,24 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UpdateUnreadMessageMarkers implements ShouldBroadcast
-{
+class UpdateMembersOfPublicGroup implements ShouldBroadcast {
+
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $userIdList;
+    public $groupId;
+    public $newMemberIdList;
 
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-    public function __construct( $userIdList )
-    {
-        $this->userIdList = $userIdList;
+    public function __construct($groupId, $newMemberIdList = null) {
+        $this->groupId = $groupId;
+        $this->newMemberIdList = $newMemberIdList;
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
+    public function broadcastOn() {
         return ['none'];
     }
 
     public function broadcastAs() {
-        return 'UPDATE_UNREAD_MESSAGE_MARKERS';
+        return 'UPDATE_MEMBERS_OF_PUBLIC_GROUP';
     }
+
 }

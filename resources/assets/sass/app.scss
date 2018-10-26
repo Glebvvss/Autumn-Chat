@@ -40,6 +40,10 @@ ul {
 	padding: 0px;
 }
 
+.hide {
+	display: none;
+}
+
 button {
 	@include button;
 }

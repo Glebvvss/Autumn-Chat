@@ -8,6 +8,10 @@ io.on('connection', (socket) => {
     redis.on('pmessage', (pattern, chanel, message) => {
       let messageJSON = JSON.parse(message);
 
+      if ( messageJSON.event === 'UPDATE_MEMBERS_OF_PUBLIC_GROUP' ) {
+        updateMembersOfPublicGroup(socket, messageJSON);
+      }
+
       if ( messageJSON.event === 'NEW_PUBLIC_GROUP_CREATED' ) {
         newPublicGroupCreated(socket, messageJSON);
       }
@@ -32,11 +36,26 @@ io.on('connection', (socket) => {
   });
 });
 
+function updateMembersOfPublicGroup(socket, messageJSON) {
+  let groupId         = messageJSON.data.groupId;
+  let newMemberIdList = messageJSON.data.newMemberIdList;
+      room            = 'update-members-of-public-group:' + groupId;
+      
+  socket.emit(room, 'update');
+
+  if ( newMemberIdList != null ) {
+    newMemberIdList.map((newMemberId) => {
+      let room = 'update-group-list:' + newMemberId;
+      socket.emit(room, 'update');
+    });
+  }
+}
+
 function newPublicGroupCreated(socket, messageJSON) {
   let memberIdList = messageJSON.data.memberIdList;
 
   memberIdList.map(memberId => {
-    let room    = 'new-public-group-created:' + memberId;
+    let room    = 'update-group-list:' + memberId;
     socket.emit(room, 'update');
   });
 }

@@ -55,7 +55,7 @@ export const getMembersOfGroup = groupId => dispatch => {
 
       dispatch({
         type:   'FETCH_MEMBERS_OF_SELECTED_CONTACT', 
-        payload: data.membersOfGroup 
+        payload: data.members
       });
     });
   });

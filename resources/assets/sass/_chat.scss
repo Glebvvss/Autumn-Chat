@@ -3,6 +3,34 @@
   left: $width_sidebar;
 }
 
+.member-list {
+  z-index: 1000;
+  padding: 5px $width_sidebar + 5px 5px 5px;
+  background: white;
+  border-bottom: 1px solid $orange;
+  position: fixed;
+  width: 100vw;
+  font-family: opensans;
+  font-size: 12px;
+
+  h1 {
+    font-family: opensans;
+    font-size: 12px;
+    color: $dark_gray !important;
+    float: left;
+    margin-right: 5px;
+  }
+
+  ul {
+    color: $orange;
+
+    li {
+      display: inline;
+      margin-right: 5px;
+    }
+  }
+}
+
 form.message-form {
   position: fixed;
   left: $width_sidebar;
@@ -31,7 +59,8 @@ form.message-form {
 }
 
 .message-list {
-  padding-bottom: 120px !important;
+  padding-bottom: 90px !important;
+  padding-top: 30px !important;
   padding: 10px;
 }
 
