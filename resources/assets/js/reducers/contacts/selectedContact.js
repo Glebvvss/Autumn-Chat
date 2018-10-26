@@ -10,6 +10,13 @@ let defaultState = {
 
 export function selectedContact(state = defaultState, action) {
 
+  if ( action.type === 'RESET_NEW_MEMBERS_ID_TO_CONTACT' ) {
+    return {
+      ...state,
+      newMembersIdToContact: [],
+    }    
+  }
+
   if ( action.type === 'RESET_CONTACT_PARAMS' ) {
     return {
       ...defaultState

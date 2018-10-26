@@ -5,6 +5,12 @@ let defaultState = {
 
 export function messages(state = defaultState, action) {
 
+  if ( action.type === 'RESET_MESSAGE_LIST' ) {
+    return {
+      ...defaultState
+    };
+  }
+
   if ( action.type === 'FETCH_MESSAGES_OF_SELECTED_CONTACT' ) {
     return {
       ...state,

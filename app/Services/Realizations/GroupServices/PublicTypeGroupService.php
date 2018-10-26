@@ -29,7 +29,11 @@ class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGrou
     }
 
     public function addNewMembersTo(int $groupId, array $userIdList) : string
-    {        
+    {
+        if ( empty($userIdList) ) {
+            return 'Userlist cannot be empty.';
+        }
+
         foreach( $userIdList as $userId ) {
             $user = User::find($userId);
 
