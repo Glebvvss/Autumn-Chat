@@ -126,7 +126,7 @@ Route::group(['as' => 'messages'], function() {
         'uses' => 'MessageController@getLatestAllOfContact'
     ]);
 
-    Route::get('/get-more-old-messages-of-contact/{contactId}/{numberScrollLoad}', [
+    Route::get('/get-more-old-messages-of-contact/{contactId}/{numberScrollLoad}/{startPointMessageId}', [
         'uses' => 'MessageController@getMoreOldOfContact'
     ]);
 

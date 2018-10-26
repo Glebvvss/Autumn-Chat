@@ -15,23 +15,44 @@ class MessageService implements IMessageService
 {
     protected $countForSingleLoad = 3;
 
-    public function getMoreOld(int $contactId, int $numberScrollLoad) : Collection
+    public function getMoreOld(
+        int $contactId, 
+        int $numberScrollLoad, 
+        int $startPointMessageId ) : Collection 
     {
-        $countToSkip = $this->countForSingleLoad * $numberScrollLoad;
+        $countLessId = $this->getCountOfContactLessId($startPointMessageId, $contactId);
+        $countToSkip = $countLessId - ( $this->countForSingleLoad * $numberScrollLoad );
+
+        return Message::where('group_id', '=', $contactId)
+                      ->where('id', '<', $startPointMessageId)
+                      ->skip($countToSkip)
+                      ->take($this->countForSingleLoad)
+                      ->with('user')
+                      ->get();       
+    }
+
+    public function getLatestAll(int $contactId) : Collection
+    {
+        $countOfContact = $this->getCountOfContact($contactId);
+        $countToSkip = $countOfContact - $this->countForSingleLoad;
 
         return Message::where('group_id', '=', $contactId)
                       ->skip($countToSkip)
                       ->take($this->countForSingleLoad)
                       ->with('user')
-                      ->get();        
+                      ->get();
     }
 
-    public function getLatestAll(int $contactId) : Collection
+    private function getCountOfContactLessId(int $messageId, int $contactId) : int
     {
         return Message::where('group_id', '=', $contactId)
-                      ->take($this->countForSingleLoad)
-                      ->with('user')
-                      ->get();
+                      ->where('id', '<', $messageId)
+                      ->count();
+    }
+
+    private function getCountOfContact(int $contactId) : int
+    {
+        return Message::where('group_id', '=', $contactId)->count();
     }
 
     public function sendTo(int $contactId, string $text) : array

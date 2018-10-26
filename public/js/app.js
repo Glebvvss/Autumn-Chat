@@ -5165,6 +5165,7 @@ module.exports = DOMLazyTree;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export getMoreOldMessages */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getLatestMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addNewMessageToList; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getLastMessagesOfDialog; });
@@ -5179,6 +5180,19 @@ module.exports = DOMLazyTree;
 
 
 
+var getMoreOldMessages = function getMoreOldMessages(contactId, numberScrollLoad) {
+  fetch(Object(__WEBPACK_IMPORTED_MODULE_2__functions_js__["b" /* makeUriForRequest */])('/get-more-old-messages-of-contact/' + contactId + '/' + numberScrollLoad), {
+    method: 'get'
+  }).then(function (response) {
+    response.json().then(function (data) {
+      dispatch({
+        type: 'FETCH_MORE_OLD_MESSAGES_TO_LIST',
+        payload: data.messages
+      });
+    });
+  });
+};
+
 var getLatestMessages = function getLatestMessages(contactId) {
   return function (dispatch) {
     fetch(Object(__WEBPACK_IMPORTED_MODULE_2__functions_js__["b" /* makeUriForRequest */])('/get-latest-messages-of-contact/' + contactId), {
@@ -5186,7 +5200,7 @@ var getLatestMessages = function getLatestMessages(contactId) {
     }).then(function (response) {
       response.json().then(function (data) {
         dispatch({
-          type: 'FETCH_MESSAGES_OF_SELECTED_CONTACT',
+          type: 'FETCH_LATEST_MESSAGES_OF_CONTACT',
           payload: data.messages
         });
       });
@@ -5223,9 +5237,6 @@ var sendMessage = function sendMessage(contactId, text) {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: 'contactId=' + contactId + '&' + 'text=' + text
-
-    }).then(function (response) {
-      //dispatch( getMessages(contactId) );
     });
   };
 };
@@ -59668,6 +59679,13 @@ function messages() {
   var action = arguments[1];
 
 
+  if (action.type === 'FETCH_MORE_OLD_MESSAGES_TO_LIST') {
+
+    return _extends({}, state, {
+      messagesOfSelectedContact: Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* cloneObject */])(state.messagesOfSelectedContact.unshift(action.payload))
+    });
+  }
+
   if (action.type === 'ADD_NEW_MESSAGE_TO_LIST') {
     return _extends({}, state, {
       messagesOfSelectedContact: [].concat(_toConsumableArray(state.messagesOfSelectedContact), [action.payload])
@@ -59678,7 +59696,7 @@ function messages() {
     return _extends({}, defaultState);
   }
 
-  if (action.type === 'FETCH_MESSAGES_OF_SELECTED_CONTACT') {
+  if (action.type === 'FETCH_LATEST_MESSAGES_OF_CONTACT') {
     return _extends({}, state, {
       messagesOfSelectedContact: action.payload
     });

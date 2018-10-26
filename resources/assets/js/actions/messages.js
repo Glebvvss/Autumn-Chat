@@ -6,6 +6,20 @@ import { scrfToken,
          makeUriForRequest, 
          scrollDocumentToBottom } from '../functions.js';
 
+export const getMoreOldMessages = (contactId, numberScrollLoad) => {
+  fetch( makeUriForRequest('/get-more-old-messages-of-contact/' + contactId + '/' + numberScrollLoad), {
+    method: 'get'
+  })
+  .then(response => {
+    response.json().then(data => {
+      dispatch({ 
+        type:    'FETCH_MORE_OLD_MESSAGES_TO_LIST',
+        payload: data.messages 
+      });
+    });
+  });
+};
+
 export const getLatestMessages = contactId => dispatch => {
   fetch( makeUriForRequest('/get-latest-messages-of-contact/' + contactId), {
     method: 'get'
@@ -13,7 +27,7 @@ export const getLatestMessages = contactId => dispatch => {
   .then(response => {
     response.json().then(data => {
       dispatch({ 
-        type:    'FETCH_MESSAGES_OF_SELECTED_CONTACT',
+        type:    'FETCH_LATEST_MESSAGES_OF_CONTACT',
         payload: data.messages 
       });
     });
@@ -46,10 +60,6 @@ export const sendMessage = (contactId, text) => dispatch => {
     body: 
       'contactId=' + contactId + '&' +
       'text='      + text
-
-  })
-  .then(response => {
-    //dispatch( getMessages(contactId) );
   });
 }
 

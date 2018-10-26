@@ -29,7 +29,8 @@ class MessageController extends Controller
     {
         $messages = $this->messageService->getMoreOld(
             $request->contactId,
-            $request->numberScrollLoad
+            $request->numberScrollLoad,
+            $request->startPointMessageId
         );
 
         return response()->json([
