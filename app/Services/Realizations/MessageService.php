@@ -13,7 +13,7 @@ use App\Services\Interfaces\IMessageService;
 
 class MessageService implements IMessageService
 {
-    public function getAllOfContact(int $contactId) : Collection
+    public function getLastOfContact(int $contactId) : Collection
     {
         return Message::where('group_id', '=', $contactId)
                       ->with('user')

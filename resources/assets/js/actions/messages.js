@@ -6,8 +6,8 @@ import { scrfToken,
          makeUriForRequest, 
          scrollDocumentToBottom } from '../functions.js';
 
-export const getMessages = contactId => dispatch => {
-  fetch( makeUriForRequest('/get-messages-of-contact/' + contactId), {
+export const getLastMessages = contactId => dispatch => {
+  fetch( makeUriForRequest('/get-last-messages-of-contact/' + contactId), {
     method: 'get'
   })
   .then(response => {
@@ -16,7 +16,6 @@ export const getMessages = contactId => dispatch => {
         type:    'FETCH_MESSAGES_OF_SELECTED_CONTACT',
         payload: data.messages 
       });
-      scrollDocumentToBottom();
     });
   });
 };
@@ -29,10 +28,10 @@ export const addNewMessageToList = message => dispatch => {
   }, 2000);
 };
 
-export const getMessagesOfDialog = friendId => dispatch => {
+export const getLastMessagesOfDialog = friendId => dispatch => {
   getDialogId(friendId).then(response => {
     response.json().then(data => {
-      dispatch( getMessages(data.dialogId) );
+      dispatch( getLastMessages(data.dialogId) );
     })
   });
 };
@@ -50,7 +49,7 @@ export const sendMessage = (contactId, text) => dispatch => {
 
   })
   .then(response => {
-    dispatch( getMessages(contactId) );
+    //dispatch( getMessages(contactId) );
   });
 }
 

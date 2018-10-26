@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { makeUriForRequest } from '../../../../../functions.js';
 
-import { getMessages,
+import { getLastMessages,
          dropUnreadMessageLink } from '../../../../../actions/messages';
 
 import { getGroups, 
@@ -56,7 +56,7 @@ class Groups extends Component {
     this.props.setSelectedGroupParams(selectedGroupId);
     this.props.getMembersOfGroup(selectedGroupId);
     this.props.getFriendsWhoNotInGroup(selectedGroupId);
-    this.props.getMessages(selectedGroupId);
+    this.props.getLastMessages(selectedGroupId);
     this.props.dropUnreadMessageLink(selectedGroupId);
     this.highlightSelectedGroup(selectedGroupId);
   }
@@ -111,8 +111,8 @@ export default connect(
       dispatch({ type: 'SET_SELECTED_CONTACT_ID',   payload: groupId });
       dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'GROUP' });
     },
-    getMessages: groupId => {
-      dispatch( getMessages(groupId) );
+    getLastMessages: groupId => {
+      dispatch( getLastMessages(groupId) );
     },
     dropUnreadMessageLink: groupId => {
       dispatch( dropUnreadMessageLink(groupId) );

@@ -25,9 +25,14 @@ class MessageController extends Controller
         $this->baseGroupService = $baseGroupService;
     }
 
-    public function getAllOfContact(Request $request)
+    public function getMoreOfOld()
     {
-        $messages = $this->messageService->getAllOfContact(
+
+    }
+
+    public function getLastOfContact(Request $request)
+    {
+        $messages = $this->messageService->getLastOfContact(
             $request->contactId
         );
 

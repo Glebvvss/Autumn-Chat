@@ -5165,9 +5165,9 @@ module.exports = DOMLazyTree;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getMessages; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getLastMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addNewMessageToList; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getMessagesOfDialog; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getLastMessagesOfDialog; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return sendMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return dropUnreadMessageLink; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return dropUnreadMessageLinkOfDialog; });
@@ -5179,9 +5179,9 @@ module.exports = DOMLazyTree;
 
 
 
-var getMessages = function getMessages(contactId) {
+var getLastMessages = function getLastMessages(contactId) {
   return function (dispatch) {
-    fetch(Object(__WEBPACK_IMPORTED_MODULE_2__functions_js__["b" /* makeUriForRequest */])('/get-messages-of-contact/' + contactId), {
+    fetch(Object(__WEBPACK_IMPORTED_MODULE_2__functions_js__["b" /* makeUriForRequest */])('/get-last-messages-of-contact/' + contactId), {
       method: 'get'
     }).then(function (response) {
       response.json().then(function (data) {
@@ -5189,7 +5189,6 @@ var getMessages = function getMessages(contactId) {
           type: 'FETCH_MESSAGES_OF_SELECTED_CONTACT',
           payload: data.messages
         });
-        Object(__WEBPACK_IMPORTED_MODULE_2__functions_js__["d" /* scrollDocumentToBottom */])();
       });
     });
   };
@@ -5205,11 +5204,11 @@ var addNewMessageToList = function addNewMessageToList(message) {
   };
 };
 
-var getMessagesOfDialog = function getMessagesOfDialog(friendId) {
+var getLastMessagesOfDialog = function getLastMessagesOfDialog(friendId) {
   return function (dispatch) {
     Object(__WEBPACK_IMPORTED_MODULE_0__friends__["e" /* getDialogId */])(friendId).then(function (response) {
       response.json().then(function (data) {
-        dispatch(getMessages(data.dialogId));
+        dispatch(getLastMessages(data.dialogId));
       });
     });
   };
@@ -5226,7 +5225,7 @@ var sendMessage = function sendMessage(contactId, text) {
       body: 'contactId=' + contactId + '&' + 'text=' + text
 
     }).then(function (response) {
-      dispatch(getMessages(contactId));
+      //dispatch( getMessages(contactId) );
     });
   };
 };
@@ -61054,8 +61053,8 @@ var MessageList = function (_Component) {
   };
 }, function (dispatch) {
   return {
-    getMessages: function getMessages(selectedContactId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_messages_js__["d" /* getMessages */])(selectedContactId));
+    getLastMessages: function getLastMessages(selectedContactId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_messages_js__["d" /* getLastMessages */])(selectedContactId));
     },
     updateFriendList: function updateFriendList() {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["f" /* getFriends */])());
@@ -62554,7 +62553,7 @@ var Groups = function (_Component) {
       this.props.setSelectedGroupParams(selectedGroupId);
       this.props.getMembersOfGroup(selectedGroupId);
       this.props.getFriendsWhoNotInGroup(selectedGroupId);
-      this.props.getMessages(selectedGroupId);
+      this.props.getLastMessages(selectedGroupId);
       this.props.dropUnreadMessageLink(selectedGroupId);
       this.highlightSelectedGroup(selectedGroupId);
     }
@@ -62617,8 +62616,8 @@ var Groups = function (_Component) {
       dispatch({ type: 'SET_SELECTED_CONTACT_ID', payload: groupId });
       dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'GROUP' });
     },
-    getMessages: function getMessages(groupId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_messages__["d" /* getMessages */])(groupId));
+    getLastMessages: function getLastMessages(groupId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_messages__["d" /* getLastMessages */])(groupId));
     },
     dropUnreadMessageLink: function dropUnreadMessageLink(groupId) {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_messages__["b" /* dropUnreadMessageLink */])(groupId));
@@ -62706,7 +62705,8 @@ var Friends = function (_Component) {
       var friendId = event.target.attributes['data-friendID']['value'];
 
       this.props.setDialogId(friendId);
-      this.props.getMessagesOfDialog(friendId);
+      this.props.setTypeOfSelectedContact();
+      this.props.getLastMessagesOfDialog(friendId);
       this.props.dropUnreadMessageLinkOfDialog(friendId);
       this.highlightSelectedFriend(friendId);
     }
@@ -62772,28 +62772,17 @@ var Friends = function (_Component) {
     getFriends: function getFriends() {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["f" /* getFriends */])());
     },
-    getDialogIdAndGetMessagesOfDialog: function (_getDialogIdAndGetMessagesOfDialog) {
-      function getDialogIdAndGetMessagesOfDialog(_x) {
-        return _getDialogIdAndGetMessagesOfDialog.apply(this, arguments);
-      }
-
-      getDialogIdAndGetMessagesOfDialog.toString = function () {
-        return _getDialogIdAndGetMessagesOfDialog.toString();
-      };
-
-      return getDialogIdAndGetMessagesOfDialog;
-    }(function (friendId) {
-      dispatch(getDialogIdAndGetMessagesOfDialog(friendId));
-      dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
-    }),
     dropUnreadMessageLinkOfDialog: function dropUnreadMessageLinkOfDialog(friendId) {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["c" /* dropUnreadMessageLinkOfDialog */])(friendId));
     },
-    getMessagesOfDialog: function getMessagesOfDialog(friendId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["e" /* getMessagesOfDialog */])(friendId));
+    getLastMessagesOfDialog: function getLastMessagesOfDialog(friendId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["e" /* getLastMessagesOfDialog */])(friendId));
     },
     setDialogId: function setDialogId(friendId) {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["l" /* setDialogId */])(friendId));
+    },
+    setTypeOfSelectedContact: function setTypeOfSelectedContact() {
+      dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
     }
   };
 })(Friends));

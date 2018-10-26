@@ -4,7 +4,7 @@ import { getFriends } from '../../../../actions/friends.js';
 import { getGroups } from '../../../../actions/groups.js';
 import Message from './components/Message.jsx';
 
-import { getMessages,
+import { getLastMessages,
          addNewMessageToList } from '../../../../actions/messages.js';
 
 import { socket, scrollDocumentToBottom } from '../../../../functions.js';
@@ -61,8 +61,8 @@ export default connect(
     selectedContactId: state.selectedContact.id
   }), 
   dispatch => ({
-    getMessages: selectedContactId => {
-      dispatch( getMessages(selectedContactId) );
+    getLastMessages: selectedContactId => {
+      dispatch( getLastMessages(selectedContactId) );
     },
     updateFriendList: () => {
       dispatch( getFriends() );

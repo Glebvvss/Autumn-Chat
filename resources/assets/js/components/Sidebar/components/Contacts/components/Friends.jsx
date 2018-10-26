@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getMessagesOfDialog } from '../../../../../actions/messages';
+import { getLastMessagesOfDialog } from '../../../../../actions/messages';
 import { dropUnreadMessageLink,
          dropUnreadMessageLinkOfDialog } from '../../../../../actions/messages';
 
@@ -50,7 +50,8 @@ class Friends extends Component {
     let friendId = event.target.attributes['data-friendID']['value'];
 
     this.props.setDialogId(friendId);
-    this.props.getMessagesOfDialog(friendId);
+    this.props.setTypeOfSelectedContact();
+    this.props.getLastMessagesOfDialog(friendId);
     this.props.dropUnreadMessageLinkOfDialog(friendId);
     this.highlightSelectedFriend(friendId);
   }
@@ -110,18 +111,17 @@ export default connect(
     getFriends: () => {
       dispatch(getFriends());
     },
-    getDialogIdAndGetMessagesOfDialog: friendId => {
-      dispatch( getDialogIdAndGetMessagesOfDialog(friendId) );
-      dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
-    },
     dropUnreadMessageLinkOfDialog: friendId => {
       dispatch( dropUnreadMessageLinkOfDialog(friendId) );
     },
-    getMessagesOfDialog: friendId => {
-      dispatch( getMessagesOfDialog(friendId) );
+    getLastMessagesOfDialog: friendId => {
+      dispatch( getLastMessagesOfDialog(friendId) );
     },
     setDialogId: friendId => {
       dispatch( setDialogId(friendId) );
+    },
+    setTypeOfSelectedContact: () => {
+      dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
     }
   })
 )(Friends);
