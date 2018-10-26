@@ -122,8 +122,12 @@ Route::group(['as' => 'groups'], function() {
 });
 
 Route::group(['as' => 'messages'], function() {
-    Route::get('/get-last-messages-of-contact/{contactId}', [
-        'uses' => 'MessageController@getLastOfContact'
+    Route::get('/get-latest-messages-of-contact/{contactId}', [
+        'uses' => 'MessageController@getLatestAllOfContact'
+    ]);
+
+    Route::get('/get-more-old-messages-of-contact/{contactId}/{numberScrollLoad}', [
+        'uses' => 'MessageController@getMoreOldOfContact'
     ]);
 
     Route::post('/send-message', [

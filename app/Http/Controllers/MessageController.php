@@ -25,14 +25,21 @@ class MessageController extends Controller
         $this->baseGroupService = $baseGroupService;
     }
 
-    public function getMoreOfOld()
+    public function getMoreOldOfContact(Request $request)
     {
+        $messages = $this->messageService->getMoreOld(
+            $request->contactId,
+            $request->numberScrollLoad
+        );
 
+        return response()->json([
+            'messages' => $messages
+        ]);        
     }
 
-    public function getLastOfContact(Request $request)
+    public function getLatestAllOfContact(Request $request)
     {
-        $messages = $this->messageService->getLastOfContact(
+        $messages = $this->messageService->getLatestAll(
             $request->contactId
         );
 
@@ -55,13 +62,6 @@ class MessageController extends Controller
         );
 
         event( new UpdateUnreadMessageMarkers($memberIdList) );
-    }
-
-    public function test()
-    {
-        $userIdList = $this->baseGroupService->getMembersIdWithoutSender(2);
-        dump($userIdList);
-        //event( new UpdateUnreadMessageMarkers([1, 2, 3, 4]) );
     }
 
 }

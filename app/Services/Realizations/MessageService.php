@@ -13,9 +13,23 @@ use App\Services\Interfaces\IMessageService;
 
 class MessageService implements IMessageService
 {
-    public function getLastOfContact(int $contactId) : Collection
+    protected $countForSingleLoad = 3;
+
+    public function getMoreOld(int $contactId, int $numberScrollLoad) : Collection
+    {
+        $countToSkip = $this->countForSingleLoad * $numberScrollLoad;
+
+        return Message::where('group_id', '=', $contactId)
+                      ->skip($countToSkip)
+                      ->take($this->countForSingleLoad)
+                      ->with('user')
+                      ->get();        
+    }
+
+    public function getLatestAll(int $contactId) : Collection
     {
         return Message::where('group_id', '=', $contactId)
+                      ->take($this->countForSingleLoad)
                       ->with('user')
                       ->get();
     }
@@ -44,7 +58,7 @@ class MessageService implements IMessageService
 
     private function createUnreadMassageLinks(int $contactId)
     {
-        $contactMembers = $this->getMembersOfContact($contactId);
+        $contactMembers = $this->getMembers($contactId);
 
         foreach( $contactMembers as $contactMember ) {
             if ( $contactMember->id === Auth::user()->id ) {
@@ -59,7 +73,7 @@ class MessageService implements IMessageService
         }
     }
 
-    private function getMembersOfContact(int $contactId) : Collection
+    private function getMembers(int $contactId) : Collection
     {
         return Group::find($contactId)->users()->get();
     }

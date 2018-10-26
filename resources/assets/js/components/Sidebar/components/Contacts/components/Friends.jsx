@@ -39,7 +39,6 @@ class Friends extends Component {
   }
 
   highlightSelectedFriend(friendId) {
-    console.log(friendId);
     this.setState({
       ...this.state,
       selectedFriendId: friendId
