@@ -89,5 +89,6 @@ export const leaveGroup = groupId => dispatch => {
   .then(response => {
     dispatch(getGroups());
     dispatch({ type: 'SET_SELECTED_CONTACT_ID', payload: null });
+    dispatch({ type: 'RESET_CONTACT_PARAMS' });
   });
 };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getFriendsWhoNotInGroup } from '../../../../../../../../../actions/groups';
 
 class FriendListForExistsGroup extends Component {
 
@@ -10,6 +11,15 @@ class FriendListForExistsGroup extends Component {
     this.state = {
       friendsWhoNotInSelectedContact: []
     };
+  }
+
+  subscribeOnChangesInMemberListOfGroup() {
+    let socket = io(':3001'),
+        room   = 'update-members-of-public-group:' + this.props.selectedContactId;
+
+    socket.on(room, (socketData) => {
+      this.props.getFriendsWhoNotInGroup(this.props.selectedContactId);
+    });
   }
 
   componentDidMount() {
@@ -76,6 +86,7 @@ class FriendListForExistsGroup extends Component {
   }
 
   render() {
+    this.subscribeOnChangesInMemberListOfGroup();
     return (
       <div className="list-select-member-to-group">
         <ul>
@@ -103,6 +114,7 @@ export default connect(
   state => ({
     friends:                        state.friends.friends,
     notification:                   state.notification.message,
+    selectedContactId:              state.selectedContact.id,
     newMembersIdToGroupList:        state.selectedContact.newMembersIdToContact,
     friendsWhoNotInSelectedContact: state.selectedContact.friendsWhoNotInSelectedContact,
   }),
@@ -115,6 +127,9 @@ export default connect(
         type:    'UPDATE_NEW_MEMBERS_ID_TO_CONTACT_LIST',
         payload: clickedFriendId 
       });
+    },
+    getFriendsWhoNotInGroup: (contactId) => {
+      dispatch( getFriendsWhoNotInGroup(contactId) );
     }
   })
 )(FriendListForExistsGroup);

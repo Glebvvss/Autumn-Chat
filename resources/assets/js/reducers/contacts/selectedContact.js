@@ -10,6 +10,12 @@ let defaultState = {
 
 export function selectedContact(state = defaultState, action) {
 
+  if ( action.type === 'RESET_CONTACT_PARAMS' ) {
+    return {
+      ...defaultState
+    }
+  }
+
   if ( action.type === 'FETCH_FRIENDS_WHO_NOT_IN_SELECTED_CONTACT' ) {
     return {
       ...state,

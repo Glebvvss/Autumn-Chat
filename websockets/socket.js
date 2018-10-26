@@ -43,6 +43,8 @@ function updateMembersOfPublicGroup(socket, messageJSON) {
       
   socket.emit(room, 'update');
 
+  
+
   if ( newMemberIdList != null ) {
     newMemberIdList.map((newMemberId) => {
       let room = 'update-group-list:' + newMemberId;

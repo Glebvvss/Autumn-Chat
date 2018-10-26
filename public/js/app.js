@@ -2238,6 +2238,7 @@ var leaveGroup = function leaveGroup(groupId) {
     }).then(function (response) {
       dispatch(getGroups());
       dispatch({ type: 'SET_SELECTED_CONTACT_ID', payload: null });
+      dispatch({ type: 'RESET_CONTACT_PARAMS' });
     });
   };
 };
@@ -59508,6 +59509,10 @@ function selectedContact() {
   var action = arguments[1];
 
 
+  if (action.type === 'RESET_CONTACT_PARAMS') {
+    return _extends({}, defaultState);
+  }
+
   if (action.type === 'FETCH_FRIENDS_WHO_NOT_IN_SELECTED_CONTACT') {
     return _extends({}, state, {
       friendsWhoNotInSelectedContact: action.payload
@@ -63846,6 +63851,7 @@ var AddFriendsToExistsGroup = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fortawesome_react_fontawesome__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_groups__ = __webpack_require__(17);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -63855,6 +63861,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -63875,6 +63882,18 @@ var FriendListForExistsGroup = function (_Component) {
   }
 
   _createClass(FriendListForExistsGroup, [{
+    key: 'subscribeOnChangesInMemberListOfGroup',
+    value: function subscribeOnChangesInMemberListOfGroup() {
+      var _this2 = this;
+
+      var socket = io(':3001'),
+          room = 'update-members-of-public-group:' + this.props.selectedContactId;
+
+      socket.on(room, function (socketData) {
+        _this2.props.getFriendsWhoNotInGroup(_this2.props.selectedContactId);
+      });
+    }
+  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.setState(_extends({}, this.state, {
@@ -63945,8 +63964,9 @@ var FriendListForExistsGroup = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
+      this.subscribeOnChangesInMemberListOfGroup();
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'list-select-member-to-group' },
@@ -63958,10 +63978,10 @@ var FriendListForExistsGroup = function (_Component) {
               'li',
               { key: index,
                 'data-key': index,
-                onClick: _this2.addSelectedFriendsToGroup.bind(_this2),
+                onClick: _this3.addSelectedFriendsToGroup.bind(_this3),
                 'data-userID': item.id },
               item.username,
-              _this2.renderCheckMarkerOnSelectedElement(item)
+              _this3.renderCheckMarkerOnSelectedElement(item)
             );
           })
         )
@@ -63976,6 +63996,7 @@ var FriendListForExistsGroup = function (_Component) {
   return {
     friends: state.friends.friends,
     notification: state.notification.message,
+    selectedContactId: state.selectedContact.id,
     newMembersIdToGroupList: state.selectedContact.newMembersIdToContact,
     friendsWhoNotInSelectedContact: state.selectedContact.friendsWhoNotInSelectedContact
   };
@@ -63989,6 +64010,9 @@ var FriendListForExistsGroup = function (_Component) {
         type: 'UPDATE_NEW_MEMBERS_ID_TO_CONTACT_LIST',
         payload: clickedFriendId
       });
+    },
+    getFriendsWhoNotInGroup: function getFriendsWhoNotInGroup(contactId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_groups__["c" /* getFriendsWhoNotInGroup */])(contactId));
     }
   };
 })(FriendListForExistsGroup));
