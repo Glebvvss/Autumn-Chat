@@ -1318,11 +1318,14 @@ module.exports = { debugTool: debugTool };
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return socket; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return scrfToken; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return makeUriForRequest; });
 /* unused harmony export socketConnectByUserId */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cloneObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return scrollDocumentToBottom; });
+var socket = io(':3001');
+
 var scrfToken = function scrfToken() {
   var metas = document.getElementsByTagName('meta');
   for (var i = 0; i < metas.length; i++) {
@@ -5162,11 +5165,12 @@ module.exports = DOMLazyTree;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getMessages; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getMessagesOfDialog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return sendMessage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return dropUnreadMessageLink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return dropUnreadMessageLinkOfDialog; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getMessages; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addNewMessageToList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getMessagesOfDialog; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return sendMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return dropUnreadMessageLink; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return dropUnreadMessageLinkOfDialog; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__friends__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__groups__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_js__ = __webpack_require__(11);
@@ -5188,6 +5192,16 @@ var getMessages = function getMessages(contactId) {
         Object(__WEBPACK_IMPORTED_MODULE_2__functions_js__["d" /* scrollDocumentToBottom */])();
       });
     });
+  };
+};
+
+var addNewMessageToList = function addNewMessageToList(message) {
+  return function (dispatch) {
+    dispatch({ type: 'ADD_NEW_MESSAGE_TO_LIST', payload: message });
+
+    setTimeout(function () {
+      Object(__WEBPACK_IMPORTED_MODULE_2__functions_js__["d" /* scrollDocumentToBottom */])();
+    }, 2000);
   };
 };
 
@@ -59638,7 +59652,12 @@ function sidebarDropdownElements() {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = messages;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_js__ = __webpack_require__(11);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+
 
 var defaultState = {
   contactType: '',
@@ -59649,6 +59668,12 @@ function messages() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
   var action = arguments[1];
 
+
+  if (action.type === 'ADD_NEW_MESSAGE_TO_LIST') {
+    return _extends({}, state, {
+      messagesOfSelectedContact: [].concat(_toConsumableArray(state.messagesOfSelectedContact), [action.payload])
+    });
+  }
 
   if (action.type === 'RESET_MESSAGE_LIST') {
     return _extends({}, defaultState);
@@ -59784,7 +59809,8 @@ var Main = function (_Component) {
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
 	return {
-		loginState: state.checkLogin
+		loginState: state.checkLogin,
+		selectedContactId: state.selectedContact.id
 	};
 }, function (dispatch) {
 	return {
@@ -60946,10 +60972,11 @@ var MemberList = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_messages_js__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_friends_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_groups_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Message_jsx__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_friends_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_groups_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Message_jsx__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions_messages_js__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__functions_js__ = __webpack_require__(11);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -60957,6 +60984,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
 
 
 
@@ -60976,27 +61005,41 @@ var MessageList = function (_Component) {
   }
 
   _createClass(MessageList, [{
-    key: 'subscribeOnChangesInMessageList',
-    value: function subscribeOnChangesInMessageList() {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      this.scrollToBottom();
+
+      if (this.props !== prevProps) {
+        this.subscribeOnNewMessagesOfContact().bind(this);
+      }
+    }
+  }, {
+    key: 'scrollToBottom',
+    value: function scrollToBottom() {
+      var element = document.getElementById('end-of-messages');
+      element.scrollIntoView();
+    }
+  }, {
+    key: 'subscribeOnNewMessagesOfContact',
+    value: function subscribeOnNewMessagesOfContact() {
       var _this2 = this;
 
-      var socket = io(':3001'),
-          room = 'messages-of-contact:' + this.props.selectedContactId;
+      var room = 'add-new-message-to-list:' + this.props.selectedContactId;
 
-      socket.on(room, function (socketData) {
-        _this2.props.getMessages(_this2.props.selectedContactId);
+      __WEBPACK_IMPORTED_MODULE_6__functions_js__["e" /* socket */].once(room, function (message) {
+        _this2.props.addNewMessageToList(message);
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      this.subscribeOnChangesInMessageList();
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'message-list' },
         this.props.messages.map(function (item, index) {
-          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Message_jsx__["a" /* default */], { key: index, messageDetails: item });
-        })
+          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Message_jsx__["a" /* default */], { key: index, messageDetails: item });
+        }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'end-of-messages' })
       );
     }
   }]);
@@ -61012,13 +61055,16 @@ var MessageList = function (_Component) {
 }, function (dispatch) {
   return {
     getMessages: function getMessages(selectedContactId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages_js__["c" /* getMessages */])(selectedContactId));
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_messages_js__["d" /* getMessages */])(selectedContactId));
     },
     updateFriendList: function updateFriendList() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_friends_js__["f" /* getFriends */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["f" /* getFriends */])());
     },
     updateGroupList: function updateGroupList() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_groups_js__["d" /* getGroups */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_groups_js__["d" /* getGroups */])());
+    },
+    addNewMessageToList: function addNewMessageToList(message) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_messages_js__["a" /* addNewMessageToList */])(message));
     }
   };
 })(MessageList));
@@ -61183,10 +61229,10 @@ var NewMessageForm = function (_Component) {
 }, function (dispatch) {
   return {
     sendMessage: function sendMessage(contactId, text) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["e" /* sendMessage */])(contactId, text));
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["f" /* sendMessage */])(contactId, text));
     },
     dropUnreadMessageLink: function dropUnreadMessageLink(contactId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["a" /* dropUnreadMessageLink */])(contactId));
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["b" /* dropUnreadMessageLink */])(contactId));
     }
   };
 })(NewMessageForm));
@@ -62572,10 +62618,10 @@ var Groups = function (_Component) {
       dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'GROUP' });
     },
     getMessages: function getMessages(groupId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_messages__["c" /* getMessages */])(groupId));
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_messages__["d" /* getMessages */])(groupId));
     },
     dropUnreadMessageLink: function dropUnreadMessageLink(groupId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_messages__["a" /* dropUnreadMessageLink */])(groupId));
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_messages__["b" /* dropUnreadMessageLink */])(groupId));
     }
   };
 })(Groups));
@@ -62741,10 +62787,10 @@ var Friends = function (_Component) {
       dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
     }),
     dropUnreadMessageLinkOfDialog: function dropUnreadMessageLinkOfDialog(friendId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["b" /* dropUnreadMessageLinkOfDialog */])(friendId));
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["c" /* dropUnreadMessageLinkOfDialog */])(friendId));
     },
     getMessagesOfDialog: function getMessagesOfDialog(friendId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["d" /* getMessagesOfDialog */])(friendId));
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["e" /* getMessagesOfDialog */])(friendId));
     },
     setDialogId: function setDialogId(friendId) {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["l" /* setDialogId */])(friendId));

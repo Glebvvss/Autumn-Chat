@@ -21,6 +21,14 @@ export const getMessages = contactId => dispatch => {
   });
 };
 
+export const addNewMessageToList = message => dispatch => {
+  dispatch({ type: 'ADD_NEW_MESSAGE_TO_LIST', payload: message });
+
+  setTimeout(() => {
+    scrollDocumentToBottom();
+  }, 2000);
+};
+
 export const getMessagesOfDialog = friendId => dispatch => {
   getDialogId(friendId).then(response => {
     response.json().then(data => {

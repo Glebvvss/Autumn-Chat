@@ -13,7 +13,14 @@ use App\Services\Interfaces\IMessageService;
 
 class MessageService implements IMessageService
 {
-    public function sendTo(int $contactId, string $text)
+    public function getAllOfContact(int $contactId) : Collection
+    {
+        return Message::where('group_id', '=', $contactId)
+                      ->with('user')
+                      ->get();
+    }
+
+    public function sendTo(int $contactId, string $text) : array
     {
         $message = new Message();
 
@@ -23,6 +30,16 @@ class MessageService implements IMessageService
         $message->save();
 
         $this->createUnreadMassageLinks($contactId);
+
+        return $this->getSingleById($message->id);
+    }
+
+    private function getSingleById(int $messageId) : array
+    {
+        return Message::where('messages.id', '=', $messageId)
+                      ->with('user')
+                      ->first()
+                      ->toArray();
     }
 
     private function createUnreadMassageLinks(int $contactId)

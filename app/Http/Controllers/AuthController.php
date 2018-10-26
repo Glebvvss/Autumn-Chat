@@ -10,20 +10,24 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Interfaces\IAuthenticationService as AuthenticationService;
 
-class AuthController extends Controller {
-
+class AuthController extends Controller 
+{
     private $authentication;
 
-    public function __construct(AuthenticationService $authentication) {
+    public function __construct(AuthenticationService $authentication) 
+    {
         $this->authentication = $authentication;
     }
 
-    public function login(Request $request) {
+    public function login(Request $request) 
+    {
         $result = $this->authentication->login($request);
+
         return response()->json($result);
     }
 
-    public function registration(Request $request) {
+    public function registration(Request $request) 
+    {
         $errors = $this->authentication->registration($request);
 
         if ( !empty($errors) ) {
@@ -31,24 +35,27 @@ class AuthController extends Controller {
         }
 
         $result = $this->login($request);
+
         return response()->json($result);
     }
 
-    public function checkLogin() {
+    public function checkLogin() 
+    {
         if ( Auth::check() ) {
             return response()->json([
                 'status' => 'user'
             ]);
         }
+
         return response()->json([
             'status' => 'guest'
         ]);
     }
 
-    public function logout() {
+    public function logout() 
+    {
         if ( Auth::check() ) {
             Auth::logout();
         }
     }
-
 }

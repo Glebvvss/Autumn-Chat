@@ -41,7 +41,10 @@ class FriendController extends Controller
 
     public function getAllWhoNotInGroup(Request $request) 
     {
-        $friendsWhoNotInGroup = $this->friendService->getAllWhoNotInGroup($request->groupId);
+        $friendsWhoNotInGroup = $this->friendService->getAllWhoNotInGroup(
+            $request->groupId
+        );
+        
         return response()->json([
             'friendsWhoNotInGroup' => $friendsWhoNotInGroup
         ]);

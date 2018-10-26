@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faComments, faUserFriends, faArrowCircleUp, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 library.add(faComment, faComments, faUserFriends, faArrowCircleUp, faCheckCircle);
 
-import { makeUriForRequest } from '../functions';
+import { makeUriForRequest, socket } from '../functions';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 

@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import { getMessages } from '../../../../actions/messages.js';
 import { getFriends } from '../../../../actions/friends.js';
 import { getGroups } from '../../../../actions/groups.js';
 import Message from './components/Message.jsx';
+
+import { getMessages,
+         addNewMessageToList } from '../../../../actions/messages.js';
+
+import { socket, scrollDocumentToBottom } from '../../../../functions.js';
+
+
 
 class MessageList extends Component {
 
@@ -12,17 +17,28 @@ class MessageList extends Component {
     super(props);
   }
 
-  subscribeOnChangesInMessageList() {
-    let socket = io(':3001'),
-        room   = 'messages-of-contact:' + this.props.selectedContactId;
+  componentDidUpdate(prevProps) {
+    this.scrollToBottom();
 
-    socket.on(room, (socketData) => {
-      this.props.getMessages(this.props.selectedContactId);
+    if ( this.props !== prevProps ) {
+      this.subscribeOnNewMessagesOfContact().bind(this);
+    }
+  }
+
+  scrollToBottom() {
+    let element = document.getElementById('end-of-messages');
+    element.scrollIntoView();
+  }
+
+  subscribeOnNewMessagesOfContact() {
+    let room   = 'add-new-message-to-list:' + this.props.selectedContactId;
+
+    socket.once(room, (message) => {
+      this.props.addNewMessageToList(message);
     });
   }
 
   render() {
-    this.subscribeOnChangesInMessageList();
     return (
       <div className="message-list">
         {
@@ -30,6 +46,9 @@ class MessageList extends Component {
             <Message key={index} messageDetails={item} /> 
           ))
         }
+
+        <div id="end-of-messages"></div>
+
       </div>
     );
   }
@@ -50,6 +69,9 @@ export default connect(
     },
     updateGroupList: () => {
       dispatch( getGroups() );
+    },
+    addNewMessageToList: message => {
+      dispatch( addNewMessageToList(message) );
     }
   })
 )(MessageList);

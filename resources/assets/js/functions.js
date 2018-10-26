@@ -1,3 +1,5 @@
+export let socket = io(':3001');
+
 export const scrfToken = () => { 
  	let metas = document.getElementsByTagName('meta'); 
  	for (let i = 0; i < metas.length; i++) { 

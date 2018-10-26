@@ -49,7 +49,9 @@ class FriendshipRequestController extends Controller
 
         if ( $result === 'Request has been sent.' ) {
             $recipient = User::where('username', '=', $request->username)->first();
+
             event( new UpdateFriendRequestList($recipient->id, 'recived') );
+
             event( new UpdateFriendRequestList(Auth::user()->id, 'sended') );
         }
 
@@ -69,6 +71,7 @@ class FriendshipRequestController extends Controller
 
         if ( $result === 'Friend added!' ) {
             event( new UpdateFriendRequestList($request->senderId, 'sended') );
+            
             event( new UpdateFriendList( $request->senderId, 'sender' ) );
         }
 

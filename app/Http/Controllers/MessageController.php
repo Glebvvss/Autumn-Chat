@@ -6,9 +6,9 @@ use Auth;
 use App\Models\Group;
 Use App\Models\Message;
 use Illuminate\Http\Request;
-use App\Events\UpdateMessageList;
-use App\Events\UpdateUnreadMessageMarkers;
+use App\Events\AddNewMessageToList;
 use App\Http\Controllers\Controller;
+use App\Events\UpdateUnreadMessageMarkers;
 use App\Services\Interfaces\IMessageService as MessageService;
 use App\Services\Interfaces\IGroupServices\IBaseGroupService as BaseGroupService;
 
@@ -27,9 +27,9 @@ class MessageController extends Controller
 
     public function getAllOfContact(Request $request)
     {
-        $messages = Message::where('group_id', '=', $request->contactId)
-                           ->with('user')
-                           ->get();
+        $messages = $this->messageService->getAllOfContact(
+            $request->contactId
+        );
 
         return response()->json([
             'messages' => $messages
@@ -38,13 +38,18 @@ class MessageController extends Controller
 
     public function sendToContact(Request $request)
     {
-        $this->messageService->sendTo($request->contactId, $request->text);
+        $message = $this->messageService->sendTo(
+            $request->contactId, 
+            $request->text
+        );
 
-        event( new UpdateMessageList($request->contactId) );
+        event( new AddNewMessageToList($request->contactId, $message) );
 
-        $userIdList = $this->baseGroupService->getMembersIdWithoutSender($request->contactId);
+        $memberIdList = $this->baseGroupService->getMembersIdWithoutSender(
+            $request->contactId
+        );
 
-        event( new UpdateUnreadMessageMarkers($userIdList) );
+        event( new UpdateUnreadMessageMarkers($memberIdList) );
     }
 
     public function test()

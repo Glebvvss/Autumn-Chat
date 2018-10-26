@@ -8,6 +8,12 @@ io.on('connection', (socket) => {
     redis.on('pmessage', (pattern, chanel, message) => {
       let messageJSON = JSON.parse(message);
 
+      console.log('test');
+
+      if ( messageJSON.event === 'ADD_NEW_MESSAGE_TO_LIST' ) {
+        addNewMessageToList(socket, messageJSON);
+      }
+
       if ( messageJSON.event === 'UPDATE_MEMBERS_OF_PUBLIC_GROUP' ) {
         updateMembersOfPublicGroup(socket, messageJSON);
       }
@@ -36,14 +42,20 @@ io.on('connection', (socket) => {
   });
 });
 
+function addNewMessageToList(socket, messageJSON) {
+  let groupId = messageJSON.data.groupId;
+  let message = messageJSON.data.message;
+      room    = 'add-new-message-to-list:' + groupId;
+
+  socket.emit(room, message);
+}
+
 function updateMembersOfPublicGroup(socket, messageJSON) {
   let groupId         = messageJSON.data.groupId;
   let newMemberIdList = messageJSON.data.newMemberIdList;
       room            = 'update-members-of-public-group:' + groupId;
       
   socket.emit(room, 'update');
-
-  
 
   if ( newMemberIdList != null ) {
     newMemberIdList.map((newMemberId) => {

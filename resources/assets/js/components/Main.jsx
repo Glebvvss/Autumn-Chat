@@ -38,7 +38,7 @@ class Main extends Component {
 		);
 	}
 
-	render() {		
+	render() {
 		if ( this.props.loginState.status === 'user' ) {
 			return this.renderChatMainPage();
 		} else if ( this.props.loginState.status === 'guest' ) {
@@ -50,7 +50,8 @@ class Main extends Component {
 
 export default connect(
 	state => ({
-		loginState: state.checkLogin
+		loginState: state.checkLogin,
+		selectedContactId: state.selectedContact.id
 	}),
 	dispatch => ({
 		checkLogin: () => {
