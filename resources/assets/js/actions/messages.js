@@ -1,13 +1,13 @@
+import { getGroups } from './groups';
 import { getFriends, 
          getDialogId } from './friends';
 
-import { getGroups } from './groups';
 import { scrfToken, 
          makeUriForRequest, 
          scrollDocumentToBottom } from '../functions.js';
 
-export const getMoreOldMessages = (contactId, numberScrollLoad) => {
-  fetch( makeUriForRequest('/get-more-old-messages-of-contact/' + contactId + '/' + numberScrollLoad), {
+export const getMoreOldMessages = (contactId, numberScrollLoad, startPointMessageId) => dispatch => {
+  fetch( makeUriForRequest('/get-more-old-messages-of-contact/'+contactId+'/'+numberScrollLoad+'/'+startPointMessageId), {
     method: 'get'
   })
   .then(response => {

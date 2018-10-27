@@ -1,7 +1,7 @@
 import { cloneObject }  from '../functions.js';
 
 let defaultState = {
-  contactType: '',
+  startPointMessageId: null,
   messagesOfSelectedContact: []
 };
 
@@ -9,9 +9,11 @@ export function messages(state = defaultState, action) {
 
   if ( action.type === 'FETCH_MORE_OLD_MESSAGES_TO_LIST' ) {
 
+    let updatedMessageList = action.payload.concat(state.messagesOfSelectedContact);
+
     return {
       ...state,
-      messagesOfSelectedContact: cloneObject( state.messagesOfSelectedContact.unshift(action.payload) )
+      messagesOfSelectedContact: cloneObject( updatedMessageList )
     };
   }
 
@@ -34,15 +36,9 @@ export function messages(state = defaultState, action) {
   if ( action.type === 'FETCH_LATEST_MESSAGES_OF_CONTACT' ) {
     return {
       ...state,
-      messagesOfSelectedContact: action.payload    
+      messagesOfSelectedContact: action.payload,
+      startPointMessageId: action.payload[0].id
     };
-  }
-
-  if ( action.type === 'SET_CONTACT_TYPE' ) {
-    return {
-      ...state,
-      contactType: action.payload
-    }
   }
   
   return state;

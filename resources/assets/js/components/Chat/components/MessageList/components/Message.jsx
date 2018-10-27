@@ -8,7 +8,7 @@ class Message extends Component {
 
   render() {
     return (
-      <div className="message-out-block">
+      <div className="message-out-block" data-messageID={this.props.messageDetails.id}>
         <div className="message">
           <div className="username-of-writer-message">
             {this.props.messageDetails.user.username}

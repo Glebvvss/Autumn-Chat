@@ -13,7 +13,7 @@ use App\Services\Interfaces\IMessageService;
 
 class MessageService implements IMessageService
 {
-    protected $countForSingleLoad = 3;
+    protected $countForSingleLoad = 10;
 
     public function getMoreOld(
         int $contactId, 
