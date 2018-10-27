@@ -33,9 +33,15 @@ class MessageController extends Controller
             $request->startPointMessageId
         );
 
+        if ( $messages === null ) {
+            return response()->json([
+                'messages' => 'none'
+            ]);
+        }
+
         return response()->json([
             'messages' => $messages
-        ]);        
+        ]);
     }
 
     public function getLatestAllOfContact(Request $request)

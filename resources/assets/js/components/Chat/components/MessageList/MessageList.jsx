@@ -23,8 +23,16 @@ class MessageList extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    if ( this.props.loadingOldMessagesHaveResult === true ) {
+      this.focusOnFirstMessageBeforeLoad();
+    }
+
     if ( this.state.scrollUp === false ) {
       this.scrollToBottom();
+    }
+
+    if ( this.props.selectedContactId !== prevProps.selectedContactId ) {
+      this.resetNumberScrollLoad();      
     }
 
     if ( this.props !== prevProps ) {
@@ -32,12 +40,17 @@ class MessageList extends Component {
     }
   }
 
+  resetNumberScrollLoad() {
+    this.setState({
+      ...this.state,
+      numberScrollLoad: 0
+    });
+  }
+
   getMoreOldMessagesByScrollToTop() {
     document.addEventListener('scroll', () => {
       if ( document.documentElement.scrollTop === 0 ) {
         this.state.numberScrollLoad = this.state.numberScrollLoad + 1;
-
-        this.focusOnFirstMessageBeforeLoad();
 
         this.notifyComponentAboutScrollUp();
 
@@ -45,7 +58,7 @@ class MessageList extends Component {
           this.props.selectedContactId, 
           this.state.numberScrollLoad, 
           this.props.startPointMessageId
-        );
+        );        
       }
     });
   }
@@ -60,7 +73,7 @@ class MessageList extends Component {
     this.setState({
       ...this.state,
       scrollUp: true
-    });    
+    });
   }
 
   notifyComponentAboutScrollDown() {
@@ -80,7 +93,7 @@ class MessageList extends Component {
 
     socket.once(room, (message) => {
       this.notifyComponentAboutScrollDown();
-      
+
       this.props.addNewMessageToList(message);
     });
   }
@@ -102,9 +115,10 @@ class MessageList extends Component {
 
 export default connect(
   state => ({
-    messages:            state.messages.messagesOfSelectedContact,
-    selectedContactId:   state.selectedContact.id,
-    startPointMessageId: state.messages.startPointMessageId
+    messages:                     state.messages.messagesOfSelectedContact,
+    selectedContactId:            state.selectedContact.id,
+    startPointMessageId:          state.messages.startPointMessageId,
+    loadingOldMessagesHaveResult: state.messages.loadingOldMessagesHaveResult
   }), 
   dispatch => ({
     updateFriendList: () => {

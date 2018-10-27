@@ -2,18 +2,26 @@ import { cloneObject }  from '../functions.js';
 
 let defaultState = {
   startPointMessageId: null,
-  messagesOfSelectedContact: []
+  messagesOfSelectedContact: [],
+  loadingOldMessagesHaveResult: null,
 };
 
 export function messages(state = defaultState, action) {
 
   if ( action.type === 'FETCH_MORE_OLD_MESSAGES_TO_LIST' ) {
 
-    let updatedMessageList = action.payload.concat(state.messagesOfSelectedContact);
+    if ( action.payload === 'NO RESULTS' ) {
+      return {
+        ...state,
+        loadingOldMessagesHaveResult: false
+      };      
+    }
 
+    let updatedMessageList = action.payload.concat(state.messagesOfSelectedContact);
     return {
       ...state,
-      messagesOfSelectedContact: cloneObject( updatedMessageList )
+      messagesOfSelectedContact: cloneObject( updatedMessageList ),
+      loadingOldMessagesHaveResult: true
     };
   }
 

@@ -12,10 +12,25 @@ export const getMoreOldMessages = (contactId, numberScrollLoad, startPointMessag
   })
   .then(response => {
     response.json().then(data => {
-      dispatch({ 
-        type:    'FETCH_MORE_OLD_MESSAGES_TO_LIST',
-        payload: data.messages 
-      });
+
+      console.log(data);
+
+      if ( data.messages !== 'none' ) {
+
+        dispatch({ 
+          type:    'FETCH_MORE_OLD_MESSAGES_TO_LIST',
+          payload: data.messages 
+        });
+
+      } else {
+
+        dispatch({ 
+          type:    'FETCH_MORE_OLD_MESSAGES_TO_LIST',
+          payload: 'NO RESULTS'
+        });
+
+      }
+
     });
   });
 };

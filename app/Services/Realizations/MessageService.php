@@ -18,10 +18,14 @@ class MessageService implements IMessageService
     public function getMoreOld(
         int $contactId, 
         int $numberScrollLoad, 
-        int $startPointMessageId ) : Collection 
+        int $startPointMessageId )
     {
         $countLessId = $this->getCountOfContactLessId($startPointMessageId, $contactId);
         $countToSkip = $countLessId - ( $this->countForSingleLoad * $numberScrollLoad );
+
+        if ( $countToSkip <= - $this->countForSingleLoad ) {
+            return;
+        }
 
         return Message::where('group_id', '=', $contactId)
                       ->where('id', '<', $startPointMessageId)

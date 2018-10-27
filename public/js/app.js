@@ -5186,10 +5186,22 @@ var getMoreOldMessages = function getMoreOldMessages(contactId, numberScrollLoad
       method: 'get'
     }).then(function (response) {
       response.json().then(function (data) {
-        dispatch({
-          type: 'FETCH_MORE_OLD_MESSAGES_TO_LIST',
-          payload: data.messages
-        });
+
+        console.log(data);
+
+        if (data.messages !== 'none') {
+
+          dispatch({
+            type: 'FETCH_MORE_OLD_MESSAGES_TO_LIST',
+            payload: data.messages
+          });
+        } else {
+
+          dispatch({
+            type: 'FETCH_MORE_OLD_MESSAGES_TO_LIST',
+            payload: 'NO RESULTS'
+          });
+        }
       });
     });
   };
@@ -59673,7 +59685,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var defaultState = {
   startPointMessageId: null,
-  messagesOfSelectedContact: []
+  messagesOfSelectedContact: [],
+  loadingOldMessagesHaveResult: null
 };
 
 function messages() {
@@ -59683,10 +59696,16 @@ function messages() {
 
   if (action.type === 'FETCH_MORE_OLD_MESSAGES_TO_LIST') {
 
-    var updatedMessageList = action.payload.concat(state.messagesOfSelectedContact);
+    if (action.payload === 'NO RESULTS') {
+      return _extends({}, state, {
+        loadingOldMessagesHaveResult: false
+      });
+    }
 
+    var updatedMessageList = action.payload.concat(state.messagesOfSelectedContact);
     return _extends({}, state, {
-      messagesOfSelectedContact: Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* cloneObject */])(updatedMessageList)
+      messagesOfSelectedContact: Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* cloneObject */])(updatedMessageList),
+      loadingOldMessagesHaveResult: true
     });
   }
 
@@ -61032,13 +61051,28 @@ var MessageList = function (_Component) {
   _createClass(MessageList, [{
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
+      if (this.props.loadingOldMessagesHaveResult === true) {
+        this.focusOnFirstMessageBeforeLoad();
+      }
+
       if (this.state.scrollUp === false) {
         this.scrollToBottom();
+      }
+
+      if (this.props.selectedContactId !== prevProps.selectedContactId) {
+        this.resetNumberScrollLoad();
       }
 
       if (this.props !== prevProps) {
         this.subscribeOnNewMessagesOfContact().bind(this);
       }
+    }
+  }, {
+    key: 'resetNumberScrollLoad',
+    value: function resetNumberScrollLoad() {
+      this.setState(_extends({}, this.state, {
+        numberScrollLoad: 0
+      }));
     }
   }, {
     key: 'getMoreOldMessagesByScrollToTop',
@@ -61048,8 +61082,6 @@ var MessageList = function (_Component) {
       document.addEventListener('scroll', function () {
         if (document.documentElement.scrollTop === 0) {
           _this2.state.numberScrollLoad = _this2.state.numberScrollLoad + 1;
-
-          _this2.focusOnFirstMessageBeforeLoad();
 
           _this2.notifyComponentAboutScrollUp();
 
@@ -61118,7 +61150,8 @@ var MessageList = function (_Component) {
   return {
     messages: state.messages.messagesOfSelectedContact,
     selectedContactId: state.selectedContact.id,
-    startPointMessageId: state.messages.startPointMessageId
+    startPointMessageId: state.messages.startPointMessageId,
+    loadingOldMessagesHaveResult: state.messages.loadingOldMessagesHaveResult
   };
 }, function (dispatch) {
   return {
