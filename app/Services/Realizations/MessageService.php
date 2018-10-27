@@ -7,44 +7,63 @@ use App\Models\User;
 use App\Models\Group;
 use App\Models\Message;
 use App\Models\UnreadMassageLink;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use App\Services\Interfaces\IMessageService;
 
 class MessageService implements IMessageService
 {
-    protected $countForSingleLoad = 10;
+    protected $countPerPage = 10;
 
     public function getMoreOld(
         int $contactId, 
         int $numberScrollLoad, 
-        int $startPointMessageId )
+        int $startPointMessageId ) : array
     {
-        $countLessId = $this->getCountOfContactLessId($startPointMessageId, $contactId);
-        $countToSkip = $countLessId - ( $this->countForSingleLoad * $numberScrollLoad );
+        Paginator::currentPageResolver(function () use ($numberScrollLoad) {
+            return $numberScrollLoad;
+        });
 
-        if ( $countToSkip <= - $this->countForSingleLoad ) {
-            return;
+        $paginatedMessages = Message::where('group_id', '=', $contactId)
+                                    ->where('id', '<', $startPointMessageId)
+                                    ->orderBy('id', 'desc')
+                                    ->with('user')
+                                    ->paginate($this->countPerPage)
+                                    ->toArray();
+        
+        if ( $this->checkOnLastPage($paginatedMessages) ) {
+            $allOldMessagesLoaded = true;
+        } else {
+            $allOldMessagesLoaded = false;
         }
 
-        return Message::where('group_id', '=', $contactId)
-                      ->where('id', '<', $startPointMessageId)
-                      ->skip($countToSkip)
-                      ->take($this->countForSingleLoad)
-                      ->with('user')
-                      ->get();       
+        $messagesOfPage = $paginatedMessages['data'];
+        return [
+            'messages'             => array_reverse($messagesOfPage),
+            'allOldMessagesLoaded' => $allOldMessagesLoaded
+        ];
     }
 
     public function getLatestAll(int $contactId) : Collection
     {
         $countOfContact = $this->getCountOfContact($contactId);
-        $countToSkip = $countOfContact - $this->countForSingleLoad;
+        $countToSkip = $countOfContact - $this->countPerPage;
 
         return Message::where('group_id', '=', $contactId)
                       ->skip($countToSkip)
-                      ->take($this->countForSingleLoad)
+                      ->take($this->countPerPage)
                       ->with('user')
                       ->get();
+    }
+
+    private function checkOnLastPage(array $paginatedMessages) : bool
+    {
+        if ( $paginatedMessages['current_page'] === $paginatedMessages['last_page'] ) {
+            return true;
+        }
+
+        return false;
     }
 
     private function getCountOfContactLessId(int $messageId, int $contactId) : int
@@ -62,7 +81,6 @@ class MessageService implements IMessageService
     public function sendTo(int $contactId, string $text) : array
     {
         $message = new Message();
-
         $message->text     = $text;
         $message->user_id  = Auth::user()->id;
         $message->group_id = $contactId;
@@ -91,7 +109,6 @@ class MessageService implements IMessageService
             }
 
             $unreadMassageLink = new UnreadMassageLink();
-
             $unreadMassageLink->user_id    = $contactMember->id;
             $unreadMassageLink->group_id   = $contactId;
             $unreadMassageLink->save();

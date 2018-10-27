@@ -22,8 +22,18 @@ class MessageList extends Component {
     }
   }
 
+  subscribeOnNewMessagesOfContact() {
+    let room   = 'add-new-message-to-list:' + this.props.selectedContactId;
+
+    socket.once(room, (message) => {
+      this.notifyComponentAboutScrollDown();
+
+      this.props.addNewMessageToList(message);
+    });
+  }
+
   componentDidUpdate(prevProps) {
-    if ( this.props.loadingOldMessagesHaveResult === true ) {
+    if ( this.props.allOldMessagesLoaded !== true ) {
       this.focusOnFirstMessageBeforeLoad();
     }
 
@@ -32,7 +42,8 @@ class MessageList extends Component {
     }
 
     if ( this.props.selectedContactId !== prevProps.selectedContactId ) {
-      this.resetNumberScrollLoad();      
+      this.props.resetAllMessagesLoaded();
+      this.resetNumberScrollLoad();
     }
 
     if ( this.props !== prevProps ) {
@@ -49,6 +60,10 @@ class MessageList extends Component {
 
   getMoreOldMessagesByScrollToTop() {
     document.addEventListener('scroll', () => {
+      if ( this.props.allOldMessagesLoaded === true ) {
+        return;
+      }
+
       if ( document.documentElement.scrollTop === 0 ) {
         this.state.numberScrollLoad = this.state.numberScrollLoad + 1;
 
@@ -58,7 +73,7 @@ class MessageList extends Component {
           this.props.selectedContactId, 
           this.state.numberScrollLoad, 
           this.props.startPointMessageId
-        );        
+        );    
       }
     });
   }
@@ -88,16 +103,6 @@ class MessageList extends Component {
     element.scrollIntoView();
   }
 
-  subscribeOnNewMessagesOfContact() {
-    let room   = 'add-new-message-to-list:' + this.props.selectedContactId;
-
-    socket.once(room, (message) => {
-      this.notifyComponentAboutScrollDown();
-
-      this.props.addNewMessageToList(message);
-    });
-  }
-
   render() {
     return (
       <div className="message-list">
@@ -115,10 +120,10 @@ class MessageList extends Component {
 
 export default connect(
   state => ({
-    messages:                     state.messages.messagesOfSelectedContact,
-    selectedContactId:            state.selectedContact.id,
-    startPointMessageId:          state.messages.startPointMessageId,
-    loadingOldMessagesHaveResult: state.messages.loadingOldMessagesHaveResult
+    messages:             state.messages.messagesOfSelectedContact,
+    selectedContactId:    state.selectedContact.id,
+    startPointMessageId:  state.messages.startPointMessageId,
+    allOldMessagesLoaded: state.messages.allOldMessagesLoaded
   }), 
   dispatch => ({
     updateFriendList: () => {
@@ -132,6 +137,9 @@ export default connect(
     },
     getMoreOldMessages: (contactId, numberScrollLoad, startPointMessageId) => {
       dispatch( getMoreOldMessages(contactId, numberScrollLoad, startPointMessageId) );
+    },
+    resetAllMessagesLoaded: () => {
+      dispatch({ type: 'RESET_ALL_OLD_MESSAGES_LOADED' });
     }
   })
 )(MessageList);

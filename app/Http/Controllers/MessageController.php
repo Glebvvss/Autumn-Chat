@@ -27,20 +27,15 @@ class MessageController extends Controller
 
     public function getMoreOldOfContact(Request $request)
     {
-        $messages = $this->messageService->getMoreOld(
+        $result = $this->messageService->getMoreOld(
             $request->contactId,
             $request->numberScrollLoad,
             $request->startPointMessageId
         );
 
-        if ( $messages === null ) {
-            return response()->json([
-                'messages' => 'none'
-            ]);
-        }
-
         return response()->json([
-            'messages' => $messages
+            'messages'             => $result['messages'],
+            'allOldMessagesLoaded' => $result['allOldMessagesLoaded']
         ]);
     }
 
