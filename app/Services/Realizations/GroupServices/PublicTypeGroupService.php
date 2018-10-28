@@ -12,6 +12,15 @@ use App\Services\Interfaces\IGroupServices\IPublicTypeGroupService;
 
 class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGroupService
 {
+    public function getAll() : array
+    {
+        return User::find( Auth::user()->id )
+                   ->groups()
+                   ->publicType()
+                   ->get()
+                   ->toArray();
+    }
+
     public function create(string $groupName, array $memberIdList)
     {
         if ( $groupName === '' ) {

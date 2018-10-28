@@ -14,11 +14,6 @@ class UnreadMessageLinkController
         $this->unreadMessageLinkService = $unreadMessageLinkService;
     }
 
-    public function create()
-    {
-
-    }
-
     public function drop(Request $request)
     {
         $this->unreadMessageLinkService->drop($request->contactId);

@@ -17,7 +17,7 @@ class UpdateFriendList implements ShouldBroadcast {
     public $userId;
     public $type;
 
-    public function __construct($userId, $type) {
+    public function __construct($userId, $type = null) {
         $this->userId = $userId;
         $this->type = $type;
     }

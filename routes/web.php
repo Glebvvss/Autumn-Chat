@@ -59,6 +59,10 @@ Route::group(['as' => 'friends'], function() {
     Route::get('/get-all-friends-who-not-in-group/{groupId}', [
         'uses' => 'FriendController@getAllWhoNotInGroup'
     ]);
+
+    Route::get('/delete-friend-from-friend-list/{friendId}', [
+        'uses' => 'FriendController@deleteFromFriendList'
+    ]);
 });
 
 Route::group(['as' => 'friendship-requests'], function() {
@@ -96,7 +100,7 @@ Route::group(['as' => 'friendship-requests'], function() {
 });
 
 Route::group(['as' => 'groups'], function() {
-    Route::get('/get-groups', [
+    Route::get('/get-public-type-groups', [
         'uses' => 'GroupController@getPublicTypeAll'
     ]); 
 

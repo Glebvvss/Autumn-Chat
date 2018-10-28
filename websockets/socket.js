@@ -8,8 +8,6 @@ io.on('connection', (socket) => {
     redis.on('pmessage', (pattern, chanel, message) => {
       let messageJSON = JSON.parse(message);
 
-      console.log('test');
-
       if ( messageJSON.event === 'ADD_NEW_MESSAGE_TO_LIST' ) {
         addNewMessageToList(socket, messageJSON);
       }

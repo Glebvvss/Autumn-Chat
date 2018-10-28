@@ -44,7 +44,7 @@ class MessageController extends Controller
         $messages = $this->messageService->getLatestAll(
             $request->contactId
         );
-
+        
         return response()->json([
             'messages' => $messages
         ]);

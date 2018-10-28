@@ -26,7 +26,7 @@ export const getLatestMessages = contactId => dispatch => {
   })
   .then(response => {
     response.json().then(data => {
-      dispatch({ 
+      dispatch({
         type:    'FETCH_LATEST_MESSAGES_OF_CONTACT',
         payload: data.messages 
       });

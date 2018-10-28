@@ -10,6 +10,7 @@ export function messages(state = defaultState, action) {
 
   if ( action.type === 'FETCH_MORE_OLD_MESSAGES_TO_LIST' ) {
     let updatedMessageList = action.payload.messages.concat(state.messagesOfSelectedContact);
+
     return {
       ...state,
       messagesOfSelectedContact: cloneObject( updatedMessageList ),
@@ -29,7 +30,7 @@ export function messages(state = defaultState, action) {
 
   if ( action.type === 'RESET_MESSAGE_LIST' ) {
     return {
-      ...defaultState
+      ...defaultState,
     };
   }
 
@@ -41,6 +42,15 @@ export function messages(state = defaultState, action) {
   }
 
   if ( action.type === 'FETCH_LATEST_MESSAGES_OF_CONTACT' ) {
+
+    if ( JSON.stringify([]) === JSON.stringify(action.payload) ) {
+      return {
+        ...state,
+        messagesOfSelectedContact: state.messagesOfSelectedContact[0],
+        startPointMessageId: action.payload[0].id
+      };      
+    }
+
     return {
       ...state,
       messagesOfSelectedContact: action.payload,

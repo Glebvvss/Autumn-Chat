@@ -5,11 +5,35 @@ namespace App\Services\Realizations;
 use DB;
 use Auth;
 use App\Models\User;
+use App\Models\Friend;
 use App\Models\Group;
 use App\Services\Interfaces\IFriendService;
+use App\Services\Realizations\GroupServices\DialogTypeGroupService;
 
 class FriendService implements IFriendService
 {
+    public function getAllOfUser(int $userId) : array
+    {
+        return User::find($userId)
+                   ->friends()
+                   ->get()
+                   ->toArray();
+    }
+
+    public function deleteFromFriends(int $friendId)
+    {
+        Friend::where('user_id', '=', Auth::user()->id)
+              ->where('friend_user_id', '=', $friendId)
+              ->delete();
+
+        Friend::where('user_id', '=', $friendId)
+              ->where('friend_user_id', '=', Auth::user()->id)
+              ->delete();
+
+        $dialogTypeGroupService = new DialogTypeGroupService();
+        $dialogTypeGroupService->dropBetween(Auth::user()->id, $friendId);
+    }
+
     public function getAllWhoNotInGroup(int $groupId) 
     {
         if ( !$this->checkGroupOnExists($groupId) ) {

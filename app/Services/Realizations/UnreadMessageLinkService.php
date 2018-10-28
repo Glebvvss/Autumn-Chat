@@ -62,16 +62,6 @@ class UnreadMessageLinkService implements IUnreadMessageLinkService
         return $friendsWithUnreadMessageLinks;
     }
 
-    public function detach(array $group)
-    {
-
-    }
-
-    public function create(int $groupId)
-    {
-        
-    }
-
     public function drop(int $groupId)
     {
         UnreadMassageLink::where('user_id', '=', Auth::user()->id)

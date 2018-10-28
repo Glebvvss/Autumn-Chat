@@ -5,13 +5,16 @@ namespace App\Services\Realizations\GroupServices;
 use DB;
 use Auth;
 use App\Models\Group;
+use Illuminate\Database\Eloquent\Collection;
 use App\Services\Interfaces\IGroupServices\IBaseGroupService;
 
 class BaseGroupService implements IBaseGroupService
 {
     public function getMembers(int $groupId) : Collection
     {
-        return Group::find($groupId)->users()->get();
+        return Group::find($groupId)
+                    ->users()
+                    ->get();
     }
 
     public function getMembersId(int $groupId) : array

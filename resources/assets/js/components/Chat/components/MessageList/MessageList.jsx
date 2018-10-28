@@ -81,7 +81,10 @@ class MessageList extends Component {
   focusOnFirstMessageBeforeLoad() {
     const selector = 'div.message-out-block';
     const element = document.querySelectorAll(selector);
-    element[9].scrollIntoView();
+
+    if ( element.hasOwnProperty(9) ) {
+      element[9].scrollIntoView();
+    }
   }
 
   notifyComponentAboutScrollUp() {

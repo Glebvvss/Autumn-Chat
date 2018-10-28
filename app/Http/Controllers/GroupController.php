@@ -11,6 +11,7 @@ use App\Models\UnreadMessageLink;
 use App\Http\Controllers\Controller;
 use App\Events\NewPublicGroupCreated;
 use App\Events\UpdateMembersOfPublicGroup;
+use App\Services\Interfaces\IGroupServices\IBaseGroupService as BaseGroupService;
 use App\Services\Interfaces\IUnreadMessageLinkService as UnreadMessageLinkService;
 use App\Services\Interfaces\IGroupServices\IPublicTypeGroupService as PublicTypeGroupService;
 use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService as DialogTypeGroupService;
@@ -20,24 +21,23 @@ class GroupController extends Controller
     protected $publicTypeGroupService;
     protected $dialogTypeGroupService;
     protected $unreadMessageLinkService;
+    protected $baseGroupService;
 
     public function __construct(
         PublicTypeGroupService   $publicTypeGroupService,
         DialogTypeGroupService   $dialogTypeGroupService,
-        UnreadMessageLinkService $unreadMessageLinkService
+        UnreadMessageLinkService $unreadMessageLinkService,
+        BaseGroupService         $baseGroupService
     ){
         $this->publicTypeGroupService   = $publicTypeGroupService;
         $this->dialogTypeGroupService   = $dialogTypeGroupService;
         $this->unreadMessageLinkService = $unreadMessageLinkService;
+        $this->baseGroupService         = $baseGroupService;
     }
 
     public function getPublicTypeAll() 
     {
-        $groups = User::find( Auth::user()->id )
-            ->groups()
-            ->publicType()
-            ->get()
-            ->toArray();
+        $groups = $this->publicTypeGroupService->getAll();
 
         $groupsWithMessageLinks = $this->unreadMessageLinkService->attachAll($groups);
 
@@ -60,6 +60,7 @@ class GroupController extends Controller
 
     public function createPublicType(Request $request) {
         $memberIdList = json_decode($request->groupMembersIdList);
+
         if ( $request->groupName === null ) {
             $request->groupName = '';
         }
@@ -103,9 +104,7 @@ class GroupController extends Controller
 
     public function getMembers(Request $request)
     {
-        $members = Group::find($request->id)
-            ->users()
-            ->get();
+        $members = $this->baseGroupService->getMembers($request->id);
 
         return response()->json([
           'members' => $members

@@ -29,8 +29,8 @@ class UserController extends Controller
     public function searchByOccurrence(Request $request) 
     {
         $matchUsernames = User::select('username')
-            ->searchByOccurrence($request->usernameOccurrence)
-            ->get();
+                              ->searchByOccurrence($request->usernameOccurrence)
+                              ->get();
 
         return response()->json([
             'matchUsernames' => $matchUsernames

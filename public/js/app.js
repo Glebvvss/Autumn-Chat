@@ -1706,7 +1706,7 @@ module.exports = ReactUpdates;
 
 var getGroups = function getGroups() {
   return function (dispatch) {
-    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["b" /* makeUriForRequest */])('/get-groups'), {
+    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["b" /* makeUriForRequest */])('/get-public-type-groups'), {
       method: 'get'
     }).then(function (response) {
       response.json().then(function (data) {
@@ -59684,6 +59684,7 @@ function messages() {
 
   if (action.type === 'FETCH_MORE_OLD_MESSAGES_TO_LIST') {
     var updatedMessageList = action.payload.messages.concat(state.messagesOfSelectedContact);
+
     return _extends({}, state, {
       messagesOfSelectedContact: Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* cloneObject */])(updatedMessageList),
       allOldMessagesLoaded: action.payload.allOldMessagesLoaded
@@ -59707,6 +59708,14 @@ function messages() {
   }
 
   if (action.type === 'FETCH_LATEST_MESSAGES_OF_CONTACT') {
+
+    if (JSON.stringify([]) === JSON.stringify(action.payload)) {
+      return _extends({}, state, {
+        messagesOfSelectedContact: state.messagesOfSelectedContact[0],
+        startPointMessageId: action.payload[0].id
+      });
+    }
+
     return _extends({}, state, {
       messagesOfSelectedContact: action.payload,
       startPointMessageId: action.payload[0].id
@@ -61099,7 +61108,10 @@ var MessageList = function (_Component) {
     value: function focusOnFirstMessageBeforeLoad() {
       var selector = 'div.message-out-block';
       var element = document.querySelectorAll(selector);
-      element[9].scrollIntoView();
+
+      if (element.hasOwnProperty(9)) {
+        element[9].scrollIntoView();
+      }
     }
   }, {
     key: 'notifyComponentAboutScrollUp',
