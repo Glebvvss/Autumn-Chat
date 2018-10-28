@@ -46,8 +46,8 @@ export function messages(state = defaultState, action) {
     if ( JSON.stringify([]) === JSON.stringify(action.payload) ) {
       return {
         ...state,
-        messagesOfSelectedContact: state.messagesOfSelectedContact[0],
-        startPointMessageId: action.payload[0].id
+        messagesOfSelectedContact: [],
+        startPointMessageId: null
       };      
     }
 

@@ -59711,8 +59711,8 @@ function messages() {
 
     if (JSON.stringify([]) === JSON.stringify(action.payload)) {
       return _extends({}, state, {
-        messagesOfSelectedContact: state.messagesOfSelectedContact[0],
-        startPointMessageId: action.payload[0].id
+        messagesOfSelectedContact: [],
+        startPointMessageId: null
       });
     }
 
