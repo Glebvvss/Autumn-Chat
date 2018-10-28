@@ -200,6 +200,16 @@ ul.user-list-of-group li {
   display: none !important;
 }
 
+.-reactjs-scrollbar-track {
+  opacity: 1 !important;
+  background: white !important;
+}
+
+.-reactjs-scrollbar-thumb {
+  opacity: 1 !important;
+  background: #E88C01 !important;
+}
+
 .sidebar-main {
   width: 260px;
   height: 100vh;
@@ -491,14 +501,16 @@ ul.user-list-of-group li {
 }
 
 .group-manager-block {
+  z-index: 5000;
   top: 0;
   position: fixed;
   width: 260px;
   height: 100vh;
   background: linear-gradient(135deg, #36393F, #1c1c1c);
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-  z-index: 5000;
+  -webkit-transition-property: left;
+  transition-property: left;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
 }
 
 .group-manager-block .group-manager-tabs {
@@ -512,7 +524,6 @@ ul.user-list-of-group li {
 .group-manager-block .group-manager-tabs ul {
   width: 100%;
   text-align: center;
-  margin-bottom: 15px;
 }
 
 .group-manager-block .group-manager-tabs ul li {
@@ -533,12 +544,14 @@ ul.user-list-of-group li {
 
 .update-selected-group button.add-checked-friends-to-group {
   width: 232px;
+  margin-top: 15px;
   margin-left: 15px;
   padding: 5px 0;
 }
 
 .leave-group button.leave-selected-group {
   width: 232px;
+  margin-top: 15px;
   margin-left: 15px;
   padding: 5px 0;
 }
@@ -550,6 +563,7 @@ ul.user-list-of-group li {
   border-radius: 5px;
   color: white;
   width: 210px;
+  margin-top: 15px;
   margin-left: 15px;
   border-radius: 5px 5px 0 0;
 }

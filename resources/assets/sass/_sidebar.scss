@@ -8,6 +8,16 @@ $padding_blocks: 20px;
 	display: none !important;
 }
 
+.-reactjs-scrollbar-track {
+	opacity: 1 !important;
+	background: white !important;
+}
+
+.-reactjs-scrollbar-thumb {
+	opacity: 1 !important;
+	background: $orange !important;	
+}
+
 .sidebar-main {
 	width: $width_sidebar;
 	height: 100vh;	
@@ -274,13 +284,14 @@ $padding_blocks: 20px;
 
 
 .group-manager-block {
+	z-index: 5000;
 	top: 0;
 	position: fixed;
 	width: $width_sidebar;
 	height: 100vh;
 	background: $diagonal_gray_gradient;
-	transition: $transition;
-	z-index: 5000;
+	transition-property: left;
+	transition-duration: $transition;
 
 	.group-manager-tabs {
 		color: $orange;
@@ -291,7 +302,6 @@ $padding_blocks: 20px;
 		ul {
 			width: 100%;
 			text-align: center;
-			margin-bottom: 15px;
 
 			li {
 				display: inline-block;
@@ -315,6 +325,7 @@ $padding_blocks: 20px;
 
 	button.add-checked-friends-to-group {
 		width: $width_sidebar - 28px;
+		margin-top: 15px;
 		margin-left: 15px;
 		padding: 5px 0;
 	}
@@ -323,6 +334,7 @@ $padding_blocks: 20px;
 .leave-group {
 	button.leave-selected-group {
 		width: $width_sidebar - 28px;
+		margin-top: 15px;
 		margin-left: 15px;
 		padding: 5px 0;
 	}	
@@ -333,6 +345,7 @@ $padding_blocks: 20px;
 	input.new-group-name {
 		@include input;
 		width: $width_sidebar - 50px;
+		margin-top: 15px;
 		margin-left: 15px;
 		border-radius: 5px 5px 0 0;
 	}

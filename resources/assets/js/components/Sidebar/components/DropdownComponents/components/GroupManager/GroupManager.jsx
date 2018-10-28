@@ -105,7 +105,9 @@ class GroupManager extends Component {
             }
           </ul>
         </div>
-        {this.renderContentTabs()}
+        <ReactScrollbar style={scrollbar}>
+          {this.renderContentTabs()}
+        </ReactScrollbar>
       </div>
     );
   }
