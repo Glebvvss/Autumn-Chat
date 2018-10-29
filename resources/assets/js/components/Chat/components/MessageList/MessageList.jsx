@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getFriends } from '../../../../actions/friends.js';
 import { getGroups } from '../../../../actions/groups.js';
 import Message from './components/Message.jsx';
+
 import { addNewMessageToList, 
          getMoreOldMessages } from '../../../../actions/messages.js';
 
