@@ -8,7 +8,12 @@ import SidebarHead from './components/SidebarHead.jsx';
 import Contacts from './components/Contacts/Contacts.jsx';
 import SearchFriends from './components/SearchFriends.jsx';
 import Groups from './components/Contacts/components/Groups.jsx';
-import Friends from './components/Contacts/components/Friends.jsx';
+
+
+//import Friends from './components/Contacts/components/Friends.jsx';
+
+import Friends from './components/Contacts/components/Friends/Friends.jsx';
+
 import DropdownComponents from './components/DropdownComponents/DropdownComponents.jsx';
 
 class Sidebar extends Component {

@@ -39,6 +39,33 @@ $padding_blocks: 20px;
 	padding-left: 15px;
 }
 
+div.delete-from-friends {
+	background: $orange;
+  display: block;
+  float: right;
+  margin-top: 1px;
+  margin-right: -28px;
+  width: 33px;
+  height: 14px;
+  transform: rotate(270deg);
+  font-size: 9px;
+  border-radius: 5px;
+
+  &:hover {
+  	background: $dark_gray;
+  	transition: $transition;
+  }
+
+	p {
+		text-align: center;
+    color: white;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    margin: auto;
+    padding: 0;
+	}
+}
+
 .sidebar-head {
 	padding: 13px 20px;
 	color: $light_gray;

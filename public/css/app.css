@@ -231,6 +231,35 @@ ul.user-list-of-group li {
   padding-left: 15px;
 }
 
+div.delete-from-friends {
+  background: #E88C01;
+  display: block;
+  float: right;
+  margin-top: 1px;
+  margin-right: -28px;
+  width: 33px;
+  height: 14px;
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+  font-size: 9px;
+  border-radius: 5px;
+}
+
+div.delete-from-friends:hover {
+  background: #36393F;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+div.delete-from-friends p {
+  text-align: center;
+  color: white;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin: auto;
+  padding: 0;
+}
+
 .sidebar-head {
   padding: 13px 20px;
   color: #DDDDDD;

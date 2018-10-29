@@ -75,6 +75,14 @@ class Friends extends Component {
     }
   }
 
+  test() {
+    return (
+      <div className="delete-from-friends">
+        <p>delete</p>
+      </div>
+    );
+  }
+
   render() {
     return (
       <ul>
@@ -90,13 +98,9 @@ class Friends extends Component {
               {this.renderIfHaveUnreadMessagesMarker(item)}
 
               <div className="right-contacts-li-element">
+                {this.test()}
                 {this.renderOnlineStatus(item.online)}
               </div>
-
-              <div styles={{ color: 'red' }}>
-                <p>delete</p>
-              </div>
-
             </li> ))
         }
       </ul>

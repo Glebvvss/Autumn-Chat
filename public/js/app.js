@@ -61756,7 +61756,7 @@ var RegistrationForm = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Contacts_Contacts_jsx__ = __webpack_require__(284);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_SearchFriends_jsx__ = __webpack_require__(287);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Contacts_components_Groups_jsx__ = __webpack_require__(288);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Contacts_components_Friends_jsx__ = __webpack_require__(289);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Contacts_components_Friends_Friends_jsx__ = __webpack_require__(311);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_DropdownComponents_DropdownComponents_jsx__ = __webpack_require__(290);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -61776,6 +61776,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
+
+//import Friends from './components/Contacts/components/Friends.jsx';
 
 
 
@@ -61840,7 +61844,7 @@ var Sidebar = function (_Component) {
 							__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 								__WEBPACK_IMPORTED_MODULE_5__components_Contacts_Contacts_jsx__["a" /* default */],
 								{ title: 'FRIENDS' },
-								__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_Contacts_components_Friends_jsx__["a" /* default */], null)
+								__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_Contacts_components_Friends_Friends_jsx__["a" /* default */], null)
 							)
 						)
 					)
@@ -62903,196 +62907,7 @@ var Groups = function (_Component) {
 })(Groups));
 
 /***/ }),
-/* 289 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_messages__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_friends__ = __webpack_require__(16);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-
-
-
-
-var Friends = function (_Component) {
-  _inherits(Friends, _Component);
-
-  function Friends(props) {
-    _classCallCheck(this, Friends);
-
-    var _this = _possibleConstructorReturn(this, (Friends.__proto__ || Object.getPrototypeOf(Friends)).call(this, props));
-
-    _this.props.getFriends();
-    _this.subscribeOnChangesInFreindList();
-
-    _this.state = {
-      selectedFriendId: 2
-    };
-    return _this;
-  }
-
-  _createClass(Friends, [{
-    key: 'subscribeOnChangesInFreindList',
-    value: function subscribeOnChangesInFreindList() {
-      var _this2 = this;
-
-      fetch(Object(__WEBPACK_IMPORTED_MODULE_3__functions_js__["b" /* makeUriForRequest */])('/get-user-id'), {
-        method: 'get'
-      }).then(function (response) {
-        response.json().then(function (httpData) {
-          var socket = io(':3001'),
-              userId = httpData.userId,
-              room = 'friends-by-user-id:' + userId;
-
-          socket.on(room, function (socketData) {
-            _this2.props.getFriends();
-          });
-        });
-      });
-    }
-  }, {
-    key: 'highlightSelectedFriend',
-    value: function highlightSelectedFriend(friendId) {
-      this.setState(_extends({}, this.state, {
-        selectedFriendId: friendId
-      }));
-    }
-  }, {
-    key: 'selectDialog',
-    value: function selectDialog(event) {
-      var friendId = event.target.attributes['data-friendID']['value'];
-
-      this.props.setDialogId(friendId);
-      this.props.setTypeOfSelectedContact();
-      this.props.getLastMessagesOfDialog(friendId);
-      this.props.dropUnreadMessageLinkOfDialog(friendId);
-      this.highlightSelectedFriend(friendId);
-    }
-  }, {
-    key: 'renderIfHaveUnreadMessagesMarker',
-    value: function renderIfHaveUnreadMessagesMarker(item) {
-      if (item.unread_message_exists === true) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          { className: 'notice-new' },
-          'NEW'
-        );
-      }
-    }
-  }, {
-    key: 'renderOnlineStatus',
-    value: function renderOnlineStatus(onlineStatus) {
-      if (onlineStatus === 1) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'online-status' });
-      } else {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'offline-status' });
-      }
-    }
-  }, {
-    key: 'test',
-    value: function test() {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { style: { background: 'orange',
-            display: 'block',
-            float: 'right',
-            marginTop: '1px',
-            marginRight: '-28px',
-            width: '33px',
-            height: '14px',
-            transform: 'rotate(270deg)',
-            fontSize: '9px',
-            borderLeft: 'solid 1px white',
-            borderRight: 'solid 1px white' } },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'p',
-          { style: { textAlign: 'center',
-              color: 'white',
-              paddingTop: '0px !important',
-              paddingBottom: '0px !important',
-              margin: 'auto',
-              padding: '0' } },
-          'delete'
-        )
-      );
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this3 = this;
-
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'ul',
-        null,
-        this.props.friends.map(function (item, index) {
-          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'li',
-            { key: index,
-              'data-friendID': item.id,
-              onClick: _this3.selectDialog.bind(_this3),
-              className: _this3.state.selectedFriendId == item.id && _this3.props.selectedContactType === 'DIALOG' ? 'active-contact' : null },
-            item.username,
-            _this3.renderIfHaveUnreadMessagesMarker(item),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'div',
-              { className: 'right-contacts-li-element' },
-              _this3.test(),
-              _this3.renderOnlineStatus(item.online)
-            )
-          );
-        })
-      );
-    }
-  }]);
-
-  return Friends;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
-  return {
-    friends: state.friends.friends,
-    selectedContactId: state.selectedContact.id,
-    selectedContactType: state.selectedContact.type
-  };
-}, function (dispatch) {
-  return {
-    getFriends: function getFriends() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["f" /* getFriends */])());
-    },
-    dropUnreadMessageLinkOfDialog: function dropUnreadMessageLinkOfDialog(friendId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["c" /* dropUnreadMessageLinkOfDialog */])(friendId));
-    },
-    getLastMessagesOfDialog: function getLastMessagesOfDialog(friendId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["d" /* getLastMessagesOfDialog */])(friendId));
-    },
-    setDialogId: function setDialogId(friendId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["l" /* setDialogId */])(friendId));
-    },
-    setTypeOfSelectedContact: function setTypeOfSelectedContact() {
-      dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
-    }
-  };
-})(Friends));
-
-/***/ }),
+/* 289 */,
 /* 290 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -66895,6 +66710,189 @@ var _iconsCache = {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_messages__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_friends__ = __webpack_require__(16);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+
+var Friends = function (_Component) {
+  _inherits(Friends, _Component);
+
+  function Friends(props) {
+    _classCallCheck(this, Friends);
+
+    var _this = _possibleConstructorReturn(this, (Friends.__proto__ || Object.getPrototypeOf(Friends)).call(this, props));
+
+    _this.props.getFriends();
+    _this.subscribeOnChangesInFreindList();
+
+    _this.state = {
+      selectedFriendId: 2
+    };
+    return _this;
+  }
+
+  _createClass(Friends, [{
+    key: 'subscribeOnChangesInFreindList',
+    value: function subscribeOnChangesInFreindList() {
+      var _this2 = this;
+
+      fetch(Object(__WEBPACK_IMPORTED_MODULE_3__functions_js__["b" /* makeUriForRequest */])('/get-user-id'), {
+        method: 'get'
+      }).then(function (response) {
+        response.json().then(function (httpData) {
+          var socket = io(':3001'),
+              userId = httpData.userId,
+              room = 'friends-by-user-id:' + userId;
+
+          socket.on(room, function (socketData) {
+            _this2.props.getFriends();
+          });
+        });
+      });
+    }
+  }, {
+    key: 'highlightSelectedFriend',
+    value: function highlightSelectedFriend(friendId) {
+      this.setState(_extends({}, this.state, {
+        selectedFriendId: friendId
+      }));
+    }
+  }, {
+    key: 'selectDialog',
+    value: function selectDialog(event) {
+      var friendId = event.target.attributes['data-friendID']['value'];
+
+      this.props.setDialogId(friendId);
+      this.props.setTypeOfSelectedContact();
+      this.props.getLastMessagesOfDialog(friendId);
+      this.props.dropUnreadMessageLinkOfDialog(friendId);
+      this.highlightSelectedFriend(friendId);
+    }
+  }, {
+    key: 'renderIfHaveUnreadMessagesMarker',
+    value: function renderIfHaveUnreadMessagesMarker(item) {
+      if (item.unread_message_exists === true) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'notice-new' },
+          'NEW'
+        );
+      }
+    }
+  }, {
+    key: 'renderOnlineStatus',
+    value: function renderOnlineStatus(onlineStatus) {
+      if (onlineStatus === 1) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'online-status' });
+      } else {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'offline-status' });
+      }
+    }
+  }, {
+    key: 'test',
+    value: function test() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'delete-from-friends' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'p',
+          null,
+          'delete'
+        )
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'ul',
+        null,
+        this.props.friends.map(function (item, index) {
+          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'li',
+            { key: index,
+              'data-friendID': item.id,
+              onClick: _this3.selectDialog.bind(_this3),
+              className: _this3.state.selectedFriendId == item.id && _this3.props.selectedContactType === 'DIALOG' ? 'active-contact' : null },
+            item.username,
+            _this3.renderIfHaveUnreadMessagesMarker(item),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              { className: 'right-contacts-li-element' },
+              _this3.test(),
+              _this3.renderOnlineStatus(item.online)
+            )
+          );
+        })
+      );
+    }
+  }]);
+
+  return Friends;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
+  return {
+    friends: state.friends.friends,
+    selectedContactId: state.selectedContact.id,
+    selectedContactType: state.selectedContact.type
+  };
+}, function (dispatch) {
+  return {
+    getFriends: function getFriends() {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["f" /* getFriends */])());
+    },
+    dropUnreadMessageLinkOfDialog: function dropUnreadMessageLinkOfDialog(friendId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["c" /* dropUnreadMessageLinkOfDialog */])(friendId));
+    },
+    getLastMessagesOfDialog: function getLastMessagesOfDialog(friendId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_messages__["d" /* getLastMessagesOfDialog */])(friendId));
+    },
+    setDialogId: function setDialogId(friendId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["l" /* setDialogId */])(friendId));
+    },
+    setTypeOfSelectedContact: function setTypeOfSelectedContact() {
+      dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
+    }
+  };
+})(Friends));
 
 /***/ })
 /******/ ]);
