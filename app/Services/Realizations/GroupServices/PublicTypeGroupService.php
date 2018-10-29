@@ -66,8 +66,9 @@ class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGrou
     private function createNewEmptyGroup(string $groupName) : int
     {
         $group = new Group();
+
         $group->group_name = $groupName;
-        $group->type = 'public';
+        $group->type       = 'public';
         $group->save();
 
         return $group->id;

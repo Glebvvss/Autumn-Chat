@@ -69,8 +69,9 @@ class AuthenticationService implements IAuthenticationService
     private function addNewUserModelToDb(Request $request) : void
     {
         $user = new User();
+
         $user->username = $request->username;
-        $user->email = $request->email;
+        $user->email    = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
     }

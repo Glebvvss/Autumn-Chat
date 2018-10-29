@@ -75,7 +75,7 @@ class Friends extends Component {
     }
   }
 
-  test() {
+  deleteFromFriendsButton() {
     return (
       <div className="delete-from-friends">
         <p>delete</p>
@@ -91,14 +91,14 @@ class Friends extends Component {
             <li key={index}
                 data-friendID={item.id}
                 onClick={this.selectDialog.bind(this)}
-                className={( this.state.selectedFriendId == item.id &&
+                className={( this.state.selectedFriendId    == item.id &&
                              this.props.selectedContactType === 'DIALOG' ) ? 'active-contact' : null} >
 
               {item.username}
               {this.renderIfHaveUnreadMessagesMarker(item)}
 
               <div className="right-contacts-li-element">
-                {this.test()}
+                {this.deleteFromFriendsButton()}
                 {this.renderOnlineStatus(item.online)}
               </div>
             </li> ))

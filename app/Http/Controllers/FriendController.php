@@ -19,10 +19,10 @@ class FriendController extends Controller
     protected $unreadMessageLinkService;
 
     public function __construct(
-        FriendService $friendService,
+        FriendService            $friendService,
         UnreadMessageLinkService $unreadMessageLinkService
     ){
-        $this->friendService = $friendService;
+        $this->friendService            = $friendService;
         $this->unreadMessageLinkService = $unreadMessageLinkService;
     }
 

@@ -22,7 +22,7 @@ class FriendshipRequestController extends Controller
         DialogTypeGroupService   $dialogTypeGroupService
     ){
         $this->friendshipRequestService = $friendshipRequestService;
-        $this->dialogTypeGroupService = $dialogTypeGroupService;
+        $this->dialogTypeGroupService   = $dialogTypeGroupService;
     }
 
     public function getRecivedAll() 

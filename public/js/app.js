@@ -66824,8 +66824,8 @@ var Friends = function (_Component) {
       }
     }
   }, {
-    key: 'test',
-    value: function test() {
+    key: 'deleteFromFriendsButton',
+    value: function deleteFromFriendsButton() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'delete-from-friends' },
@@ -66856,7 +66856,7 @@ var Friends = function (_Component) {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'div',
               { className: 'right-contacts-li-element' },
-              _this3.test(),
+              _this3.deleteFromFriendsButton(),
               _this3.renderOnlineStatus(item.online)
             )
           );

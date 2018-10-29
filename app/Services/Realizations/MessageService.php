@@ -81,6 +81,7 @@ class MessageService implements IMessageService
     public function sendTo(int $contactId, string $text) : array
     {
         $message = new Message();
+        
         $message->text     = $text;
         $message->user_id  = Auth::user()->id;
         $message->group_id = $contactId;

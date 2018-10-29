@@ -117,12 +117,12 @@ class DialogTypeGroupService extends BaseGroupService implements IDialogTypeGrou
 
     private function associateUsersWithDialog(int $groupId, int $userId, int $otherUserId) : void
     {
-        $user = User::find($userId);
+        $user  = User::find($userId);
         $group = Group::find($groupId);
         $group->users()->attach($user);
         $group->save();
 
-        $user = User::find($otherUserId);
+        $user  = User::find($otherUserId);
         $group = Group::find($groupId);
         $group->users()->attach($user);
         $group->save();
