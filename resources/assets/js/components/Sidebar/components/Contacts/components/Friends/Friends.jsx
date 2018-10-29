@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getLastMessagesOfDialog } from '../../../../../actions/messages';
+import { getLastMessagesOfDialog } from '../../../../../../actions/messages';
 import { dropUnreadMessageLink,
-         dropUnreadMessageLinkOfDialog } from '../../../../../actions/messages';
+         dropUnreadMessageLinkOfDialog } from '../../../../../../actions/messages';
 
 import { scrfToken, 
-         makeUriForRequest } from '../../../../../functions.js';
+         makeUriForRequest } from '../../../../../../functions.js';
 
 import { getFriends, 
-         setDialogId } from '../../../../../actions/friends';
+         setDialogId } from '../../../../../../actions/friends';
 
 class Friends extends Component {
 
@@ -75,33 +75,6 @@ class Friends extends Component {
     }
   }
 
-  test() {
-    return (
-      <div style={{ background: 'orange',
-                    display: 'block',
-                    float: 'right',
-                    marginTop: '1px',
-                    marginRight: '-28px',
-                    width: '33px',
-                    height: '14px',
-                    transform: 'rotate(270deg)',
-                    fontSize: '9px',
-                    borderLeft: 'solid 1px white',
-                    borderRight: 'solid 1px white' }}>
-
-        <p style={{ textAlign: 'center',
-                    color: 'white',
-                    paddingTop: '0px !important',
-                    paddingBottom: '0px !important',
-                    margin: 'auto',
-                    padding: '0' }}>
-
-          delete
-        </p>
-      </div>
-    );
-  }
-
   render() {
     return (
       <ul>
@@ -117,9 +90,13 @@ class Friends extends Component {
               {this.renderIfHaveUnreadMessagesMarker(item)}
 
               <div className="right-contacts-li-element">
-                {this.test()}
                 {this.renderOnlineStatus(item.online)}
               </div>
+
+              <div styles={{ color: 'red' }}>
+                <p>delete</p>
+              </div>
+
             </li> ))
         }
       </ul>

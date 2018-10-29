@@ -10,7 +10,8 @@ $padding_blocks: 20px;
 
 .-reactjs-scrollbar-track {
 	opacity: 1 !important;
-	background: white !important;
+	background: $dark_gray !important;
+	width: 2px !important;
 }
 
 .-reactjs-scrollbar-thumb {
@@ -212,11 +213,11 @@ $padding_blocks: 20px;
 }
 
 @mixin user-status {
-	margin-right: 3px;
+	margin-right: -3px;
 	margin-top: 3px;
-	width: 10px;
-	height: 10px;
-	border-radius: 5px;	
+	width: 6px;
+	height: 6px;
+	border-radius: 3px;	
 	float: right;
 }
 

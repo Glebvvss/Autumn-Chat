@@ -29,7 +29,7 @@ class UnreadMessageLinkService implements IUnreadMessageLinkService
         return $groupsWithUnreadMessageLinks;
     }
 
-    public function attach(array $group)
+    public function attach(array $group) : array
     {
         if ( $this->getUnreadMessageLink($group['id']) ) {
             $group['unread_message_exists'] = true;
@@ -62,7 +62,7 @@ class UnreadMessageLinkService implements IUnreadMessageLinkService
         return $friendsWithUnreadMessageLinks;
     }
 
-    public function drop(int $groupId)
+    public function drop(int $groupId) : void
     {
         UnreadMassageLink::where('user_id', '=', Auth::user()->id)
                          ->where('group_id', '=', $groupId)

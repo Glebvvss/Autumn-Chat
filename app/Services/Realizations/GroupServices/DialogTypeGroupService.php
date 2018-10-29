@@ -13,12 +13,7 @@ use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService;
 
 class DialogTypeGroupService extends BaseGroupService implements IDialogTypeGroupService
 {
-    public function getAll()
-    {
-        
-    }
-
-    public function createBetween(int $userId, int $otherUserId)
+    public function createBetween(int $userId, int $otherUserId) : void
     {
         if ( !$userId || !$otherUserId ) {
             throw new \Exception('Not exists user id numbers.');
@@ -33,7 +28,7 @@ class DialogTypeGroupService extends BaseGroupService implements IDialogTypeGrou
         $this->associateUsersWithDialog($dialogId, $userId, $otherUserId);
     }
 
-    public function dropBetween(int $userId, int $otherUserId)
+    public function dropBetween(int $userId, int $otherUserId) : void
     {
         if ( !$userId || !$otherUserId ) {
             throw new \Exception('Not exists user id numbers.');
@@ -69,19 +64,19 @@ class DialogTypeGroupService extends BaseGroupService implements IDialogTypeGrou
                     ->first();
     }
 
-    private function deleteAllMessagesOfDialog(int $dialogId)
+    private function deleteAllMessagesOfDialog(int $dialogId) : void
     {
         Message::where('group_id', '=', $dialogId)->delete();
     }
 
-    private function disociateUsersFromDialog(int $dialogId)
+    private function disociateUsersFromDialog(int $dialogId) : void
     {
         DB::table('group_user')
             ->where('group_id', '=', $dialogId)
             ->delete();
     }
 
-    private function removeDialogFromDatabase(int $dialogId)
+    private function removeDialogFromDatabase(int $dialogId) : void
     {
         Group::find($dialogId)->delete();
     }
@@ -110,7 +105,7 @@ class DialogTypeGroupService extends BaseGroupService implements IDialogTypeGrou
         return true;
     }
 
-    private function createNewDialog(string $dialogName)
+    private function createNewDialog(string $dialogName) : int
     {
         $group = new Group();
         $group->group_name = $dialogName;
@@ -120,11 +115,8 @@ class DialogTypeGroupService extends BaseGroupService implements IDialogTypeGrou
         return $group->id;
     }
 
-    private function associateUsersWithDialog(
-        int $groupId, 
-        int $userId, 
-        int $otherUserId
-    ){
+    private function associateUsersWithDialog(int $groupId, int $userId, int $otherUserId) : void
+    {
         $user = User::find($userId);
         $group = Group::find($groupId);
         $group->users()->attach($user);

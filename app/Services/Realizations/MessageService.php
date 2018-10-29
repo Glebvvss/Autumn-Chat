@@ -99,7 +99,7 @@ class MessageService implements IMessageService
                       ->toArray();
     }
 
-    private function createUnreadMassageLinks(int $contactId)
+    private function createUnreadMassageLinks(int $contactId) : void
     {
         $contactMembers = $this->getMembers($contactId);
 

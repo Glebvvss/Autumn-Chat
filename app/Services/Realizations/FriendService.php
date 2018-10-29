@@ -5,8 +5,8 @@ namespace App\Services\Realizations;
 use DB;
 use Auth;
 use App\Models\User;
-use App\Models\Friend;
 use App\Models\Group;
+use App\Models\Friend;
 use App\Services\Interfaces\IFriendService;
 use App\Services\Realizations\GroupServices\DialogTypeGroupService;
 
@@ -20,7 +20,7 @@ class FriendService implements IFriendService
                    ->toArray();
     }
 
-    public function deleteFromFriends(int $friendId)
+    public function deleteFromFriends(int $friendId) : void
     {
         Friend::where('user_id', '=', Auth::user()->id)
               ->where('friend_user_id', '=', $friendId)
@@ -34,17 +34,17 @@ class FriendService implements IFriendService
         $dialogTypeGroupService->dropBetween(Auth::user()->id, $friendId);
     }
 
-    public function getAllWhoNotInGroup(int $groupId) 
+    public function getAllWhoNotInGroup(int $groupId)
     {
         if ( !$this->checkGroupOnExists($groupId) ) {
-            return;
+            throw new \Exception('Group is not exists');
         }
 
         $groupMembers = $this->getMembersGroup($groupId);
 
         $friends = DB::table('users')
-            ->select('users.id as id', 'users.username as username')
-            ->join('friends', 'users.id', 'friends.friend_user_id');
+                     ->select('users.id as id', 'users.username as username')
+                     ->join('friends', 'users.id', 'friends.friend_user_id');
 
         $friends->where('friends.user_id', '=', Auth::user()->id);
         foreach( $groupMembers as $groupMember ) {
@@ -57,13 +57,13 @@ class FriendService implements IFriendService
     private function getMembersGroup(int $groupId) 
     {
         return DB::table('group_user')
-            ->leftJoin('groups', 'group_user.group_id', '=', 'groups.id')
-            ->leftJoin('users', 'group_user.user_id', '=', 'users.id')
-            ->where('groups.id', '=', $groupId)
-            ->get();
+                 ->leftJoin('groups', 'group_user.group_id', '=', 'groups.id')
+                 ->leftJoin('users', 'group_user.user_id', '=', 'users.id')
+                 ->where('groups.id', '=', $groupId)
+                 ->get();
     }
 
-    private function checkGroupOnExists(int $id)
+    private function checkGroupOnExists(int $id) : bool
     {
         $check = Group::find($id);
 

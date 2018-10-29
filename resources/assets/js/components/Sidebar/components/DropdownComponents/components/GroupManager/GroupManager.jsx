@@ -26,9 +26,27 @@ class GroupManager extends Component {
       visibleComponent: {
         left: 0
       },
+      scrollbar: {
+        width: 260,
+        height: document.documentElement.clientHeight - 20,
+      },
       groupName: '',
       tab: 'CREATE_NEW_GROUP_TAB',
     };
+
+    this.changeScrollbarStateByResizeWindow();
+  }
+
+  changeScrollbarStateByResizeWindow() {
+    window.addEventListener('resize', (event) => {
+      this.setState({
+        ...this.state,
+        scrollbar: {
+          width: 260,
+          height: document.documentElement.clientHeight - 20,
+        } 
+      });
+    });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -97,7 +115,7 @@ class GroupManager extends Component {
               tabTitles.map((item, index) => (
                 <li className={this.highlightSelectedTabTitle(item)}
                     key={index}
-                    data-tab={item.tab} 
+                    data-tab={item.tab}
                     onClick={this.showSelectedTab.bind(this)}>
 
                   {item.title}
@@ -105,7 +123,7 @@ class GroupManager extends Component {
             }
           </ul>
         </div>
-        <ReactScrollbar style={scrollbar}>
+        <ReactScrollbar style={this.state.scrollbar}>
           {this.renderContentTabs()}
         </ReactScrollbar>
       </div>
@@ -116,7 +134,8 @@ class GroupManager extends Component {
 
 export default connect(
   state => ({
-    visible: state.sidebarDropdownElements.groupManagerVisible,
+    visible:             state.sidebarDropdownElements.groupManagerVisible,
+    selectedContactType: state.selectedContact.type
   }),
   dispatch => ({
     createGroup: (groupName, groupMembersIdList) => {

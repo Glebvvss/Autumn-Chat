@@ -21,7 +21,7 @@ class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGrou
                    ->toArray();
     }
 
-    public function create(string $groupName, array $memberIdList)
+    public function create(string $groupName, array $memberIdList) : string
     {
         if ( $groupName === '' ) {
             return 'Group name cannot be empty.';
@@ -54,7 +54,7 @@ class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGrou
         return 'New members to group added.';
     }
 
-    public function leaveMemberFrom(int $groupId, int $userId) 
+    public function leaveMemberFrom(int $groupId, int $userId) : void
     {
         $user = User::find($userId);
         
@@ -63,7 +63,7 @@ class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGrou
         $group->save();
     }
 
-    private function createNewEmptyGroup(string $groupName)
+    private function createNewEmptyGroup(string $groupName) : int
     {
         $group = new Group();
         $group->group_name = $groupName;
@@ -73,7 +73,7 @@ class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGrou
         return $group->id;
     }
 
-    private function associateUsersWithGroups(int $groupId, array $memberIdList)
+    private function associateUsersWithGroups(int $groupId, array $memberIdList) : void
     {
         $memberIdListWithCreator = $this->addGroupCreatorToMemberList($memberIdList);
 

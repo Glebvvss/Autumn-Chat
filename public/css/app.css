@@ -202,7 +202,8 @@ ul.user-list-of-group li {
 
 .-reactjs-scrollbar-track {
   opacity: 1 !important;
-  background: white !important;
+  background: #36393F !important;
+  width: 2px !important;
 }
 
 .-reactjs-scrollbar-thumb {
@@ -428,21 +429,21 @@ ul.user-list-of-group li {
 }
 
 .online-status {
-  margin-right: 3px;
+  margin-right: -3px;
   margin-top: 3px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
   float: right;
   background: #E88C01;
 }
 
 .offline-status {
-  margin-right: 3px;
+  margin-right: -3px;
   margin-top: 3px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
   float: right;
   background: gray;
 }

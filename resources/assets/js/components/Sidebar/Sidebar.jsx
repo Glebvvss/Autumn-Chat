@@ -4,22 +4,38 @@ import ReactScrollbar from 'react-scrollbar-js';
 import { connect } from 'react-redux';
 import { getFriends } from '../../actions/friends';
 
+import SidebarHead from './components/SidebarHead.jsx';
 import Contacts from './components/Contacts/Contacts.jsx';
 import SearchFriends from './components/SearchFriends.jsx';
 import Groups from './components/Contacts/components/Groups.jsx';
 import Friends from './components/Contacts/components/Friends.jsx';
-import SidebarHead from './components/SidebarHead.jsx';
 import DropdownComponents from './components/DropdownComponents/DropdownComponents.jsx';
-
-const scrollbar = {
-  width: 260,
-  height: '100%',
-};
 
 class Sidebar extends Component {
 
 	constructor(props) {
-		super(props);		
+		super(props);
+
+		this.state = {
+			scrollbar: {
+			  width: 260,
+			  height: document.documentElement.clientHeight - 130,
+			}
+		};
+		
+		this.changeScrollbarStateByResizeWindow();
+	}
+
+	changeScrollbarStateByResizeWindow() {
+		window.addEventListener('resize', (event) => {
+			this.setState({
+		  	...this.state,
+		  	scrollbar: {
+				  width: 260,
+				  height: document.documentElement.clientHeight - 130,
+				}	
+		  });  
+		});
 	}
 
 	render() {
@@ -30,7 +46,7 @@ class Sidebar extends Component {
 				<div className="sidebar-main">
 					<SidebarHead />
 					<SearchFriends />
-					<ReactScrollbar style={scrollbar}>
+					<ReactScrollbar style={this.state.scrollbar}>
 						<div className="scroll-black-content">
 
 							<Contacts title="GROUPS">

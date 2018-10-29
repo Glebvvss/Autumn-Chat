@@ -39,9 +39,9 @@ class FriendshipRequestService implements IFriendshipRequestService
         return User::where('username', '=', $username)->first();
     }
 
-    private function getUserById( int $id ) 
+    private function getUserById( int $id ) : User
     {
-        return User::find($id);
+        return User::findOrFail($id);
     }
 
     private function checkUserById( int $id ) : bool 
@@ -98,7 +98,7 @@ class FriendshipRequestService implements IFriendshipRequestService
         return 'Friendship request canceled.';
     }
 
-    public function countNewRecived()
+    public function countNewRecived() : int
     {
         $count = FriendshipRequest::where('recipient_id', '=', Auth::user()->id)
             ->where('new', '=', 1)
@@ -107,7 +107,7 @@ class FriendshipRequestService implements IFriendshipRequestService
         return $count;
     }
 
-    public function readByRecipient()
+    public function readByRecipient() : void
     {
         FriendshipRequest::where('recipient_id', '=', Auth::user()->id)->update([
             'new' => 0
@@ -158,7 +158,7 @@ class FriendshipRequestService implements IFriendshipRequestService
         return true;
     }
 
-    private function storeRequestIntoDatabase( int $id ) 
+    private function storeRequestIntoDatabase( int $id ) : void
     {
         $friendshipRequest = new FriendshipRequest();
         $friendshipRequest->sender_id = Auth::user()->id;
@@ -180,14 +180,14 @@ class FriendshipRequestService implements IFriendshipRequestService
             ->first();   
     }
 
-    private function buildFriendshipsContact( FriendshipRequest $request, int $idSender ) 
+    private function buildFriendshipsContact( FriendshipRequest $request, int $idSender ) : void
     {
         $this->dropRequestFromBb($request);
         $this->addFriendRowForRecipient($idSender);
         $this->addFriendRowForSender($idSender);
     }
 
-    private function addFriendRowForRecipient( int $id ) 
+    private function addFriendRowForRecipient( int $id ) : void
     {
         $friend = new Friend();
         $friend->user_id = Auth::user()->id;
@@ -195,7 +195,7 @@ class FriendshipRequestService implements IFriendshipRequestService
         $friend->save();
     }
 
-    private function addFriendRowForsender( int $id ) 
+    private function addFriendRowForsender( int $id ) : void
     {
         $friend = new Friend();
         $friend->user_id = $id;
@@ -203,7 +203,7 @@ class FriendshipRequestService implements IFriendshipRequestService
         $friend->save();
     }
 
-    private function dropRequestFromBb( FriendshipRequest $request ) 
+    private function dropRequestFromBb( FriendshipRequest $request ) : void
     {
         FriendshipRequest::where('id', '=', $request->id)->delete();
     }

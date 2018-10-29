@@ -46,7 +46,9 @@ class LeaveGroup extends Component {
   }
 
   render() {
-    if ( this.props.selectedGroupId !== null ) {
+    if ( this.props.selectedGroupId !== null &&
+         this.props.selectedGroupType === 'GROUP' ) {
+
       return this.renderIfGroupSelected();
     }
     return this.renderIfGroupNoSelected();
@@ -56,7 +58,8 @@ class LeaveGroup extends Component {
 
 export default connect(
   state => ({
-    selectedGroupId: state.selectedContact.id
+    selectedGroupId:   state.selectedContact.id,
+    selectedGroupType: state.selectedContact.type
   }),
   dispatch => ({
     leaveGroup: groupId => {

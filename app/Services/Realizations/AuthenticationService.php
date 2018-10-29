@@ -66,7 +66,7 @@ class AuthenticationService implements IAuthenticationService
         
         return [];
     }
-    private function addNewUserModelToDb(Request $request) 
+    private function addNewUserModelToDb(Request $request) : void
     {
         $user = new User();
         $user->username = $request->username;
