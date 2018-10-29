@@ -61130,8 +61130,7 @@ var MessageList = function (_Component) {
   }, {
     key: 'scrollToBottom',
     value: function scrollToBottom() {
-      var element = document.getElementById('end-of-messages');
-      element.scrollIntoView();
+      this.refs['end-of-messages'].scrollIntoView();
     }
   }, {
     key: 'render',
@@ -61142,7 +61141,7 @@ var MessageList = function (_Component) {
         this.props.messages.map(function (item, index) {
           return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Message_jsx__["a" /* default */], { key: index, messageDetails: item });
         }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'end-of-messages' })
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: 'end-of-messages' })
       );
     }
   }]);

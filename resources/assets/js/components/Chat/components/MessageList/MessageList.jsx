@@ -102,8 +102,7 @@ class MessageList extends Component {
   }
 
   scrollToBottom() {
-    let element = document.getElementById('end-of-messages');
-    element.scrollIntoView();
+    this.refs['end-of-messages'].scrollIntoView();
   }
 
   render() {
@@ -114,7 +113,7 @@ class MessageList extends Component {
             <Message key={index} messageDetails={item} /> 
           ))
         }
-        <div id="end-of-messages"></div>
+        <div ref="end-of-messages"></div>
       </div>
     );
   }
