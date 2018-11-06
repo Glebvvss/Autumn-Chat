@@ -9,8 +9,11 @@ class DeleteFromFriends extends Component {
 
   deleteFromFriendList(event) {
     let friendId = event.target.attributes['data-friendID']['value'];
+    let result = confirm('Are You Want To Remove From Friends This User?');
 
-    this.props.deleteFromFriendList(friendId);
+    if ( result === true ) {
+      this.props.deleteFromFriendList(friendId);
+    }
   }
 
   render() {

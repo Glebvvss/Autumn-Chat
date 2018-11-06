@@ -9,18 +9,20 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faUsers,
+				 faHistory,
 				 faComment, 
 				 faComments, 
+				 faCheckCircle,
 				 faUserFriends, 
-				 faArrowCircleUp,
-				 faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+				 faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
 
 library.add( faUsers,
+						 faHistory,
 						 faComment, 
 						 faComments, 
+						 faCheckCircle,
 						 faUserFriends, 
-						 faArrowCircleUp, 
-						 faCheckCircle );
+						 faArrowCircleUp );
 
 import { makeUriForRequest, socket } from '../functions';
 

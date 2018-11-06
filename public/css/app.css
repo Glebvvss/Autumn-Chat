@@ -492,6 +492,73 @@ div.delete-from-friends:hover {
   background: gray;
 }
 
+.history-block {
+  z-index: 5000;
+  position: fixed;
+  top: 0;
+  background: linear-gradient(135deg, #36393F, #1c1c1c);
+  width: 240px;
+  height: 50vh;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  overflow: hidden;
+  font-family: 'opensans';
+  margin-right: 10px;
+}
+
+.history-block p {
+  padding: 0;
+  margin: 0;
+}
+
+.history-block .title-of-history {
+  background: white;
+  background: -webkit-gradient(linear, left top, left bottom, from(#36393F), to(#1c1c1c));
+  background: linear-gradient(180deg, #36393F, #1c1c1c);
+  padding: 5px;
+  height: 11px;
+}
+
+.history-block h1 {
+  text-align: center;
+  color: #E88C01;
+  font-size: 10px;
+}
+
+.history-block ul {
+  width: 220px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.history-block ul li {
+  border: solid 1px #E88C01;
+  margin-top: 10px;
+  border-radius: 5px / 25px;
+  background: #E88C01;
+}
+
+.history-block ul li p {
+  color: white;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.history-block ul li p.date {
+  border-top: solid 1px white;
+  padding-top: 3px;
+  margin-top: 2px;
+  text-align: center;
+  color: white;
+}
+
+.underline-orange {
+  height: 1px;
+  margin: 5px;
+  background: #E88C01;
+}
+
 .frienship-requests-block {
   z-index: 5000;
   position: fixed;
@@ -509,12 +576,6 @@ div.delete-from-friends:hover {
   color: #E88C01;
   font-family: opensans;
   font-size: 12px;
-}
-
-.frienship-requests-block .underline-orange {
-  height: 1px;
-  margin: 5px;
-  background: #E88C01;
 }
 
 .frienship-requests-block .some-frienship-request li {

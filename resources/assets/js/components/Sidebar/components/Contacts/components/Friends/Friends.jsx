@@ -11,8 +11,7 @@ import { scrfToken,
          makeUriForRequest } from '../../../../../../functions.js';
 
 import { getFriends, 
-         setDialogId,
-         deleteFromFriendList } from '../../../../../../actions/friends';
+         setDialogId } from '../../../../../../actions/friends';
 
 class Friends extends Component {
 
@@ -57,10 +56,6 @@ class Friends extends Component {
     this.props.getLastMessagesOfDialog(friendId);
     this.props.dropUnreadMessageLinkOfDialog(friendId);
     this.highlightSelectedFriend(friendId);
-  }
-
-  deleteFromFriends() {
-    this.props.deleteFromFriendList();
   }
 
   render() {
@@ -135,9 +130,6 @@ export default connect(
     },
     setTypeOfSelectedContact: () => {
       dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
-    },
-    deleteFromFriendList: friendId => {
-      dispatch( deleteFromFriendList(friendId) );
     }
   })
 )(Friends);

@@ -45,6 +45,14 @@ class SidebarHead extends Component {
     }
   }
 
+  changeVisibleHistory() {
+    this.props.changeVisibleHistory();
+  }
+
+  changeVisibleGroupManager() {
+    this.props.changeVisibleGroupManager();
+  }
+
   changeVisibleFriendshipRequests() {
     this.props.readNewRecivedFriendshipRequests()
     this.props.changeVisibleFriendshipRequests();
@@ -57,7 +65,15 @@ class SidebarHead extends Component {
         <div className="logout" onClick={this.props.logoutAction}>logout</div>
         <div className="icons">
 
-          <span onClick={this.props.changeVisibleGroupManager}>
+          <span onClick={this.changeVisibleHistory.bind(this)} 
+                className={this.state.activeMenuPoint === 'HISTORY' ? 'active-point' : null }>
+
+            <FontAwesomeIcon icon="history" title="History" />
+          </span>
+
+          <span onClick={this.changeVisibleGroupManager.bind(this)} 
+                className={this.state.activeMenuPoint === 'GROUP_MANAGER' ? 'active-point' : null }>
+
             <FontAwesomeIcon icon="comments" title="Group Manager" />
           </span>
 
@@ -65,9 +81,11 @@ class SidebarHead extends Component {
                onClick={this.props.readNewRecivedFriendshipRequests}
                style={this.state.visibleRequestsMarker}>
           </div>
-          <span onClick={this.changeVisibleFriendshipRequests.bind(this)}>
+          <span onClick={this.changeVisibleFriendshipRequests.bind(this)} 
+                className={this.state.activeMenuPoint === 'FRIENDSHIP_REQUESTS' ? 'active-point' : null }>
+
             <FontAwesomeIcon icon="user-friends" title="Friendship Requests" />
-          </span>
+          </span>        
 
         </div>
       </div>
@@ -87,6 +105,9 @@ export default connect(
     },
     getUsername: () => {
       dispatch(getUsername());
+    },
+    changeVisibleHistory: () => {
+      dispatch({ type: 'CHANGE_VISIBLE_STATUS_HISTORY' });
     },
     changeVisibleFriendshipRequests: () => {
       dispatch({ type: 'CHANGE_VISIBLE_STATUS_FRIENSHIP_REQUESTS' });

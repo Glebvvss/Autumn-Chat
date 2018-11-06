@@ -8,7 +8,7 @@ import AddFriendsToExistsGroup from './components/AddFriendsToExistsGroup/AddFri
 import LeaveGroup from './components/LeaveGroup.jsx';
 
 const scrollbar = {
-  width: 260,
+  width: 250,
   height: '100%',
 };
 

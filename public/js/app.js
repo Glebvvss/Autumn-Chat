@@ -47097,7 +47097,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-__WEBPACK_IMPORTED_MODULE_7__fortawesome_fontawesome_svg_core__["b" /* library */].add(__WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["f" /* faUsers */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["c" /* faComment */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["d" /* faComments */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["e" /* faUserFriends */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["a" /* faArrowCircleUp */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["b" /* faCheckCircle */]);
+__WEBPACK_IMPORTED_MODULE_7__fortawesome_fontawesome_svg_core__["b" /* library */].add(__WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["g" /* faUsers */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["e" /* faHistory */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["c" /* faComment */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["d" /* faComments */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["b" /* faCheckCircle */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["f" /* faUserFriends */], __WEBPACK_IMPORTED_MODULE_9__fortawesome_free_solid_svg_icons__["a" /* faArrowCircleUp */]);
 
 
 
@@ -59635,6 +59635,7 @@ function notification() {
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var defaultState = {
+  historyVisible: false,
   groupManagerVisible: false,
   friendshipRequestsVisible: false
 };
@@ -59664,6 +59665,18 @@ function sidebarDropdownElements() {
     } else {
       return _extends({}, state, {
         friendshipRequestsVisible: false
+      });
+    }
+  }
+
+  if (action.type === 'CHANGE_VISIBLE_STATUS_HISTORY') {
+    if (state.historyVisible === false) {
+      return _extends({}, defaultState, {
+        historyVisible: true
+      });
+    } else {
+      return _extends({}, state, {
+        historyVisible: false
       });
     }
   }
@@ -61790,10 +61803,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-//import Friends from './components/Contacts/components/Friends.jsx';
-
-
-
 
 
 var Sidebar = function (_Component) {
@@ -61944,6 +61953,16 @@ var SidebarHead = function (_Component) {
       }
     }
   }, {
+    key: 'changeVisibleHistory',
+    value: function changeVisibleHistory() {
+      this.props.changeVisibleHistory();
+    }
+  }, {
+    key: 'changeVisibleGroupManager',
+    value: function changeVisibleGroupManager() {
+      this.props.changeVisibleGroupManager();
+    }
+  }, {
     key: 'changeVisibleFriendshipRequests',
     value: function changeVisibleFriendshipRequests() {
       this.props.readNewRecivedFriendshipRequests();
@@ -61970,7 +61989,14 @@ var SidebarHead = function (_Component) {
           { className: 'icons' },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'span',
-            { onClick: this.props.changeVisibleGroupManager },
+            { onClick: this.changeVisibleHistory.bind(this),
+              className: this.state.activeMenuPoint === 'HISTORY' ? 'active-point' : null },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__fortawesome_react_fontawesome__["a" /* FontAwesomeIcon */], { icon: 'history', title: 'History' })
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'span',
+            { onClick: this.changeVisibleGroupManager.bind(this),
+              className: this.state.activeMenuPoint === 'GROUP_MANAGER' ? 'active-point' : null },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__fortawesome_react_fontawesome__["a" /* FontAwesomeIcon */], { icon: 'comments', title: 'Group Manager' })
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'update-marker-friendship-list',
@@ -61978,7 +62004,8 @@ var SidebarHead = function (_Component) {
             style: this.state.visibleRequestsMarker }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'span',
-            { onClick: this.changeVisibleFriendshipRequests.bind(this) },
+            { onClick: this.changeVisibleFriendshipRequests.bind(this),
+              className: this.state.activeMenuPoint === 'FRIENDSHIP_REQUESTS' ? 'active-point' : null },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__fortawesome_react_fontawesome__["a" /* FontAwesomeIcon */], { icon: 'user-friends', title: 'Friendship Requests' })
           )
         )
@@ -62001,6 +62028,9 @@ var SidebarHead = function (_Component) {
     },
     getUsername: function getUsername() {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_auth__["b" /* getUsername */])());
+    },
+    changeVisibleHistory: function changeVisibleHistory() {
+      dispatch({ type: 'CHANGE_VISIBLE_STATUS_HISTORY' });
     },
     changeVisibleFriendshipRequests: function changeVisibleFriendshipRequests() {
       dispatch({ type: 'CHANGE_VISIBLE_STATUS_FRIENSHIP_REQUESTS' });
@@ -63008,11 +63038,6 @@ var Friends = function (_Component) {
       this.highlightSelectedFriend(friendId);
     }
   }, {
-    key: 'deleteFromFriends',
-    value: function deleteFromFriends() {
-      this.props.deleteFromFriendList();
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this3 = this;
@@ -63086,9 +63111,6 @@ function OnlineStatus(props) {
     },
     setTypeOfSelectedContact: function setTypeOfSelectedContact() {
       dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
-    },
-    deleteFromFriendList: function deleteFromFriendList(friendId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends__["d" /* deleteFromFriendList */])(friendId));
     }
   };
 })(Friends));
@@ -63127,8 +63149,11 @@ var DeleteFromFriends = function (_Component) {
     key: 'deleteFromFriendList',
     value: function deleteFromFriendList(event) {
       var friendId = event.target.attributes['data-friendID']['value'];
+      var result = confirm('Are You Want To Remove From Friends This User?');
 
-      this.props.deleteFromFriendList(friendId);
+      if (result === true) {
+        this.props.deleteFromFriendList(friendId);
+      }
     }
   }, {
     key: 'render',
@@ -63165,6 +63190,7 @@ var DeleteFromFriends = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_FriendshipRequests_FriendshipRequests_jsx__ = __webpack_require__(292);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_GroupManager_GroupManager_jsx__ = __webpack_require__(295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_History_History_jsx__ = __webpack_require__(312);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -63172,6 +63198,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -63193,6 +63220,7 @@ var DropdownComponents = function (_Component) {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_History_History_jsx__["a" /* default */], null),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_FriendshipRequests_FriendshipRequests_jsx__["a" /* default */], null),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_GroupManager_GroupManager_jsx__["a" /* default */], null)
       );
@@ -63624,7 +63652,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var scrollbar = {
-  width: 260,
+  width: 250,
   height: '100%'
 };
 
@@ -64886,7 +64914,7 @@ var Notifications = function (_Component) {
 /* unused harmony export faHeartbeat */
 /* unused harmony export faHelicopter */
 /* unused harmony export faHighlighter */
-/* unused harmony export faHistory */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return faHistory; });
 /* unused harmony export faHockeyPuck */
 /* unused harmony export faHome */
 /* unused harmony export faHospital */
@@ -65273,7 +65301,7 @@ var Notifications = function (_Component) {
 /* unused harmony export faUserClock */
 /* unused harmony export faUserCog */
 /* unused harmony export faUserEdit */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return faUserFriends; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return faUserFriends; });
 /* unused harmony export faUserGraduate */
 /* unused harmony export faUserLock */
 /* unused harmony export faUserMd */
@@ -65286,7 +65314,7 @@ var Notifications = function (_Component) {
 /* unused harmony export faUserTag */
 /* unused harmony export faUserTie */
 /* unused harmony export faUserTimes */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return faUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return faUsers; });
 /* unused harmony export faUsersCog */
 /* unused harmony export faUtensilSpoon */
 /* unused harmony export faUtensils */
@@ -66959,6 +66987,210 @@ var _iconsCache = {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+var History = function (_Component) {
+  _inherits(History, _Component);
+
+  function History(props) {
+    _classCallCheck(this, History);
+
+    var _this = _possibleConstructorReturn(this, (History.__proto__ || Object.getPrototypeOf(History)).call(this, props));
+
+    _this.state = {
+      visibleComponent: {
+        left: 0
+      },
+      scrollbar: {
+        width: '240px',
+        height: document.documentElement.clientHeight / 2 - 20
+      }
+    };
+
+    _this.changeScrollbarStateByResizeWindow();
+    return _this;
+  }
+
+  _createClass(History, [{
+    key: 'changeScrollbarStateByResizeWindow',
+    value: function changeScrollbarStateByResizeWindow() {
+      var _this2 = this;
+
+      window.addEventListener('resize', function (event) {
+        _this2.setState(_extends({}, _this2.state, {
+          scrollbar: {
+            width: 260,
+            height: document.documentElement.clientHeight / 2 - 20
+          }
+        }));
+      });
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      if (this.props !== prevProps) {
+        this.checkVisibleStatusComponent();
+      }
+    }
+  }, {
+    key: 'checkVisibleStatusComponent',
+    value: function checkVisibleStatusComponent() {
+      if (this.props.visible === true) {
+        this.setState(_extends({}, this.state, {
+          visibleComponent: {
+            left: '260px'
+          }
+        }));
+      } else {
+        this.setState(_extends({}, this.state, {
+          visibleComponent: {
+            left: 0
+          }
+        }));
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'history-block', style: this.state.visibleComponent },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'title-of-history' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h1',
+            null,
+            'History'
+          )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default.a,
+          { style: this.state.scrollbar },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'ul',
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'li',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                'History log text. History log text. History log text. History log text. asdasdasdasdasd'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                { className: 'date' },
+                '10.09.2019 | 16:54:12'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'underline-orange' })
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'li',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                'History log text. History log text. History log text. History log text. asdasdasdasdasd'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                { className: 'date' },
+                '10.09.2019 | 16:54:12'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'underline-orange' })
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'li',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                'History log text. History log text. History log text. History log text. asdasdasdasdasd'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                { className: 'date' },
+                '10.09.2019 | 16:54:12'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'underline-orange' })
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'li',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                'History log text. History log text. History log text. History log text. asdasdasdasdasd'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                { className: 'date' },
+                '10.09.2019 | 16:54:12'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'underline-orange' })
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'li',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                'History log text. History log text. History log text. History log text. asdasdasdasdasd'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                { className: 'date' },
+                '10.09.2019 | 16:54:12'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'underline-orange' })
+            )
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { width: '100%', height: '20px' } })
+        )
+      );
+    }
+  }]);
+
+  return History;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
+  return {
+    visible: state.sidebarDropdownElements.historyVisible
+  };
+})(History));
 
 /***/ })
 /******/ ]);

@@ -1,4 +1,5 @@
 let defaultState = {
+  historyVisible: false,
   groupManagerVisible: false,
   friendshipRequestsVisible: false,
 };
@@ -29,6 +30,20 @@ export function sidebarDropdownElements( state = defaultState, action ) {
       return {
         ...state,
         friendshipRequestsVisible: false,
+      };
+    }
+  }
+
+  if ( action.type === 'CHANGE_VISIBLE_STATUS_HISTORY' ) {
+    if ( state.historyVisible === false ) {
+      return {
+        ...defaultState,
+        historyVisible: true,
+      };
+    } else {
+      return {
+        ...state,
+        historyVisible: false,
       };
     }
   }

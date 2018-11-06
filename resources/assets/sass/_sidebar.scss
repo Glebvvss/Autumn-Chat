@@ -269,6 +269,72 @@ div.delete-from-friends {
 	background: gray;
 }
 
+.history-block {
+	//left: $width_sidebar;
+
+	z-index: 5000;
+	position: fixed;
+	top: 0;
+	background: $diagonal_gray_gradient;
+	width: $width_sidebar - 20px;
+	height: 50vh;
+	transition: $transition;
+	overflow: hidden;
+	font-family: 'opensans';
+	margin-right: 10px;
+
+	p {
+		padding: 0;
+		margin: 0;
+	}
+
+	.title-of-history {
+		background: white;
+		background: $vertical_gray_gradient;
+		padding: 5px;
+		height: 11px;
+	}
+
+	h1 {
+		text-align: center;
+		color: $orange;
+		font-size: 10px;
+	}
+
+	ul {
+		width: 220px;
+		margin-left: 10px;
+		margin-right: 10px;
+
+		li {
+			border: solid 1px $orange;
+			margin-top: 10px;
+			border-radius: 5px / 25px;
+			background: $orange;
+
+			p {
+				color: white;
+				font-size: 12px;
+				margin-left: 5px;
+				margin-right: 5px;
+			}
+
+			p.date {
+				border-top: solid 1px white;
+				padding-top: 3px;
+				margin-top: 2px;
+				text-align: center;
+				color: white;
+			}
+		}
+	}
+}
+
+.underline-orange {
+	height: 1px;
+	margin: 5px;
+	background: $orange;
+}
 
 .frienship-requests-block {
 	z-index: 5000;
@@ -285,12 +351,6 @@ div.delete-from-friends {
 		color: $orange;
 		font-family: opensans;
 		font-size: 12px;
-	}
-
-	.underline-orange {
-		height: 1px;
-		margin: 5px;
-		background: $orange;
 	}
 
 	.some-frienship-request {
