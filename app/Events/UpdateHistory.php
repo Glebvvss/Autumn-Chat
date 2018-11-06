@@ -10,24 +10,33 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UpdateMembersOfPublicGroup implements ShouldBroadcast {
-
+class UpdateHistory implements ShouldBroadcast
+{
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $groupId;
-    public $newMemberIdList;
+    public $userIdList;
 
-    public function __construct($groupId, $newMemberIdList = null) {
-        $this->groupId = $groupId;
-        $this->newMemberIdList = $newMemberIdList;
+    /**
+     * Create a new event instance.
+     *
+     * @return void
+     */
+    public function __construct( array $userIdList )
+    {
+        $this->userIdList = $userIdList;
     }
 
-    public function broadcastOn() {
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return \Illuminate\Broadcasting\Channel|array
+     */
+    public function broadcastOn()
+    {
         return ['none'];
     }
 
     public function broadcastAs() {
-        return 'UPDATE_MEMBERS_OF_PUBLIC_GROUP';
+        return 'UPDATE_HISTORY';
     }
-
 }

@@ -162,9 +162,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        /*
-         * Package Service Providers...
-         */
 
         /*
          * Application Service Providers...
@@ -181,6 +178,9 @@ return [
         App\Providers\Custom\FriendServiceProvider::class,
         App\Providers\Custom\MessageServiceProvider::class,
         App\Providers\Custom\UnreadMessageLinkServiceProvider::class,
+
+        App\Providers\Custom\HistoryServiceProviders\HistoryServiceProvider::class,
+        App\Providers\Custom\HistoryServiceProviders\HistoryWriterServiceProvider::class,
 
         App\Providers\Custom\GroupServiceProviders\BaseGroupServiceProvider::class,
         App\Providers\Custom\GroupServiceProviders\PublicTypeGroupServiceProvider::class,

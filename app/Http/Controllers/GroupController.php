@@ -13,25 +13,29 @@ use App\Events\NewPublicGroupCreated;
 use App\Events\UpdateMembersOfPublicGroup;
 use App\Services\Interfaces\IGroupServices\IBaseGroupService as BaseGroupService;
 use App\Services\Interfaces\IUnreadMessageLinkService as UnreadMessageLinkService;
+use App\Services\Interfaces\IHistoryServices\IHistoryWriterService as HistoryWriterService;
 use App\Services\Interfaces\IGroupServices\IPublicTypeGroupService as PublicTypeGroupService;
 use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService as DialogTypeGroupService;
 
 class GroupController extends Controller
 {
+    protected $unreadMessageLinkService;
     protected $publicTypeGroupService;
     protected $dialogTypeGroupService;
-    protected $unreadMessageLinkService;
+    protected $historyWriterService;
     protected $baseGroupService;
 
     public function __construct(
+        UnreadMessageLinkService $unreadMessageLinkService,
         PublicTypeGroupService   $publicTypeGroupService,
         DialogTypeGroupService   $dialogTypeGroupService,
-        UnreadMessageLinkService $unreadMessageLinkService,
+        HistoryWriterService     $historyWriterService,
         BaseGroupService         $baseGroupService
     ){
+        $this->unreadMessageLinkService = $unreadMessageLinkService;
         $this->publicTypeGroupService   = $publicTypeGroupService;
         $this->dialogTypeGroupService   = $dialogTypeGroupService;
-        $this->unreadMessageLinkService = $unreadMessageLinkService;
+        $this->historyWriterService     = $historyWriterService;
         $this->baseGroupService         = $baseGroupService;
     }
 
@@ -57,7 +61,7 @@ class GroupController extends Controller
             'dialogId' => $dialogId
         ]);
     }
-
+  
     public function createPublicType(Request $request) {
         $memberIdList = json_decode($request->groupMembersIdList);
 
@@ -70,19 +74,32 @@ class GroupController extends Controller
             $memberIdList
         );
 
-        if ( $result === 'Group created!' ) {
+        if ( $result['message'] === 'Group created!' ) {
             event( new NewPublicGroupCreated($memberIdList) );
+
+            $this->historyWriterService->groupCreatedBy(
+                Auth::user()->id, 
+                $result['newGroupId']
+            );
         }
 
         return response()->json([
-            'message' => $result
+            'message' => $result['message']
         ]);
     }
 
     public function leaveFromPublicType(Request $request) {
-        $this->publicTypeGroupService->leaveMemberFrom($request->id, Auth::user()->id);
+        $this->publicTypeGroupService->leaveMemberFrom(
+            $request->groupId, 
+            Auth::user()->id
+        );
 
-        event( new UpdateMembersOfPublicGroup($request->id) );
+        event( new UpdateMembersOfPublicGroup($request->groupId) );
+
+        $this->historyWriterService->leaveFromGroup(
+            Auth::user()->id, 
+            $request->groupId
+        );
     }
 
     public function addNewMembersToPublicType(Request $request) {
@@ -94,7 +111,12 @@ class GroupController extends Controller
         );
         
         if ( $result === 'New members to group added.' ) {
-            event( new UpdateMembersOfPublicGroup($request->id, $newMembersIdList) );
+            event( new UpdateMembersOfPublicGroup($request->groupId, $newMembersIdList) );
+
+            $this->historyWriterService->addNewMembersToGroup(
+                $newMembersIdList, 
+                $request->groupId
+            );
         }
 
         return response()->json([

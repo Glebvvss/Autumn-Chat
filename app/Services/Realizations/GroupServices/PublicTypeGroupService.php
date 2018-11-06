@@ -21,20 +21,23 @@ class PublicTypeGroupService extends BaseGroupService implements IPublicTypeGrou
                    ->toArray();
     }
 
-    public function create(string $groupName, array $memberIdList) : string
+    public function create(string $groupName, array $memberIdList) : array
     {
         if ( $groupName === '' ) {
-            return 'Group name cannot be empty.';
+            return ['message' => 'Group name cannot be empty.'];
         }
 
         if ( empty($memberIdList) ) {
-            return 'No users in member list of group.';
+            return ['message' => 'No users in member list of group.'];
         }
 
         $newGroupId = $this->createNewEmptyGroup($groupName);
         $this->associateUsersWithGroups($newGroupId, $memberIdList);
 
-        return 'Group created!';
+        return [
+            'message'    => 'Group created!',
+            'newGroupId' => $newGroupId
+        ];
     }
 
     public function addNewMembersTo(int $groupId, array $userIdList) : string

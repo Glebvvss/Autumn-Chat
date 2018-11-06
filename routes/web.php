@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('app');
 });
 
+Route::get('/test', [
+    'uses' => 'HistoryController@test'
+]);
+
 Route::group(['as' => 'auth'], function() {
     Route::post('/login', [
         'uses' => 'AuthController@login'
@@ -120,7 +124,7 @@ Route::group(['as' => 'groups'], function() {
         'uses' => 'GroupController@addNewMembersToPublicType'
     ]);
 
-    Route::get('/leave-group/{id}', [
+    Route::get('/leave-group/{groupId}', [
         'uses' => 'GroupController@leaveFromPublicType'
     ]);
 });
@@ -143,4 +147,18 @@ Route::group(['as' => 'unread-message-link'], function() {
     Route::get('/drop-unread-message-link/{contactId}', [
         'uses' => 'UnreadMessageLinkController@drop'
     ]); 
+});
+
+Route::group(['as' => 'history'], function() {
+    Route::get('/get-history-page/{pageNumber}', [
+        'uses' => 'HistoryController@getPage'
+    ]);
+
+    Route::get('/reset-new-markers-of-history', [
+        'uses' => 'HistoryController@resetNewMarkers'
+    ]);
+
+    Route::get('/check-on-new-history', [
+        'uses' => 'HistoryController@checkOnNew'
+    ]);
 });

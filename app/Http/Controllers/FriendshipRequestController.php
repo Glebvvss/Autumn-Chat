@@ -10,19 +10,23 @@ use App\Models\FriendshipRequest;
 use App\Http\Controllers\Controller;
 use App\Events\UpdateFriendRequestList;
 use App\Services\Interfaces\IFriendshipRequestService as FriendshipRequestService;
+use App\Services\Interfaces\IHistoryServices\IHistoryWriterService as HistoryWriterService;
 use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService as DialogTypeGroupService;
 
 class FriendshipRequestController extends Controller 
 {
     protected $friendshipRequestService;
     protected $dialogTypeGroupService;
+    protected $historyWriterService;
 
     public function __construct (
         FriendshipRequestService $friendshipRequestService,
-        DialogTypeGroupService   $dialogTypeGroupService
+        DialogTypeGroupService   $dialogTypeGroupService,
+        HistoryWriterService     $historyWriterService
     ){
         $this->friendshipRequestService = $friendshipRequestService;
         $this->dialogTypeGroupService   = $dialogTypeGroupService;
+        $this->historyWriterService     = $historyWriterService;
     }
 
     public function getRecivedAll() 
@@ -51,8 +55,9 @@ class FriendshipRequestController extends Controller
             $recipient = User::where('username', '=', $request->username)->first();
 
             event( new UpdateFriendRequestList($recipient->id, 'recived') );
-
             event( new UpdateFriendRequestList(Auth::user()->id, 'sended') );
+
+            $this->historyWriterService->friendshipRequestSended($recipient->id);
         }
 
         return response()->json([
@@ -71,10 +76,11 @@ class FriendshipRequestController extends Controller
 
         if ( $result === 'Friend added!' ) {
             event( new UpdateFriendRequestList($request->senderId, 'sended') );
-            
             event( new UpdateFriendList( $request->senderId, 'sender' ) );
-        }
 
+            $this->historyWriterService->friendAdded($request->senderId);
+        }
+        
         return response()->json([
             'message' => $result
         ]);
@@ -86,6 +92,8 @@ class FriendshipRequestController extends Controller
 
         if ( $result === 'Friendship request canceled.' ) {
             event( new UpdateFriendRequestList($request->senderId, 'sended') );
+
+            $this->historyWriterService->reciviedFriendshipRequestCanceled($request->senderId);
         }
 
         return response()->json([
@@ -99,6 +107,8 @@ class FriendshipRequestController extends Controller
 
         if ( $result === 'Friendship request canceled.' ) {
             event( new UpdateFriendRequestList($request->recipientId, 'recived') );
+
+            $this->historyWriterService->sendedFriendshipRequestCanceled($request->recipientId);
         }
 
         return response()->json([

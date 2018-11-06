@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Providers\Custom;
+namespace App\Providers\Custom\HistoryServiceProviders;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Realizations\UnreadMessageLinkService;
+use App\Services\Realizations\HistoryServices\HistoryService;
 
-class UnreadMessageLinkServiceProvider extends ServiceProvider
+class HistoryServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -24,8 +24,8 @@ class UnreadMessageLinkServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\Interfaces\IUnreadMessageLinkService', function() {
-            return new UnreadMessageLinkService();
+        $this->app->bind('App\Services\Interfaces\IHistoryServices\IHistoryService', function() {
+            return new HistoryService();
         });
     }
 }
