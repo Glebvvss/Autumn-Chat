@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Group;
 use App\Models\Friend;
 use App\Services\Interfaces\IFriendService;
+use Illuminate\Database\Eloquent\Collection;
 use App\Services\Realizations\GroupServices\DialogTypeGroupService;
 
 class FriendService implements IFriendService
@@ -34,7 +35,7 @@ class FriendService implements IFriendService
         $dialogTypeGroupService->dropBetween(Auth::user()->id, $friendId);
     }
 
-    public function getAllWhoNotInGroup(int $groupId)
+    public function getAllWhoNotInGroup(int $groupId) : Collection
     {
         if ( !$this->checkGroupOnExists($groupId) ) {
             throw new \Exception('Group is not exists');

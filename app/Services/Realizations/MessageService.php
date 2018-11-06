@@ -57,6 +57,20 @@ class MessageService implements IMessageService
                       ->get();
     }
 
+    public function sendTo(int $contactId, string $text) : array
+    {
+        $message = new Message();
+        
+        $message->text     = $text;
+        $message->user_id  = Auth::user()->id;
+        $message->group_id = $contactId;
+        $message->save();
+
+        $this->createUnreadMassageLinks($contactId);
+
+        return $this->getSingleById($message->id);
+    }
+
     private function checkOnLastPage(array $paginatedMessages) : bool
     {
         if ( $paginatedMessages['current_page'] === $paginatedMessages['last_page'] ) {
@@ -76,20 +90,6 @@ class MessageService implements IMessageService
     private function getCountOfContact(int $contactId) : int
     {
         return Message::where('group_id', '=', $contactId)->count();
-    }
-
-    public function sendTo(int $contactId, string $text) : array
-    {
-        $message = new Message();
-        
-        $message->text     = $text;
-        $message->user_id  = Auth::user()->id;
-        $message->group_id = $contactId;
-        $message->save();
-
-        $this->createUnreadMassageLinks($contactId);
-
-        return $this->getSingleById($message->id);
     }
 
     private function getSingleById(int $messageId) : array

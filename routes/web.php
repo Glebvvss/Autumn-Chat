@@ -15,10 +15,6 @@ Route::get('/', function () {
     return view('app');
 });
 
-Route::get('/test', [
-    'uses' => 'HistoryController@test'
-]);
-
 Route::group(['as' => 'auth'], function() {
     Route::post('/login', [
         'uses' => 'AuthController@login'

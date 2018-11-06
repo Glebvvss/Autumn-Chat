@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 interface IAuthenticationService
 {
-    public function login(Request $request);
+    public function login(Request $request) : array;
 
-    public function registration(Request $request);
+    public function registration(Request $request) : array;
 }

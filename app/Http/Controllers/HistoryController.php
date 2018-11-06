@@ -10,7 +10,6 @@ use App\Models\FriendshipRequest;
 use App\Http\Controllers\Controller;
 use App\Events\UpdateFriendRequestList;
 use App\Services\Interfaces\IHistoryServices\IHistoryService as HistoryService;
-use App\Services\Interfaces\IHistoryServices\IHistoryWriterService as HistoryWriterService;
 
 class HistoryController extends Controller 
 {
@@ -19,13 +18,6 @@ class HistoryController extends Controller
     public function __construct(HistoryService $historyService)
     {
         $this->historyService = $historyService;
-    }
-
-    public function test(HistoryWriterService $historyWriterService)
-    {
-        $historyWriterService->addNewMembersToGroup(
-            [1], 3
-        );
     }
 
     public function getPage(Request $request)
