@@ -1805,18 +1805,19 @@ var leaveGroup = function leaveGroup(groupId) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return getFriends; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return sendFriendshipRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return getFriends; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return sendFriendshipRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return comfirmFriendRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cancelRecivedFriendRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return cancelSendedFriendshipRequest; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return getRecivedFriendshipRequests; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return getSendedFriendshipRequests; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return getSearchMatchesList; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return readNewRecivedFriendshipRequests; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getCountNewRecivedFriendshipRequests; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getDialogId; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return setDialogId; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return getRecivedFriendshipRequests; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return getSendedFriendshipRequests; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return getSearchMatchesList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return readNewRecivedFriendshipRequests; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getCountNewRecivedFriendshipRequests; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return getDialogId; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return setDialogId; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return deleteFromFriendList; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__messages_js__ = __webpack_require__(27);
 
@@ -1969,6 +1970,16 @@ var setDialogId = function setDialogId(friendId) {
         dispatch({ type: 'SET_SELECTED_CONTACT_ID', payload: data.dialogId });
         dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
       });
+    });
+  };
+};
+
+var deleteFromFriendList = function deleteFromFriendList(friendId) {
+  return function (dispatch) {
+    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["b" /* makeUriForRequest */])('/delete-friend-from-friend-list/' + friendId), {
+      method: 'get'
+    }).then(function (response) {
+      dispatch(getFriends());
     });
   };
 };
@@ -5222,7 +5233,7 @@ var addNewMessageToList = function addNewMessageToList(message) {
 
 var getLastMessagesOfDialog = function getLastMessagesOfDialog(friendId) {
   return function (dispatch) {
-    Object(__WEBPACK_IMPORTED_MODULE_1__friends__["e" /* getDialogId */])(friendId).then(function (response) {
+    Object(__WEBPACK_IMPORTED_MODULE_1__friends__["f" /* getDialogId */])(friendId).then(function (response) {
       response.json().then(function (data) {
         dispatch(getLatestMessages(data.dialogId));
       });
@@ -5248,7 +5259,7 @@ var dropUnreadMessageLink = function dropUnreadMessageLink(contactId) {
     fetch(Object(__WEBPACK_IMPORTED_MODULE_2__functions_js__["b" /* makeUriForRequest */])('/drop-unread-message-link/' + contactId), {
       method: 'get'
     }).then(function (response) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__friends__["f" /* getFriends */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__friends__["g" /* getFriends */])());
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__groups__["d" /* getGroups */])());
     });
   };
@@ -5256,7 +5267,7 @@ var dropUnreadMessageLink = function dropUnreadMessageLink(contactId) {
 
 var dropUnreadMessageLinkOfDialog = function dropUnreadMessageLinkOfDialog(friendId) {
   return function (dispatch) {
-    Object(__WEBPACK_IMPORTED_MODULE_1__friends__["e" /* getDialogId */])(friendId).then(function (response) {
+    Object(__WEBPACK_IMPORTED_MODULE_1__friends__["f" /* getDialogId */])(friendId).then(function (response) {
       response.json().then(function (data) {
         dispatch(dropUnreadMessageLink(data.dialogId));
       });
@@ -61159,7 +61170,7 @@ var MessageList = function (_Component) {
 }, function (dispatch) {
   return {
     updateFriendList: function updateFriendList() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["f" /* getFriends */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["g" /* getFriends */])());
     },
     updateGroupList: function updateGroupList() {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_groups_js__["d" /* getGroups */])());
@@ -61998,10 +62009,10 @@ var SidebarHead = function (_Component) {
       dispatch({ type: 'CHANGE_VISIBLE_STATUS_GROUP_MANAGER' });
     },
     getCountNewRecivedFriendshipRequests: function getCountNewRecivedFriendshipRequests() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends__["d" /* getCountNewRecivedFriendshipRequests */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends__["e" /* getCountNewRecivedFriendshipRequests */])());
     },
     readNewRecivedFriendshipRequests: function readNewRecivedFriendshipRequests() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends__["j" /* readNewRecivedFriendshipRequests */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends__["k" /* readNewRecivedFriendshipRequests */])());
     }
   };
 })(SidebarHead));
@@ -62137,7 +62148,7 @@ var Contacts = function (_Component) {
 }, function (dispatch) {
 	return {
 		updateFriends: function updateFriends() {
-			dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends_js__["f" /* getFriends */])());
+			dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends_js__["g" /* getFriends */])());
 		},
 		updatePublicGroups: function updatePublicGroups() {
 			dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__actions_groups_js__["d" /* getGroups */])());
@@ -62738,13 +62749,13 @@ var SearchFriends = function (_Component) {
 }, function (dispatch) {
 	return {
 		getSearchMatchesList: function getSearchMatchesList(usernameOccurrence) {
-			dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["h" /* getSearchMatchesList */])(usernameOccurrence));
+			dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["i" /* getSearchMatchesList */])(usernameOccurrence));
 		},
 		clearSeatchMatchesList: function clearSeatchMatchesList() {
 			dispatch({ type: 'CLEAR_SEARCH_MATCH_LIST' });
 		},
 		sendFriendshipRequest: function sendFriendshipRequest(recipientUsername) {
-			dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["k" /* sendFriendshipRequest */])(recipientUsername));
+			dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["l" /* sendFriendshipRequest */])(recipientUsername));
 		}
 	};
 })(SearchFriends));
@@ -62997,6 +63008,11 @@ var Friends = function (_Component) {
       this.highlightSelectedFriend(friendId);
     }
   }, {
+    key: 'deleteFromFriends',
+    value: function deleteFromFriends() {
+      this.props.deleteFromFriendList();
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this3 = this;
@@ -63057,7 +63073,7 @@ function OnlineStatus(props) {
 }, function (dispatch) {
   return {
     getFriends: function getFriends() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends__["f" /* getFriends */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends__["g" /* getFriends */])());
     },
     dropUnreadMessageLinkOfDialog: function dropUnreadMessageLinkOfDialog(friendId) {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_messages__["c" /* dropUnreadMessageLinkOfDialog */])(friendId));
@@ -63066,10 +63082,13 @@ function OnlineStatus(props) {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_messages__["d" /* getLastMessagesOfDialog */])(friendId));
     },
     setDialogId: function setDialogId(friendId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends__["l" /* setDialogId */])(friendId));
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends__["m" /* setDialogId */])(friendId));
     },
     setTypeOfSelectedContact: function setTypeOfSelectedContact() {
       dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
+    },
+    deleteFromFriendList: function deleteFromFriendList(friendId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_friends__["d" /* deleteFromFriendList */])(friendId));
     }
   };
 })(Friends));
@@ -63082,6 +63101,7 @@ function OnlineStatus(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_friends_js__ = __webpack_require__(16);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -63089,6 +63109,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -63103,9 +63124,11 @@ var DeleteFromFriends = function (_Component) {
   }
 
   _createClass(DeleteFromFriends, [{
-    key: 'click',
-    value: function click(event) {
-      alert('test');
+    key: 'deleteFromFriendList',
+    value: function deleteFromFriendList(event) {
+      var friendId = event.target.attributes['data-friendID']['value'];
+
+      this.props.deleteFromFriendList(friendId);
     }
   }, {
     key: 'render',
@@ -63114,7 +63137,7 @@ var DeleteFromFriends = function (_Component) {
         'div',
         { className: 'delete-from-friends',
           'data-friendID': this.props.friendId,
-          onClick: this.click.bind(this) },
+          onClick: this.deleteFromFriendList.bind(this) },
         'delete'
       );
     }
@@ -63126,7 +63149,11 @@ var DeleteFromFriends = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
   return {};
 }, function (dispatch) {
-  return {};
+  return {
+    deleteFromFriendList: function deleteFromFriendList(friendId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_friends_js__["d" /* deleteFromFriendList */])(friendId));
+    }
+  };
 })(DeleteFromFriends));
 
 /***/ }),
@@ -63418,7 +63445,7 @@ var RecivedRequests = function (_Component) {
 }, function (dispatch) {
   return {
     getRecivedFriendshipRequests: function getRecivedFriendshipRequests() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["g" /* getRecivedFriendshipRequests */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["h" /* getRecivedFriendshipRequests */])());
     },
     comfirmRequest: function comfirmRequest(senderId) {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["c" /* comfirmFriendRequest */])(senderId));
@@ -63427,7 +63454,7 @@ var RecivedRequests = function (_Component) {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["a" /* cancelRecivedFriendRequest */])(senderId));
     },
     getCountNewRecivedFriendshipRequests: function getCountNewRecivedFriendshipRequests() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["d" /* getCountNewRecivedFriendshipRequests */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["e" /* getCountNewRecivedFriendshipRequests */])());
     }
   };
 })(RecivedRequests));
@@ -63554,7 +63581,7 @@ var SendedRequests = function (_Component) {
 }, function (dispatch) {
   return {
     getSendedFriendshipRequests: function getSendedFriendshipRequests() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["i" /* getSendedFriendshipRequests */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["j" /* getSendedFriendshipRequests */])());
     },
     cancelSendedFriendshipRequest: function cancelSendedFriendshipRequest(recipientId) {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_friends__["b" /* cancelSendedFriendshipRequest */])(recipientId));
@@ -63980,7 +64007,7 @@ var FriendListForCreateGroup = function (_Component) {
 }, function (dispatch) {
   return {
     getFriends: function getFriends() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_friends__["f" /* getFriends */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_friends__["g" /* getFriends */])());
     },
     changeFroupMemberList: function changeFroupMemberList(clickedFriendId) {
       dispatch({ type: 'CHANGE_GROUP_MEMBER_LIST_BEFORE_CREATED', payload: clickedFriendId });

@@ -139,3 +139,12 @@ export const setDialogId = friendId => dispatch => {
     });
   });
 };
+
+export const deleteFromFriendList = friendId => dispatch => {
+  fetch( makeUriForRequest('/delete-friend-from-friend-list/' + friendId), {
+    method: 'get'
+  })
+  .then(response => {
+    dispatch( getFriends() );
+  });
+};

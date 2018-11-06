@@ -11,7 +11,8 @@ import { scrfToken,
          makeUriForRequest } from '../../../../../../functions.js';
 
 import { getFriends, 
-         setDialogId } from '../../../../../../actions/friends';
+         setDialogId,
+         deleteFromFriendList } from '../../../../../../actions/friends';
 
 class Friends extends Component {
 
@@ -58,6 +59,10 @@ class Friends extends Component {
     this.highlightSelectedFriend(friendId);
   }
 
+  deleteFromFriends() {
+    this.props.deleteFromFriendList();
+  }
+
   render() {
     return (
       <ul>
@@ -76,7 +81,7 @@ class Friends extends Component {
               </span>
 
               <OnlineStatus onlineStatus={item.online} />
-              <DeleteFromFriends friendId={item.id} />
+              <DeleteFromFriends friendId={item.id}  />
             </li> ))
         }
       </ul>
@@ -130,6 +135,9 @@ export default connect(
     },
     setTypeOfSelectedContact: () => {
       dispatch({ type: 'SET_SELECTED_CONTACT_TYPE', payload: 'DIALOG' });
+    },
+    deleteFromFriendList: friendId => {
+      dispatch( deleteFromFriendList(friendId) );
     }
   })
 )(Friends);
