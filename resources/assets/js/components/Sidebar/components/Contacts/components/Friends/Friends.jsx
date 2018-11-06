@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import DeleteFromFriends from './components/DeleteFromFriends.jsx';
+
 import { getLastMessagesOfDialog } from '../../../../../../actions/messages';
+
 import { dropUnreadMessageLink,
          dropUnreadMessageLinkOfDialog } from '../../../../../../actions/messages';
 
@@ -55,58 +58,55 @@ class Friends extends Component {
     this.highlightSelectedFriend(friendId);
   }
 
-  renderIfHaveUnreadMessagesMarker(item) {
-    if ( item.unread_message_exists === true ) {
-      return (
-        <div className="notice-new">NEW</div>
-      );
-    }
-  }
-
-  renderOnlineStatus(onlineStatus) {
-    if ( onlineStatus === 1 ) {
-      return (
-        <div className="online-status"></div>
-      );
-    } else {
-      return (
-        <div className="offline-status"></div>
-      );
-    }
-  }
-
-  deleteFromFriendsButton() {
-    return (
-      <div className="delete-from-friends">
-        <p>delete</p>
-      </div>
-    );
-  }
-
   render() {
     return (
       <ul>
         {
           this.props.friends.map((item, index) => (
-            <li key={index}
-                data-friendID={item.id}
-                onClick={this.selectDialog.bind(this)}
-                className={( this.state.selectedFriendId    == item.id &&
-                             this.props.selectedContactType === 'DIALOG' ) ? 'active-contact' : null} >
+            <li key={index}>
+              <span className="friend-name"
+                    data-friendID={item.id}
+                    onClick={this.selectDialog.bind(this)}
+                    className={( this.state.selectedFriendId    ==  item.id    &&
+                                 this.props.selectedContactType === 'DIALOG' ) ?
+                                 'active-contact friend-name' : 'friend-name'}>
 
-              {item.username}
-              {this.renderIfHaveUnreadMessagesMarker(item)}
+                {item.username}
+                <UnreadMessageMarker exists={item.unread_message_exists} />
+              </span>
 
-              <div className="right-contacts-li-element">
-                {this.deleteFromFriendsButton()}
-                {this.renderOnlineStatus(item.online)}
-              </div>
+              <OnlineStatus onlineStatus={item.online} />
+              <DeleteFromFriends friendId={item.id} />
             </li> ))
         }
       </ul>
     );
   }
 
+}
+
+function UnreadMessageMarker(props) {
+  if ( props.exists === true ) {
+    return (
+      <div className="notice-new">NEW</div>
+    );
+  } else {
+    return (
+      <span></span>
+    );
+  }
+}
+
+function OnlineStatus(props) {
+  if ( props.onlineStatus === true ) {
+    return (
+      <div className="online-status"></div>
+    );
+  } else {
+    return (
+      <div className="offline-status"></div>
+    );
+  }
 }
 
 export default connect(

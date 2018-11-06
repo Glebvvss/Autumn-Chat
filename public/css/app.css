@@ -235,7 +235,7 @@ div.delete-from-friends {
   background: #E88C01;
   display: block;
   float: right;
-  margin-top: 1px;
+  margin-top: -16px;
   margin-right: -28px;
   width: 33px;
   height: 14px;
@@ -243,21 +243,15 @@ div.delete-from-friends {
           transform: rotate(270deg);
   font-size: 9px;
   border-radius: 5px;
+  text-align: center;
+  color: white;
+  padding: 0;
 }
 
 div.delete-from-friends:hover {
   background: #36393F;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-}
-
-div.delete-from-friends p {
-  text-align: center;
-  color: white;
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
-  margin: auto;
-  padding: 0;
 }
 
 .sidebar-head {
@@ -442,6 +436,19 @@ div.delete-from-friends p {
   color: #E88C01;
 }
 
+.friend-name {
+  background: red;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  margin-left: -20px;
+  margin-top: -10px;
+  margin-bottom: -10px;
+  display: inline-block;
+  width: 236px;
+  background: #DDDDDD;
+}
+
 .right-contacts-li-element {
   float: right;
 }
@@ -458,22 +465,30 @@ div.delete-from-friends p {
 }
 
 .online-status {
-  margin-right: -3px;
-  margin-top: 3px;
+  background: #E88C01;
+  display: block;
+  float: right;
+  margin-top: -12px;
+  margin-right: 5px;
   width: 6px;
   height: 6px;
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
   border-radius: 3px;
-  float: right;
   background: #E88C01;
 }
 
 .offline-status {
-  margin-right: -3px;
-  margin-top: 3px;
+  background: #E88C01;
+  display: block;
+  float: right;
+  margin-top: -12px;
+  margin-right: 5px;
   width: 6px;
   height: 6px;
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
   border-radius: 3px;
-  float: right;
   background: gray;
 }
 

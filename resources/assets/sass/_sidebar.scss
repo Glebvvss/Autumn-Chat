@@ -43,7 +43,7 @@ div.delete-from-friends {
 	background: $orange;
   display: block;
   float: right;
-  margin-top: 1px;
+  margin-top: -16px;
   margin-right: -28px;
   width: 33px;
   height: 14px;
@@ -56,14 +56,9 @@ div.delete-from-friends {
   	transition: $transition;
   }
 
-	p {
-		text-align: center;
-    color: white;
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
-    margin: auto;
-    padding: 0;
-	}
+	text-align: center;
+  color: white;
+  padding: 0;
 }
 
 .sidebar-head {
@@ -224,6 +219,19 @@ div.delete-from-friends {
 	}
 }
 
+.friend-name {
+	background: red; 
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	margin-left: -20px;
+	margin-top: -10px;
+	margin-bottom: -10px;
+	display: inline-block;
+	width: 236px;
+	background: $light_gray;
+}
+
 .right-contacts-li-element {
 	float: right;
 }
@@ -240,12 +248,15 @@ div.delete-from-friends {
 }
 
 @mixin user-status {
-	margin-right: -3px;
-	margin-top: 3px;
-	width: 6px;
-	height: 6px;
-	border-radius: 3px;	
-	float: right;
+	background: $orange;
+  display: block;
+  float: right;
+  margin-top: -12px;
+  margin-right: 5px;
+  width: 6px;
+  height: 6px;
+  transform: rotate(270deg);
+  border-radius: 3px;
 }
 
 .online-status {

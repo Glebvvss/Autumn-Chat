@@ -53,12 +53,12 @@ class SidebarHead extends Component {
   render() {
     return (
       <div className="sidebar-head">
-        <h1 className="username">{this.props.user.username}</h1>
+        <h1 className="username" title="User name of authenticate user">{this.props.user.username}</h1>
         <div className="logout" onClick={this.props.logoutAction}>logout</div>
         <div className="icons">
 
           <span onClick={this.props.changeVisibleGroupManager}>
-            <FontAwesomeIcon icon="comments" />
+            <FontAwesomeIcon icon="comments" title="Group Manager" />
           </span>
 
           <div className="update-marker-friendship-list" 
@@ -66,7 +66,7 @@ class SidebarHead extends Component {
                style={this.state.visibleRequestsMarker}>
           </div>
           <span onClick={this.changeVisibleFriendshipRequests.bind(this)}>
-            <FontAwesomeIcon icon="user-friends" />
+            <FontAwesomeIcon icon="user-friends" title="Friendship Requests" />
           </span>
 
         </div>
