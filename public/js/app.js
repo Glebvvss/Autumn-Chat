@@ -59797,48 +59797,45 @@ var Main = function (_Component) {
 	}
 
 	_createClass(Main, [{
-		key: 'renderAuthForms',
-		value: function renderAuthForms() {
-			return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'div',
-				{ className: 'auth' },
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Auth_Auth_jsx__["a" /* default */], null)
-			);
-		}
-	}, {
-		key: 'renderChatMainPage',
-		value: function renderChatMainPage() {
-			return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'div',
-				{ className: 'main' },
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Notifications_Notifications_jsx__["a" /* default */], null),
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Sidebar_Sidebar_jsx__["a" /* default */], null),
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Chat_Chat_jsx__["a" /* default */], null)
-			);
-		}
-	}, {
-		key: 'renderWaitCheckRole',
-		value: function renderWaitCheckRole() {
-			return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'div',
-				null,
-				'Loading...'
-			);
-		}
-	}, {
 		key: 'render',
 		value: function render() {
 			if (this.props.loginState.status === 'user') {
-				return this.renderChatMainPage();
+				return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ChatMainPage, null);
 			} else if (this.props.loginState.status === 'guest') {
-				return this.renderAuthForms();
+				return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(AuthForms, null);
 			}
-			return this.renderWaitCheckRole();
+			return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(WaitCheckRole, null);
 		}
 	}]);
 
 	return Main;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+function WaitCheckRole() {
+	return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+		'div',
+		null,
+		'Loading...'
+	);
+}
+
+function AuthForms(props) {
+	return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+		'div',
+		{ className: 'auth' },
+		__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Auth_Auth_jsx__["a" /* default */], null)
+	);
+}
+
+function ChatMainPage(props) {
+	return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+		'div',
+		{ className: 'main' },
+		__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Notifications_Notifications_jsx__["a" /* default */], null),
+		__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Sidebar_Sidebar_jsx__["a" /* default */], null),
+		__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Chat_Chat_jsx__["a" /* default */], null)
+	);
+}
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(function (state) {
 	return {

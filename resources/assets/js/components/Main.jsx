@@ -14,38 +14,38 @@ class Main extends Component {
 		this.props.checkLogin();
 	}
 
-	renderAuthForms() {
-		return (
-			<div className="auth">
-				<Auth />
-			</div>
-		);
-	}
-
-	renderChatMainPage() {
-		return (
-			<div className="main">
-        <Notifications />
-				<Sidebar />
-				<Chat />
-			</div>
-		);
-	}
-
-	renderWaitCheckRole() {
-		return (
-			<div>Loading...</div>
-		);
-	}
-
 	render() {
 		if ( this.props.loginState.status === 'user' ) {
-			return this.renderChatMainPage();
+			return <ChatMainPage />;
 		} else if ( this.props.loginState.status === 'guest' ) {
-			return this.renderAuthForms();
+			return <AuthForms />;
 		}	
-		return this.renderWaitCheckRole();
+		return <WaitCheckRole />;
 	}
+}
+
+function WaitCheckRole() {
+	return (
+		<div>Loading...</div>
+	);
+}
+
+function AuthForms(props) {
+	return (
+		<div className="auth">
+			<Auth />
+		</div>
+	);
+}
+
+function ChatMainPage(props) {
+	return (
+		<div className="main">
+      <Notifications />
+			<Sidebar />
+			<Chat />
+		</div>
+	);
 }
 
 export default connect(
