@@ -499,16 +499,25 @@ div.delete-from-friends:hover {
   background: linear-gradient(135deg, #36393F, #1c1c1c);
   width: 240px;
   height: 50vh;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
+  -webkit-transition-property: left;
+  transition-property: left;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
   overflow: hidden;
   font-family: 'opensans';
-  margin-right: 10px;
 }
 
 .history-block p {
   padding: 0;
   margin: 0;
+}
+
+.history-block .more-history-btn {
+  padding: 2px 5px;
+  margin: 10px auto 0 auto;
+  width: 80px;
+  display: block;
+  font-size: 11px;
 }
 
 .history-block .title-of-history {
@@ -534,21 +543,21 @@ div.delete-from-friends:hover {
 .history-block ul li {
   border: solid 1px #E88C01;
   margin-top: 10px;
-  border-radius: 5px / 25px;
+  border-radius: 5px;
   background: #E88C01;
 }
 
 .history-block ul li p {
   color: white;
   font-size: 12px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin: 5px 5px 0 5px;
 }
 
 .history-block ul li p.date {
   border-top: solid 1px white;
   padding-top: 3px;
   margin-top: 2px;
+  margin-bottom: 5px;
   text-align: center;
   color: white;
 }
@@ -817,6 +826,7 @@ h6 {
 body {
   margin: 0px;
   padding: 0px;
+  background: url(http://widefon.com/_ld/156/79476541.jpg);
   background-attachment: fixed;
 }
 

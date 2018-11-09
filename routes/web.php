@@ -146,15 +146,19 @@ Route::group(['as' => 'unread-message-link'], function() {
 });
 
 Route::group(['as' => 'history'], function() {
-    Route::get('/get-history-page/{pageNumber}', [
+    Route::get('/get-history-page/{pageNumber}/{startPointPostId}', [
         'uses' => 'HistoryController@getPage'
     ]);
 
-    Route::get('/reset-new-markers-of-history', [
-        'uses' => 'HistoryController@resetNewMarkers'
+    Route::get('/reset-new-markers-of-history-posts', [
+        'uses' => 'HistoryController@resetNewMarkersOnPosts'
     ]);
 
-    Route::get('/check-on-new-history', [
-        'uses' => 'HistoryController@checkOnNew'
+    Route::get('/check-on-new-history-posts', [
+        'uses' => 'HistoryController@checkOnNewPosts'
+    ]);
+
+    Route::get('/get-start-point-history-post-id', [
+        'uses' => 'HistoryController@getStartPointPostId'
     ]);
 });

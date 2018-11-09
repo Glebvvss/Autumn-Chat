@@ -22,14 +22,35 @@ class HistoryController extends Controller
 
     public function getPage(Request $request)
     {
-        $historyPage = $this->historyService->getPage($request->pageNumber);
+        $historyPage = $this->historyService->getPage(
+            $request->pageNumber,
+            $request->startPointPostId
+        );
 
         return response()->json([
             'historyPage' => $historyPage
         ]);
     }
+
+    public function getStartPointPostId()
+    {
+        $startPointPostId = $this->historyService->getStartPointPostId();
+
+        return response()->json([
+            'startPointPostId' => $startPointPostId
+        ]);
+    }
+
+    public function getCountPages()
+    {
+        $countPages = $this->historyService->getCountPages();
+
+        return response()->json([
+            'countPages' => $countPages
+        ]);
+    }
     
-    public function checkOnNew()
+    public function checkOnNewPosts()
     {
         $result = $this->historyService->checkOnNewByUserId( Auth::user()->id );
 
@@ -38,7 +59,7 @@ class HistoryController extends Controller
         ]);
     }
 
-    public function resetNewMarkers()
+    public function resetNewMarkersOnPosts()
     {
         $this->historyService->resetNewMarkers(); 
     }
