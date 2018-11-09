@@ -4,11 +4,25 @@ let defaultState = {
   loadedHistoryPosts: [],
   countLoadedPages: 0,
   countPostsPerPage: 5,
-  allHistoryLoaded: false,
+  fullHistoryLoaded: false,
   startPointPostId: null,
 };
 
 export function history(state = defaultState, action) {
+
+  if ( action.type === 'SET_FULL_HISTORY_LOADED' ) {
+    return {
+      ...state,
+      fullHistoryLoaded: true,
+    };
+  }
+
+  if ( action.type === 'RESET_FULL_HISTORY_LOADED' ) {
+    return {
+      ...state,
+      fullHistoryLoadedallHistoryLoaded: false,
+    };
+  }
 
   if ( action.type === 'SET_START_POINT_HISTORY_POST_ID' ) {
     return {
@@ -17,10 +31,8 @@ export function history(state = defaultState, action) {
     };
   }
 
-  if ( action.type === 'ADD_HISTORY_PAGE_CONTENT' ) {
-
+  if ( action.type === 'UPDATE_LOADED_HISTORY_LIST' ) {
     let updatedLoadedHistoryPosts = state.loadedHistoryPosts.concat(action.payload);
-
     return {
       ...state,
       loadedHistoryPosts: cloneObject(updatedLoadedHistoryPosts),

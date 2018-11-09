@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactScrollbar from 'react-scrollbar-js';
 
-import { addHistoryPageContect, 
-         getFirstPageByStartPointId } from '../../../../../../actions/history';
+import { getHistoryMoreOldLoadList, 
+         getLatestHistoryList } from '../../../../../../actions/history';
 
 class History extends Component {
 
@@ -23,7 +23,7 @@ class History extends Component {
 
   componentDidMount() {
     this.changeScrollbarStateByResizeWindow();
-    this.props.getFirstPageByStartPointId();
+    this.props.getLatestHistoryList();
   }
 
   changeScrollbarStateByResizeWindow() {
@@ -70,9 +70,21 @@ class History extends Component {
     }
   }
 
-  initialAddHistoryPageContent() {
-    let pageNumber = this.props.countLoadedPages + 1;
-    this.props.addHistoryPageContect(pageNumber, this.props.startPointPostId);
+  getHistoryMoreOldLoadList() {
+    let loadNumber = this.props.countLoadedPages + 1;
+    this.props.getHistoryMoreOldLoadList(loadNumber, this.props.startPointPostId);
+  }
+
+  renderIfFullHistoryNotLoaded() {
+    if ( this.props.fullHistoryLoaded !== true ) {
+      return (
+        <button className="more-history-btn" 
+                onClick={this.getHistoryMoreOldLoadList.bind(this)}>
+
+          more
+        </button>
+      );
+    }
   }
 
   render() {
@@ -87,10 +99,7 @@ class History extends Component {
               ))
             }
           </ul>
-          <button className="more-history-btn" 
-                  onClick={this.initialAddHistoryPageContent.bind(this)}>
-            more
-          </button>
+          {this.renderIfFullHistoryNotLoaded()}
           <BottomElement />
         </ReactScrollbar>
       </div>
@@ -123,17 +132,18 @@ function BottomElement(props) {
 
 export default connect(
   state => ({
-    visible:          state.sidebarDropdownElements.historyVisible,
-    history:          state.history.loadedHistoryPosts,
-    countLoadedPages: state.history.countLoadedPages,
-    startPointPostId: state.history.startPointPostId
+    visible:           state.sidebarDropdownElements.historyVisible,
+    history:           state.history.loadedHistoryPosts,
+    countLoadedPages:  state.history.countLoadedPages,
+    startPointPostId:  state.history.startPointPostId,
+    fullHistoryLoaded: state.history.fullHistoryLoaded
   }),
   dispatch => ({
-    addHistoryPageContect: (pageNumber, startPointPostId) => {
-      dispatch( addHistoryPageContect(pageNumber, startPointPostId) );
+    getHistoryMoreOldLoadList: (loadNumber, startPointPostId) => {
+      dispatch( getHistoryMoreOldLoadList(loadNumber, startPointPostId) );
     },
-    getFirstPageByStartPointId: () => {
-      dispatch( getFirstPageByStartPointId() );
+    getLatestHistoryList: () => {
+      dispatch( getLatestHistoryList() );
     }
   })
 )(History);

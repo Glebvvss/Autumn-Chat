@@ -11,14 +11,14 @@ use App\Services\Interfaces\IHistoryServices\IHistoryService;
 
 class HistoryService implements IHistoryService
 {
-    protected $countPostsPerPage = 5;
+    protected $countPostsPerLoad = 5;
 
     public function setCountPostsPerPage(int $newValue) : void {
-        $this->historyPostsPerPage = $newValue;
+        $this->historyPostsPerLoad = $newValue;
     }
 
     public function getCountPostsPerPage() : int {
-        return $historyPostsPerPage;
+        return $historyPostsPerLoad;
     }
 
     public function getStartPointPostId() : int
@@ -30,16 +30,16 @@ class HistoryService implements IHistoryService
         return $lastPost->id;
     }
 
-    public function getPage(int $pageNumber, int $startPointPostId) : array
+    public function getSingleLoadList(int $loadNumber, int $startPointPostId) : array
     {   
-        Paginator::currentPageResolver(function () use ($pageNumber) {
-            return $pageNumber;
+        Paginator::currentPageResolver(function () use ($loadNumber) {
+            return $loadNumber;
         });
         
         $page = History::where('user_id', '=', Auth::user()->id)
                        ->where('id', '<=', $startPointPostId)
                        ->orderBy('created_at', 'desc')
-                       ->paginate($this->countPostsPerPage)
+                       ->paginate($this->countPostsPerLoad)
                        ->toArray();
 
         return $page['data'];
@@ -49,7 +49,7 @@ class HistoryService implements IHistoryService
     {
         $paginator = History::where('user_id', '=', Auth::user()->id)
                             ->orderBy('created_at', 'desc')
-                            ->paginate($this->countPostsPerPage);
+                            ->paginate($this->countPostsPerLoad);
 
         return $paginator->count();
     }

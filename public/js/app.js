@@ -59767,7 +59767,7 @@ var defaultState = {
   loadedHistoryPosts: [],
   countLoadedPages: 0,
   countPostsPerPage: 5,
-  allHistoryLoaded: false,
+  fullHistoryLoaded: false,
   startPointPostId: null
 };
 
@@ -59776,16 +59776,26 @@ function history() {
   var action = arguments[1];
 
 
+  if (action.type === 'SET_FULL_HISTORY_LOADED') {
+    return _extends({}, state, {
+      fullHistoryLoaded: true
+    });
+  }
+
+  if (action.type === 'RESET_FULL_HISTORY_LOADED') {
+    return _extends({}, state, {
+      fullHistoryLoadedallHistoryLoaded: false
+    });
+  }
+
   if (action.type === 'SET_START_POINT_HISTORY_POST_ID') {
     return _extends({}, state, {
       startPointPostId: action.payload
     });
   }
 
-  if (action.type === 'ADD_HISTORY_PAGE_CONTENT') {
-
+  if (action.type === 'UPDATE_LOADED_HISTORY_LIST') {
     var updatedLoadedHistoryPosts = state.loadedHistoryPosts.concat(action.payload);
-
     return _extends({}, state, {
       loadedHistoryPosts: Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* cloneObject */])(updatedLoadedHistoryPosts),
       countLoadedPages: state.countLoadedPages + 1
@@ -64539,7 +64549,7 @@ var History = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.changeScrollbarStateByResizeWindow();
-      this.props.getFirstPageByStartPointId();
+      this.props.getLatestHistoryList();
     }
   }, {
     key: 'changeScrollbarStateByResizeWindow',
@@ -64587,10 +64597,22 @@ var History = function (_Component) {
       }
     }
   }, {
-    key: 'initialAddHistoryPageContent',
-    value: function initialAddHistoryPageContent() {
-      var pageNumber = this.props.countLoadedPages + 1;
-      this.props.addHistoryPageContect(pageNumber, this.props.startPointPostId);
+    key: 'getHistoryMoreOldLoadList',
+    value: function getHistoryMoreOldLoadList() {
+      var loadNumber = this.props.countLoadedPages + 1;
+      this.props.getHistoryMoreOldLoadList(loadNumber, this.props.startPointPostId);
+    }
+  }, {
+    key: 'renderIfFullHistoryNotLoaded',
+    value: function renderIfFullHistoryNotLoaded() {
+      if (this.props.fullHistoryLoaded !== true) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'button',
+          { className: 'more-history-btn',
+            onClick: this.getHistoryMoreOldLoadList.bind(this) },
+          'more'
+        );
+      }
     }
   }, {
     key: 'render',
@@ -64609,12 +64631,7 @@ var History = function (_Component) {
               return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(HistoryPost, { postDetails: item });
             })
           ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'button',
-            { className: 'more-history-btn',
-              onClick: this.initialAddHistoryPageContent.bind(this) },
-            'more'
-          ),
+          this.renderIfFullHistoryNotLoaded(),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(BottomElement, null)
         )
       );
@@ -64662,15 +64679,16 @@ function BottomElement(props) {
     visible: state.sidebarDropdownElements.historyVisible,
     history: state.history.loadedHistoryPosts,
     countLoadedPages: state.history.countLoadedPages,
-    startPointPostId: state.history.startPointPostId
+    startPointPostId: state.history.startPointPostId,
+    fullHistoryLoaded: state.history.fullHistoryLoaded
   };
 }, function (dispatch) {
   return {
-    addHistoryPageContect: function addHistoryPageContect(pageNumber, startPointPostId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_history__["a" /* addHistoryPageContect */])(pageNumber, startPointPostId));
+    getHistoryMoreOldLoadList: function getHistoryMoreOldLoadList(loadNumber, startPointPostId) {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_history__["a" /* getHistoryMoreOldLoadList */])(loadNumber, startPointPostId));
     },
-    getFirstPageByStartPointId: function getFirstPageByStartPointId() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_history__["b" /* getFirstPageByStartPointId */])());
+    getLatestHistoryList: function getLatestHistoryList() {
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_history__["b" /* getLatestHistoryList */])());
     }
   };
 })(History));
@@ -64680,57 +64698,48 @@ function BottomElement(props) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addHistoryPageContect; });
-/* unused harmony export updateHistoryList */
-/* unused harmony export resetNewMerkersOfHistypePosts */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getFirstPageByStartPointId; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getHistoryMoreOldLoadList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getLatestHistoryList; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_js__ = __webpack_require__(8);
 
 
-var addHistoryPageContect = function addHistoryPageContect(pageNumber, startPointPostId) {
+var loadLatestHistoryList = function loadLatestHistoryList(startPointPostId) {
   return function (dispatch) {
-    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["b" /* makeUriForRequest */])('/get-history-page/' + pageNumber + '/' + startPointPostId), {
+    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["b" /* makeUriForRequest */])('/get-latest-history-load-list/' + startPointPostId), {
       method: 'get'
     }).then(function (response) {
       response.json().then(function (data) {
-        dispatch({ type: 'ADD_HISTORY_PAGE_CONTENT', payload: data.historyPage });
+        console.log(data);
+        dispatch({ type: 'UPDATE_LOADED_HISTORY_LIST', payload: data.historyPosts });
       });
     });
   };
 };
 
-var updateHistoryList = function updateHistoryList(countLoadedHistoryPages) {
+var getHistoryMoreOldLoadList = function getHistoryMoreOldLoadList(loadNumber, startPointPostId) {
   return function (dispatch) {
-    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["b" /* makeUriForRequest */])('/get-history-page/' + pageNumber), {
+    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["b" /* makeUriForRequest */])('/get-history-more-old-load-list/' + loadNumber + '/' + startPointPostId), {
       method: 'get'
     }).then(function (response) {
       response.json().then(function (data) {
-        dispatch({ type: 'FETCH_HISTORY_PAGE', payload: data.historyPage });
+        dispatch({ type: 'UPDATE_LOADED_HISTORY_LIST', payload: data.historyPosts });
+
+        if (data.historyPosts.length < 5) {
+          dispatch({ type: 'SET_FULL_HISTORY_LOADED' });
+        }
       });
     });
   };
 };
 
-var resetNewMerkersOfHistypePosts = function resetNewMerkersOfHistypePosts(countLoadedHistoryPages) {
-  return function (dispatch) {
-    fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["b" /* makeUriForRequest */])('/reset-new-markers-of-history-posts'), {
-      method: 'get'
-    }).then(function (response) {
-      response.json().then(function (data) {
-        dispatch(updateHistoryList(countLoadedHistoryPages));
-      });
-    });
-  };
-};
-
-var getFirstPageByStartPointId = function getFirstPageByStartPointId() {
+var getLatestHistoryList = function getLatestHistoryList() {
   return function (dispatch) {
     fetch(Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["b" /* makeUriForRequest */])('/get-start-point-history-post-id'), {
       method: 'get'
     }).then(function (response) {
       response.json().then(function (data) {
         dispatch({ type: 'SET_START_POINT_HISTORY_POST_ID', payload: data.startPointPostId });
-        dispatch(addHistoryPageContect(1, data.startPointPostId));
+        dispatch(loadLatestHistoryList(data.startPointPostId));
       });
     });
   };

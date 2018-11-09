@@ -4,7 +4,7 @@ namespace App\Services\Interfaces\IHistoryServices;
 
 interface IHistoryService 
 {
-    public function getPage(int $pageNumber, int $startPointPostId) : array;
+    public function getSingleLoadList(int $loadNumber, int $startPointPostId) : array;
 
     public function writeHistoryEvent(string $text, int $userId) : void;
 

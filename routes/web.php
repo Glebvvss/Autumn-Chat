@@ -146,8 +146,12 @@ Route::group(['as' => 'unread-message-link'], function() {
 });
 
 Route::group(['as' => 'history'], function() {
-    Route::get('/get-history-page/{pageNumber}/{startPointPostId}', [
-        'uses' => 'HistoryController@getPage'
+    Route::get('/get-latest-history-load-list/{startPointPostId}', [
+        'uses' => 'HistoryController@getLatestLoadList'
+    ]);
+
+    Route::get('/get-history-more-old-load-list/{loadNumber}/{startPointPostId}', [
+        'uses' => 'HistoryController@getMoreOldLoadList'
     ]);
 
     Route::get('/reset-new-markers-of-history-posts', [

@@ -20,15 +20,25 @@ class HistoryController extends Controller
         $this->historyService = $historyService;
     }
 
-    public function getPage(Request $request)
+    public function getLatestLoadList(Request $request) {
+        $historyPosts = $this->historyService->getSingleLoadList(
+            1, $request->startPointPostId
+        );
+
+        return response()->json([
+            'historyPosts' => $historyPosts,
+        ]);
+    }
+
+    public function getMoreOldLoadList(Request $request)
     {
-        $historyPage = $this->historyService->getPage(
-            $request->pageNumber,
+        $historyPosts = $this->historyService->getSingleLoadList(
+            $request->loadNumber,
             $request->startPointPostId
         );
 
         return response()->json([
-            'historyPage' => $historyPage
+            'historyPosts' => $historyPosts
         ]);
     }
 

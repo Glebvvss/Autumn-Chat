@@ -1,46 +1,41 @@
 import { scrfToken, makeUriForRequest } from '../functions.js';
 
-export const addHistoryPageContect = (pageNumber, startPointPostId) => dispatch => {
-  fetch( makeUriForRequest('/get-history-page/' + pageNumber + '/' + startPointPostId), {
+const loadLatestHistoryList = startPointPostId => dispatch => {
+  fetch( makeUriForRequest('/get-latest-history-load-list/' + startPointPostId), {
     method: 'get'
   })
   .then(response => {
     response.json().then(data => {
-      dispatch({ type: 'ADD_HISTORY_PAGE_CONTENT', payload: data.historyPage });
+      console.log(data);
+      dispatch({ type: 'UPDATE_LOADED_HISTORY_LIST', payload: data.historyPosts });
     });
   });
 };
 
-export const updateHistoryList = countLoadedHistoryPages => dispatch => {
-  fetch( makeUriForRequest('/get-history-page/' + pageNumber), {
+export const getHistoryMoreOldLoadList = (loadNumber, startPointPostId) => dispatch => {
+  fetch( makeUriForRequest('/get-history-more-old-load-list/' + loadNumber + '/' + startPointPostId), {
     method: 'get'
   })
   .then(response => {
     response.json().then(data => {
-      dispatch({ type: 'FETCH_HISTORY_PAGE', payload: data.historyPage });
-    });
-  }); 
-};
+      dispatch({ type: 'UPDATE_LOADED_HISTORY_LIST', payload: data.historyPosts });
 
-export const resetNewMerkersOfHistypePosts = countLoadedHistoryPages => dispatch => {
-  fetch( makeUriForRequest('/reset-new-markers-of-history-posts'), {
-    method: 'get'
-  })
-  .then(response => {
-    response.json().then(data => {
-      dispatch( updateHistoryList(countLoadedHistoryPages) );
+      if ( data.historyPosts.length < 5 ) {
+        dispatch({ type: 'SET_FULL_HISTORY_LOADED' });
+      }
+      
     });
   });
 };
 
-export const getFirstPageByStartPointId = () => dispatch => {
+export const getLatestHistoryList = () => dispatch => {
   fetch( makeUriForRequest('/get-start-point-history-post-id'), {
     method: 'get'
   })
   .then(response => {
     response.json().then(data => {
       dispatch({ type: 'SET_START_POINT_HISTORY_POST_ID', payload: data.startPointPostId });
-      dispatch( addHistoryPageContect(1, data.startPointPostId) );
+      dispatch( loadLatestHistoryList(data.startPointPostId) );
     });
   });
 };
