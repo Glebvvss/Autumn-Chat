@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactScrollbar from 'react-scrollbar-js';
 
+import { makeUriForRequest } from '../../../../../../functions';
+
 import { getHistoryMoreOldLoadList, 
          getLatestHistoryList } from '../../../../../../actions/history';
 
@@ -26,6 +28,23 @@ class History extends Component {
     this.props.getLatestHistoryList();
   }
 
+  subscribeOnChangesInHistory() {
+    fetch( makeUriForRequest('/get-user-id'), {
+      method: 'get'
+    })
+    .then(response => {
+      response.json().then(httpData => {
+        let socket = io(':3001'),
+            userId = httpData.userId,
+            room   = 'update-unread-message-merkers-of-user-id:' + userId;
+
+        socket.on(room, (socketData) => {
+          
+        });
+      });
+    });
+  }
+
   changeScrollbarStateByResizeWindow() {
     window.addEventListener('resize', (event) => {
       this.setState({
@@ -36,14 +55,6 @@ class History extends Component {
         } 
       });
     });
-  }
-
-  loadPageHistoryByScrollOnBottom() {
-    let scrollbar = this.refs.scrollbar;
-
-    scrollbar.addEventListener('scroll', (event) => {
-      
-    }); 
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -71,7 +82,7 @@ class History extends Component {
   }
 
   getHistoryMoreOldLoadList() {
-    let loadNumber = this.props.countLoadedPages + 1;
+    let loadNumber = this.props.countLoads + 1;
     this.props.getHistoryMoreOldLoadList(loadNumber, this.props.startPointPostId);
   }
 
@@ -134,7 +145,7 @@ export default connect(
   state => ({
     visible:           state.sidebarDropdownElements.historyVisible,
     history:           state.history.loadedHistoryPosts,
-    countLoadedPages:  state.history.countLoadedPages,
+    countLoads:        state.history.countLoads,
     startPointPostId:  state.history.startPointPostId,
     fullHistoryLoaded: state.history.fullHistoryLoaded
   }),

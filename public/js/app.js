@@ -59765,7 +59765,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var defaultState = {
   loadedHistoryPosts: [],
-  countLoadedPages: 0,
+  countLoads: 0,
   countPostsPerPage: 5,
   fullHistoryLoaded: false,
   startPointPostId: null
@@ -59798,7 +59798,7 @@ function history() {
     var updatedLoadedHistoryPosts = state.loadedHistoryPosts.concat(action.payload);
     return _extends({}, state, {
       loadedHistoryPosts: Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* cloneObject */])(updatedLoadedHistoryPosts),
-      countLoadedPages: state.countLoadedPages + 1
+      countLoads: state.countLoads + 1
     });
   }
 
@@ -64191,10 +64191,11 @@ var AddFriendsToExistsGroup = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (this.props.selectedContactId === null) {
-        return this.renderIfGroupNoSelected();
+      if (this.props.selectedContactId !== null && this.props.selectedContactType === 'GROUP') {
+
+        return this.renderIfGroupSelected();
       }
-      return this.renderIfGroupSelected();
+      return this.renderIfGroupNoSelected();
     }
   }]);
 
@@ -64204,9 +64205,10 @@ var AddFriendsToExistsGroup = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_3_react_redux__["b" /* connect */])(function (state) {
   return {
     groupMembersIdList: state.makeNewGroup.groupMembersIdList,
-    friendsWhoNotInSelectedGroup: state.selectedContact.friendsWhoNotInSelectedContact,
     selectedContactId: state.selectedContact.id,
-    newMembersIdToGroup: state.selectedContact.newMembersIdToContact
+    selectedContactType: state.selectedContact.type,
+    newMembersIdToGroup: state.selectedContact.newMembersIdToContact,
+    friendsWhoNotInSelectedGroup: state.selectedContact.friendsWhoNotInSelectedContact
   };
 }, function (dispatch) {
   return {
@@ -64508,7 +64510,8 @@ var LeaveGroup = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_history__ = __webpack_require__(303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_history__ = __webpack_require__(303);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -64518,6 +64521,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
 
 
 
@@ -64552,6 +64557,21 @@ var History = function (_Component) {
       this.props.getLatestHistoryList();
     }
   }, {
+    key: 'subscribeOnChangesInHistory',
+    value: function subscribeOnChangesInHistory() {
+      fetch(Object(__WEBPACK_IMPORTED_MODULE_3__functions__["b" /* makeUriForRequest */])('/get-user-id'), {
+        method: 'get'
+      }).then(function (response) {
+        response.json().then(function (httpData) {
+          var socket = io(':3001'),
+              userId = httpData.userId,
+              room = 'update-unread-message-merkers-of-user-id:' + userId;
+
+          socket.on(room, function (socketData) {});
+        });
+      });
+    }
+  }, {
     key: 'changeScrollbarStateByResizeWindow',
     value: function changeScrollbarStateByResizeWindow() {
       var _this2 = this;
@@ -64564,13 +64584,6 @@ var History = function (_Component) {
           }
         }));
       });
-    }
-  }, {
-    key: 'loadPageHistoryByScrollOnBottom',
-    value: function loadPageHistoryByScrollOnBottom() {
-      var scrollbar = this.refs.scrollbar;
-
-      scrollbar.addEventListener('scroll', function (event) {});
     }
   }, {
     key: 'componentDidUpdate',
@@ -64599,7 +64612,7 @@ var History = function (_Component) {
   }, {
     key: 'getHistoryMoreOldLoadList',
     value: function getHistoryMoreOldLoadList() {
-      var loadNumber = this.props.countLoadedPages + 1;
+      var loadNumber = this.props.countLoads + 1;
       this.props.getHistoryMoreOldLoadList(loadNumber, this.props.startPointPostId);
     }
   }, {
@@ -64678,17 +64691,17 @@ function BottomElement(props) {
   return {
     visible: state.sidebarDropdownElements.historyVisible,
     history: state.history.loadedHistoryPosts,
-    countLoadedPages: state.history.countLoadedPages,
+    countLoads: state.history.countLoads,
     startPointPostId: state.history.startPointPostId,
     fullHistoryLoaded: state.history.fullHistoryLoaded
   };
 }, function (dispatch) {
   return {
     getHistoryMoreOldLoadList: function getHistoryMoreOldLoadList(loadNumber, startPointPostId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_history__["a" /* getHistoryMoreOldLoadList */])(loadNumber, startPointPostId));
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_history__["a" /* getHistoryMoreOldLoadList */])(loadNumber, startPointPostId));
     },
     getLatestHistoryList: function getLatestHistoryList() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_history__["b" /* getLatestHistoryList */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_history__["b" /* getLatestHistoryList */])());
     }
   };
 })(History));

@@ -81,6 +81,7 @@ class SidebarHead extends Component {
                onClick={this.props.readNewRecivedFriendshipRequests}
                style={this.state.visibleRequestsMarker}>
           </div>
+          
           <span onClick={this.changeVisibleFriendshipRequests.bind(this)} 
                 className={this.state.activeMenuPoint === 'FRIENDSHIP_REQUESTS' ? 'active-point' : null }>
 

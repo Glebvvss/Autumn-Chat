@@ -2,7 +2,7 @@ import { cloneObject }  from '../functions.js';
 
 let defaultState = {
   loadedHistoryPosts: [],
-  countLoadedPages: 0,
+  countLoads: 0,
   countPostsPerPage: 5,
   fullHistoryLoaded: false,
   startPointPostId: null,
@@ -36,7 +36,7 @@ export function history(state = defaultState, action) {
     return {
       ...state,
       loadedHistoryPosts: cloneObject(updatedLoadedHistoryPosts),
-      countLoadedPages: state.countLoadedPages + 1
+      countLoads: state.countLoads + 1
     };
   }
 
