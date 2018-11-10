@@ -10,22 +10,20 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UpdateFriendRequestList implements ShouldBroadcast
+class SendHistoryPostsToClients implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $userId;
-    public $type;
+    public $historyPosts;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct( $userId, $type )
+    public function __construct( array $historyPosts )
     {
-        $this->userId = $userId;
-        $this->type = $type;
+        $this->historyPosts = $historyPosts;
     }
 
     /**
@@ -39,6 +37,6 @@ class UpdateFriendRequestList implements ShouldBroadcast
     }
 
     public function broadcastAs() {
-        return 'UPDATE_FRIENDSHIP_REQUEST_LIST';
+        return 'SEND_HISTORY_POSTS_TO_CLIENTS';
     }
 }

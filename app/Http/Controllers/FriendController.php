@@ -7,27 +7,32 @@ use Auth;
 use App\Models\User;
 use App\Models\Group;
 use Illuminate\Http\Request;
-use App\Events\UpdateFriendList;
 use App\Events\UpdateHistory;
+use App\Events\UpdateFriendList;
 use App\Http\Controllers\Controller;
+use App\Events\SendHistoryPostsToClients;
 use App\Services\Interfaces\IFriendService as FriendService;
 use App\Services\Interfaces\IHistoryServices\IHistoryService as HistoryService;
-use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService as DialogTypeGroupService;
 use App\Services\Interfaces\IUnreadMessageLinkService as UnreadMessageLinkService;
+use App\Services\Interfaces\IHistoryServices\IHistoryWriterService as HistoryWriterService;
+use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService as DialogTypeGroupService;
 
 class FriendController extends Controller
 {
     protected $friendService;
     protected $historyService;
+    protected $historyWriterService;
     protected $unreadMessageLinkService;
 
     public function __construct(
         FriendService            $friendService,
         HistoryService           $historyService,
+        HistoryWriterService     $historyWriterService,
         UnreadMessageLinkService $unreadMessageLinkService
     ){
         $this->friendService            = $friendService;
         $this->historyService           = $historyService;
+        $this->historyWriterService     = $historyWriterService;
         $this->unreadMessageLinkService = $unreadMessageLinkService;
     }
 
@@ -50,22 +55,10 @@ class FriendController extends Controller
     {
         $this->friendService->deleteFromFriends($request->friendId);
 
+        $historyPosts = $this->historyWriterService->deleteFromFriendList($friendId);
+
         event( new UpdateFriendList($request->friendId) );
-
-        $this->historyService->makeNew(
-            'You deleted a friend named ' . User::find($request->friendId)->username,
-            Auth::user()->id
-        );
-
-        $this->historyService->makeNew(
-            'You have been deleted from friends of ' . Auth::user()->username, 
-            $request->friendId
-        );
-
-        event( new UpdateHistory([
-            Auth::user()->id, 
-            $request->friendId
-        ]));
+        event( new SendHistoryPostsToClients($historyPosts) );   
     }
 
     public function getAllWhoNotInGroup(Request $request) 

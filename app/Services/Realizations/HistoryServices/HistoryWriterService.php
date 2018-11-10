@@ -83,6 +83,24 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
         ];
     }
 
+    public function deleteFromFriendList(int $friendId) : array
+    {
+        $historyPost1 = $this->historyService->writeHistoryPost(
+                            'You deleted a friend named ' . User::find($request->friendId)->username,
+                            Auth::user()->id
+                        );
+
+        $historyPost1 = $this->historyService->writeHistoryPost(
+                            'You have been deleted from friends of ' . Auth::user()->username, 
+                            $friendId
+                        );
+
+        return [
+            $historyPost1->user_id => $historyPost1,
+            $historyPost2->user_id => $historyPost1
+        ];   
+    }
+
     public function groupCreatedBy(int $userCreatorId, int $groupId) : array
     {
         $group   = Group::find($groupId);
@@ -96,7 +114,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
         foreach( $members as $member ) {
 
             if ( $member->id == $creator->id ) {
-                $historyPost =   $this->writeHistoryPost(
+                $historyPost =  $this->writeHistoryPost(
                                     'You created public group named ' . $group->group_name . '.',
                                     $creator->id
                                 );
@@ -106,7 +124,9 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
             }
 
             $historyPost =  $this->writeHistoryPost(
-                                'You are member of ' . $group->group_name . ' public group, which created by ' . $creator->username,
+                                'You are member of ' . $group->group_name . 
+                                ' public group, which created by ' . $creator->username,
+
                                 $member->id
                             );
 

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\UnreadMessageLink;
 use App\Http\Controllers\Controller;
 use App\Events\NewPublicGroupCreated;
+use App\Events\SendHistoryPostsToClients;
 use App\Events\UpdateMembersOfPublicGroup;
 use App\Services\Interfaces\IGroupServices\IBaseGroupService as BaseGroupService;
 use App\Services\Interfaces\IUnreadMessageLinkService as UnreadMessageLinkService;
@@ -75,12 +76,13 @@ class GroupController extends Controller
                   );
 
         if ( $result['message'] === 'Group created!' ) {
-            event( new NewPublicGroupCreated($memberIdList) );
+            $historyPosts = $this->historyWriterService->groupCreatedBy(
+                                Auth::user()->id, 
+                                $result['newGroupId']
+                            );
 
-            $this->historyWriterService->groupCreatedBy(
-                Auth::user()->id, 
-                $result['newGroupId']
-            );
+            event( new NewPublicGroupCreated($memberIdList) );
+            event( new SendHistoryPostsToClients($historyPosts) );
         }
 
         return response()->json([
@@ -94,12 +96,13 @@ class GroupController extends Controller
             Auth::user()->id
         );
 
-        event( new UpdateMembersOfPublicGroup($request->groupId) );
+        $historyPosts = $this->historyWriterService->leaveFromGroup(
+                            Auth::user()->id, 
+                            $request->groupId
+                        );
 
-        $this->historyWriterService->leaveFromGroup(
-            Auth::user()->id, 
-            $request->groupId
-        );
+        event( new UpdateMembersOfPublicGroup($request->groupId) );
+        event( new SendHistoryPostsToClients($historyPosts) );
     }
 
     public function addNewMembersToPublicType(Request $request) {
@@ -111,12 +114,13 @@ class GroupController extends Controller
         );
         
         if ( $result === 'New members to group added.' ) {
-            event( new UpdateMembersOfPublicGroup($request->groupId, $newMembersIdList) );
+            $historyPosts = $this->historyWriterService->addNewMembersToGroup(
+                                $newMembersIdList, 
+                                $request->groupId
+                            );
 
-            $this->historyWriterService->addNewMembersToGroup(
-                $newMembersIdList, 
-                $request->groupId
-            );
+            event( new UpdateMembersOfPublicGroup($request->groupId, $newMembersIdList) );
+            event( new SendHistoryPostsToClients($historyPosts) );
         }
 
         return response()->json([

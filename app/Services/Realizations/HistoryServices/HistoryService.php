@@ -70,9 +70,9 @@ class HistoryService implements IHistoryService
     public function checkOnNewByUserId(int $userId) : bool
     {
         $check = History::where('user_id', '=', $userId)
-               ->where('new', '=', 1)
-               ->get()
-               ->toArray();
+                        ->where('new', '=', 1)
+                        ->get()
+                        ->toArray();
 
         if ( $check === [] ) {
             return true;

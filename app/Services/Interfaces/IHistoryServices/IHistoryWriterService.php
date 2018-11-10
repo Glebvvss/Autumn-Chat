@@ -12,9 +12,9 @@ interface IHistoryWriterService
 
     public function friendshipRequestSended(int $userId) : array;
 
-    public function groupCreatedBy(int $userCreatorId, int $groupId);
+    public function groupCreatedBy(int $userCreatorId, int $groupId) : array;
 
-    public function leaveFromGroup(int $userId, int $groupId);
+    public function leaveFromGroup(int $userId, int $groupId) : array;
 
-    public function addNewMembersToGroup(array $newMemberIdList, int $groupId);
+    public function addNewMembersToGroup(array $newMemberIdList, int $groupId) : array;
 }

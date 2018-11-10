@@ -9,6 +9,7 @@ use App\Events\UpdateFriendList;
 use App\Models\FriendshipRequest;
 use App\Http\Controllers\Controller;
 use App\Events\UpdateFriendRequestList;
+use App\Events\SendHistoryPostsToClients;
 use App\Services\Interfaces\IFriendshipRequestService as FriendshipRequestService;
 use App\Services\Interfaces\IHistoryServices\IHistoryWriterService as HistoryWriterService;
 use App\Services\Interfaces\IGroupServices\IDialogTypeGroupService as DialogTypeGroupService;
@@ -53,11 +54,11 @@ class FriendshipRequestController extends Controller
 
         if ( $result === 'Request has been sent.' ) {
             $recipient = User::where('username', '=', $request->username)->first();
+            $historyPosts = $this->historyWriterService->friendshipRequestSended($recipient->id);
 
             event( new UpdateFriendRequestList($recipient->id, 'recived') );
             event( new UpdateFriendRequestList(Auth::user()->id, 'sended') );
-
-            $this->historyWriterService->friendshipRequestSended($recipient->id);
+            event( new SendHistoryPostsToClients($historyPosts) );
         }
 
         return response()->json([
@@ -75,10 +76,11 @@ class FriendshipRequestController extends Controller
         );
 
         if ( $result === 'Friend added!' ) {
+            $historyPosts = $this->historyWriterService->friendAdded($request->senderId);
+
             event( new UpdateFriendRequestList($request->senderId, 'sended') );
             event( new UpdateFriendList( $request->senderId, 'sender' ) );
-
-            $this->historyWriterService->friendAdded($request->senderId);
+            event( new SendHistoryPostsToClients($historyPosts) );
         }
         
         return response()->json([
@@ -91,9 +93,10 @@ class FriendshipRequestController extends Controller
         $result = $this->friendshipRequestService->cancelRecivedFrom($request->senderId);
 
         if ( $result === 'Friendship request canceled.' ) {
-            event( new UpdateFriendRequestList($request->senderId, 'sended') );
+            $historyPosts = $this->historyWriterService->reciviedFriendshipRequestCanceled($request->senderId);
 
-            $this->historyWriterService->reciviedFriendshipRequestCanceled($request->senderId);
+            event( new UpdateFriendRequestList($request->senderId, 'sended') );
+            event( new SendHistoryPostsToClients($historyPosts) );
         }
 
         return response()->json([
@@ -106,9 +109,10 @@ class FriendshipRequestController extends Controller
         $result = $this->friendshipRequestService->cancelSendedTo($request->recipientId);
 
         if ( $result === 'Friendship request canceled.' ) {
-            event( new UpdateFriendRequestList($request->recipientId, 'recived') );
+            $historyPosts = $this->historyWriterService->sendedFriendshipRequestCanceled($request->recipientId);
 
-            $this->historyWriterService->sendedFriendshipRequestCanceled($request->recipientId);
+            event( new UpdateFriendRequestList($request->recipientId, 'recived') );
+            event( new SendHistoryPostsToClients($historyPosts) );
         }
 
         return response()->json([
