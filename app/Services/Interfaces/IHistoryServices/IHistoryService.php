@@ -6,7 +6,7 @@ interface IHistoryService
 {
     public function getSingleLoadList(int $loadNumber, int $startPointPostId) : array;
 
-    public function writeHistoryPost(string $text, int $userId) : void;
+    public function writeHistoryPost(string $text, int $userId);
 
     public function checkOnNewByUserId(int $userId) : bool;
 

@@ -54,14 +54,17 @@ class HistoryService implements IHistoryService
         return $paginator->count();
     }
 
-    public function writeHistoryPost(string $text, int $userId) : void
+    public function writeHistoryPost(string $text, int $userId)
     {
         $history = new History();
 
         $history->text = $text;
         $history->new = true;
         $history->user()->associate(User::find($userId));
-        $history->save();
+
+        $newPost = $history->save();
+
+        return History::find($newPost->id);
     }
 
     public function checkOnNewByUserId(int $userId) : bool

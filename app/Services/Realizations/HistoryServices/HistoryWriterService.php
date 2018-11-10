@@ -11,133 +11,176 @@ use App\Services\Interfaces\IHistoryServices\IHistoryWriterService;
 
 class HistoryWriterService extends HistoryService implements IHistoryWriterService
 {
-    public function friendAdded(int $friendId) : void
+    public function friendAdded(int $friendId) : array
     {
-        $this->writeHistoryPost(
-            'Friend added ' . User::find($friendId)->username,
-            Auth::user()->id
-        );
+        $historyPost1 = $this->writeHistoryPost(
+                            'Friend added ' . User::find($friendId)->username,
+                            Auth::user()->id
+                        );
 
-        $this->writeHistoryPost(
-            'Friend added ' . Auth::user()->username,
-            $friendId
-        );
+        $historyPost2 = $this->writeHistoryPost(
+                            'Friend added ' . Auth::user()->username,
+                            $friendId
+                        );
+
+        return [
+            $historyPost1->user_id => $historyPost1,
+            $historyPost2->user_id => $historyPost1
+        ];
     }
 
-    public function sendedFriendshipRequestCanceled(int $userId) : void
+    public function sendedFriendshipRequestCanceled(int $userId) : array
     {
-        $this->writeHistoryPost(
-            'You cancel sended friendship request to ' . User::find($userId)->username . '.',
-            Auth::user()->id
-        );
+        $historyPost1 = $this->writeHistoryPost(
+                            'You cancel sended friendship request to ' . User::find($userId)->username . '.',
+                            Auth::user()->id
+                        );
 
-        $this->writeHistoryPost(
-            Auth::user()->username . 'cancel sended friendship request to you.',
-            $userId
-        );
+        $historyPost2 = $this->writeHistoryPost(
+                            Auth::user()->username . 'cancel sended friendship request to you.',
+                            $userId
+                        );
+
+        return [
+            $historyPost1->user_id => $historyPost1,
+            $historyPost2->user_id => $historyPost1
+        ];
     }
 
-    public function reciviedFriendshipRequestCanceled(int $userId) : void
+    public function reciviedFriendshipRequestCanceled(int $userId) : array
     {
-        $this->writeHistoryPost(
-            'You cancel recivied friendship request from ' . User::find($userId)->username . '.',
-            Auth::user()->id
-        );
+        $historyPost1 = $this->writeHistoryPost(
+                            'You cancel recivied friendship request from ' . User::find($userId)->username . '.',
+                            Auth::user()->id
+                        );
 
-        $this->writeHistoryPost(
-            Auth::user()->username . ' cancel recivied friendship request from you.',
-            $userId
-        );
+        $historyPost2 = $this->writeHistoryPost(
+                            Auth::user()->username . ' cancel recivied friendship request from you.',
+                            $userId
+                        );
+
+        return [
+            $historyPost1->user_id => $historyPost1,
+            $historyPost2->user_id => $historyPost1
+        ];
     }
 
-    public function friendshipRequestSended(int $userId) : void
+    public function friendshipRequestSended(int $userId) : array
     {
-        $this->writeHistoryPost(
-            'You sended friendship request to ' . User::find($userId)->username . '.',
-            Auth::user()->id
-        );
+        $historyPost1 = $this->writeHistoryPost(
+                            'You sended friendship request to ' . User::find($userId)->username . '.',
+                            Auth::user()->id
+                        );
 
-        $this->writeHistoryPost(
-            'You recivied friendship request from ' . Auth::user()->username . '.',
-            User::find($userId)->id
-        );
+        $historyPost2 = $this->writeHistoryPost(
+                            'You recivied friendship request from ' . Auth::user()->username . '.',
+                            User::find($userId)->id
+                        );
+
+        return [
+            $historyPost1->user_id => $historyPost1,
+            $historyPost2->user_id => $historyPost1
+        ];
     }
 
-    public function groupCreatedBy(int $userCreatorId, int $groupId) : void
+    public function groupCreatedBy(int $userCreatorId, int $groupId) : array
     {
         $group   = Group::find($groupId);
         $creator = User::find($userCreatorId);
 
         $members = Group::find($groupId)
-                           ->users()
-                           ->get();
+                        ->users()
+                        ->get();
 
+        $historyPostList = [];
         foreach( $members as $member ) {
-            if ( $member->id == $creator->id ) {
-                $this->writeHistoryPost(
-                    'You created public group named ' . $group->group_name . '.',
-                    $creator->id
-                );
 
+            if ( $member->id == $creator->id ) {
+                $historyPost =   $this->writeHistoryPost(
+                                    'You created public group named ' . $group->group_name . '.',
+                                    $creator->id
+                                );
+
+                $historyPostList[$histryPost->user_id] = $histryPost;
                 continue;
             }
 
-            $this->writeHistoryPost(
-                'You are member of ' . $group->group_name . ' public group, which created by ' . $creator->username,
-                $member->id
-            );
+            $historyPost =  $this->writeHistoryPost(
+                                'You are member of ' . $group->group_name . ' public group, which created by ' . $creator->username,
+                                $member->id
+                            );
+
+            $historyPostList[$historyPost->user_id] = $historyPost;
         }
+
+        return $historyPostList;
     }
 
-    public function leaveFromGroup(int $userId, int $groupId) : void
+    public function leaveFromGroup(int $userId, int $groupId) : array
     {
         $group   = Group::find($groupId);
         $leaveUser = User::find($userId);
 
         $members = Group::find($groupId)
-                           ->users()
-                           ->get();
+                        ->users()
+                        ->get();
 
+        $historyPostList =  [];
         foreach( $members as $member ) {
             if ( $member->id == $leaveUser->id ) {
-                $this->writeHistoryPost(
-                    'You leave public group named ' . $group->group_name . '.',
-                    $leaveUser->id
-                );
+                $historyPost =  $this->writeHistoryPost(
+                                    'You leave public group named ' . $group->group_name . '.',
+                                    $leaveUser->id
+                                );
 
+                $historyPostList[$histryPost->user_id] = $histryPost;
                 continue;
             }
 
-            $this->writeHistoryPost(
-                $leaveUser->username . ' leave group named ' . $group->group_name . '.',
-                $member->id
-            );
+            $historyPost =  $this->writeHistoryPost(
+                                $leaveUser->username . ' leave group named ' . $group->group_name . '.',
+                                $member->id
+                            );
+
+            $historyPostList[$historyPost->user_id] = $historyPost;
         }
+
+        return $historyPostList;
     }
 
-    public function addNewMembersToGroup(array $newMemberIdList, int $groupId) : void
+    public function addNewMembersToGroup(array $newMemberIdList, int $groupId) : array
     {
         $members = Group::find($groupId)
-                           ->users()
-                           ->get();
+                        ->users()
+                        ->get();
 
         $usernames = $this->generateStringifyUsernameList($newMemberIdList);
 
         $group = Group::find($groupId);
 
+        $historyPostList = [];
         foreach( $members as $member ) {
             if ( in_array( $member->id, $newMemberIdList ) ) {
-                $this->writeHistoryPost(
-                    'You added to group named ' . $group->group_name . '.',
-                    $member->id
-                );
+
+                $historyPost =   $this->writeHistoryPost(
+                                    'You added to group named ' . $group->group_name . '.',
+                                    $member->id
+                                );
+
+                $historyPostList[$historyPost->user_id] = $historyPost;
+
             } else {
-                $this->writeHistoryPost(
-                    $usernames . ' join to group named ' . $group->group_name . '.',
-                    $member->id
-                );
+
+                $historyPost =   $this->writeHistoryPost(
+                                    $usernames . ' join to group named ' . $group->group_name . '.',
+                                    $member->id
+                                );
+
+                $historyPostList[$historyPost->user_id] = $historyPost;
             }
         }
+
+        return $historyPostList;
     }
 
     private function generateStringifyUsernameList(array $userIdList) : string
