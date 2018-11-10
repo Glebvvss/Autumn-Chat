@@ -53,9 +53,9 @@ class GroupController extends Controller
     public function getIdOfDialogType(Request $request)
     {
         $dialogId = $this->dialogTypeGroupService->getDialogIdBetween(
-            Auth::user()->id, 
-            $request->friendId
-        );
+                        Auth::user()->id, 
+                        $request->friendId
+                    );
 
         return response()->json([
             'dialogId' => $dialogId
@@ -70,9 +70,9 @@ class GroupController extends Controller
         }
 
         $result = $this->publicTypeGroupService->create(
-            $request->groupName, 
-            $memberIdList
-        );
+                      $request->groupName, 
+                      $memberIdList
+                  );
 
         if ( $result['message'] === 'Group created!' ) {
             event( new NewPublicGroupCreated($memberIdList) );

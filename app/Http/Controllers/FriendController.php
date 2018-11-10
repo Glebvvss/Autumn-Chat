@@ -33,13 +33,13 @@ class FriendController extends Controller
 
     public function getAll()
     {
-        $friends = $this->friendService->getAllOfUser(
-            Auth::user()->id
-        );
+        $friends =  $this->friendService->getAllOfUser(
+                        Auth::user()->id
+                    );
 
         $friendsWithUnreadMessageLinks = $this->unreadMessageLinkService->attachToFriendListByDialogs(
-            $friends
-        );
+                                             $friends
+                                         );
         
         return response()->json([
             'friends' => $friendsWithUnreadMessageLinks
@@ -71,8 +71,8 @@ class FriendController extends Controller
     public function getAllWhoNotInGroup(Request $request) 
     {
         $friendsWhoNotInGroup = $this->friendService->getAllWhoNotInGroup(
-            $request->groupId
-        );
+                                    $request->groupId
+                                );
         
         return response()->json([
             'friendsWhoNotInGroup' => $friendsWhoNotInGroup

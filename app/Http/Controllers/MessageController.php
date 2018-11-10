@@ -28,10 +28,10 @@ class MessageController extends Controller
     public function getMoreOldOfContact(Request $request)
     {
         $result = $this->messageService->getMoreOld(
-            $request->contactId,
-            $request->numberScrollLoad,
-            $request->startPointMessageId
-        );
+                      $request->contactId,
+                      $request->numberScrollLoad,
+                      $request->startPointMessageId
+                  );
 
         return response()->json([
             'messages'             => $result['messages'],
@@ -42,8 +42,8 @@ class MessageController extends Controller
     public function getLatestAllOfContact(Request $request)
     {
         $messages = $this->messageService->getLatestAll(
-            $request->contactId
-        );
+                        $request->contactId
+                    );
         
         return response()->json([
             'messages' => $messages
@@ -52,16 +52,16 @@ class MessageController extends Controller
 
     public function sendToContact(Request $request)
     {
-        $message = $this->messageService->sendTo(
-            $request->contactId, 
-            $request->text
-        );
+        $message =  $this->messageService->sendTo(
+                        $request->contactId, 
+                        $request->text
+                    );
 
         event( new AddNewMessageToList($request->contactId, $message) );
 
         $memberIdList = $this->baseGroupService->getMembersIdWithoutSender(
-            $request->contactId
-        );
+                            $request->contactId
+                        );
 
         event( new UpdateUnreadMessageMarkers($memberIdList) );
     }

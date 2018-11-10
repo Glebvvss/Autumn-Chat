@@ -13,12 +13,12 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
 {
     public function friendAdded(int $friendId) : void
     {
-        $this->writeHistoryEvent(
+        $this->writeHistoryPost(
             'Friend added ' . User::find($friendId)->username,
             Auth::user()->id
         );
 
-        $this->writeHistoryEvent(
+        $this->writeHistoryPost(
             'Friend added ' . Auth::user()->username,
             $friendId
         );
@@ -26,12 +26,12 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
 
     public function sendedFriendshipRequestCanceled(int $userId) : void
     {
-        $this->writeHistoryEvent(
+        $this->writeHistoryPost(
             'You cancel sended friendship request to ' . User::find($userId)->username . '.',
             Auth::user()->id
         );
 
-        $this->writeHistoryEvent(
+        $this->writeHistoryPost(
             Auth::user()->username . 'cancel sended friendship request to you.',
             $userId
         );
@@ -39,12 +39,12 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
 
     public function reciviedFriendshipRequestCanceled(int $userId) : void
     {
-        $this->writeHistoryEvent(
+        $this->writeHistoryPost(
             'You cancel recivied friendship request from ' . User::find($userId)->username . '.',
             Auth::user()->id
         );
 
-        $this->writeHistoryEvent(
+        $this->writeHistoryPost(
             Auth::user()->username . ' cancel recivied friendship request from you.',
             $userId
         );
@@ -52,12 +52,12 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
 
     public function friendshipRequestSended(int $userId) : void
     {
-        $this->writeHistoryEvent(
+        $this->writeHistoryPost(
             'You sended friendship request to ' . User::find($userId)->username . '.',
             Auth::user()->id
         );
 
-        $this->writeHistoryEvent(
+        $this->writeHistoryPost(
             'You recivied friendship request from ' . Auth::user()->username . '.',
             User::find($userId)->id
         );
@@ -74,7 +74,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
 
         foreach( $members as $member ) {
             if ( $member->id == $creator->id ) {
-                $this->writeHistoryEvent(
+                $this->writeHistoryPost(
                     'You created public group named ' . $group->group_name . '.',
                     $creator->id
                 );
@@ -82,7 +82,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
                 continue;
             }
 
-            $this->writeHistoryEvent(
+            $this->writeHistoryPost(
                 'You are member of ' . $group->group_name . ' public group, which created by ' . $creator->username,
                 $member->id
             );
@@ -100,7 +100,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
 
         foreach( $members as $member ) {
             if ( $member->id == $leaveUser->id ) {
-                $this->writeHistoryEvent(
+                $this->writeHistoryPost(
                     'You leave public group named ' . $group->group_name . '.',
                     $leaveUser->id
                 );
@@ -108,7 +108,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
                 continue;
             }
 
-            $this->writeHistoryEvent(
+            $this->writeHistoryPost(
                 $leaveUser->username . ' leave group named ' . $group->group_name . '.',
                 $member->id
             );
@@ -127,12 +127,12 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
 
         foreach( $members as $member ) {
             if ( in_array( $member->id, $newMemberIdList ) ) {
-                $this->writeHistoryEvent(
+                $this->writeHistoryPost(
                     'You added to group named ' . $group->group_name . '.',
                     $member->id
                 );
             } else {
-                $this->writeHistoryEvent(
+                $this->writeHistoryPost(
                     $usernames . ' join to group named ' . $group->group_name . '.',
                     $member->id
                 );

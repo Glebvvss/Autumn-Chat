@@ -2,6 +2,7 @@ let io    = require('socket.io')(3001),
     Redis = require('ioredis'),
     redis = new Redis();
 
+redis.setMaxListeners(0);
 io.on('connection', (socket) => {
   redis.psubscribe('*', (error, count) => {
     

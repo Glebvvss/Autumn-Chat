@@ -33,9 +33,9 @@ class HistoryController extends Controller
     public function getMoreOldLoadList(Request $request)
     {
         $historyPosts = $this->historyService->getSingleLoadList(
-            $request->loadNumber,
-            $request->startPointPostId
-        );
+                            $request->loadNumber,
+                            $request->startPointPostId
+                        );
 
         return response()->json([
             'historyPosts' => $historyPosts
