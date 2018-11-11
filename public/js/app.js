@@ -64517,8 +64517,10 @@ var LeaveGroup = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_scrollbar_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_history__ = __webpack_require__(303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__functions__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions_history__ = __webpack_require__(303);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -64528,6 +64530,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -64569,7 +64572,7 @@ var History = function (_Component) {
     value: function subscribeOnChangesInHistory() {
       var _this2 = this;
 
-      fetch(Object(__WEBPACK_IMPORTED_MODULE_3__functions__["b" /* makeUriForRequest */])('/get-user-id'), {
+      fetch(Object(__WEBPACK_IMPORTED_MODULE_4__functions__["b" /* makeUriForRequest */])('/get-user-id'), {
         method: 'get'
       }).then(function (response) {
         response.json().then(function (httpData) {
@@ -64710,10 +64713,10 @@ function BottomElement(props) {
 }, function (dispatch) {
   return {
     getHistoryMoreOldLoadList: function getHistoryMoreOldLoadList(loadNumber, startPointPostId) {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_history__["a" /* getHistoryMoreOldLoadList */])(loadNumber, startPointPostId));
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_history__["a" /* getHistoryMoreOldLoadList */])(loadNumber, startPointPostId));
     },
     getLatestHistoryList: function getLatestHistoryList() {
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_history__["b" /* getLatestHistoryList */])());
+      dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_history__["b" /* getLatestHistoryList */])());
     },
     addNewHistoryPost: function addNewHistoryPost(newHistoryPost) {
       dispatch({ type: 'ADD_NEW_HISTORY_POST', payload: newHistoryPost });

@@ -14,12 +14,12 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
     public function friendAdded(int $friendId) : array
     {
         $historyPost1 = $this->writeHistoryPost(
-                            'Friend added ' . User::find($friendId)->username,
+                            'You have new friend, who named ' . User::find($friendId)->username . '.',
                             Auth::user()->id
                         );
 
         $historyPost2 = $this->writeHistoryPost(
-                            'Friend added ' . Auth::user()->username,
+                            'You have new friend, who named ' . Auth::user()->username . '.',
                             $friendId
                         );
 
@@ -32,12 +32,12 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
     public function sendedFriendshipRequestCanceled(int $userId) : array
     {
         $historyPost1 = $this->writeHistoryPost(
-                            'You cancel sended friendship request to ' . User::find($userId)->username . '.',
+                            'You canceled sent friendship request to ' . User::find($userId)->username . '.',
                             Auth::user()->id
                         );
 
         $historyPost2 = $this->writeHistoryPost(
-                            Auth::user()->username . 'cancel sended friendship request to you.',
+                            Auth::user()->username . ' canceled sent friendship request to you.',
                             $userId
                         );
 
@@ -50,12 +50,12 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
     public function reciviedFriendshipRequestCanceled(int $userId) : array
     {
         $historyPost1 = $this->writeHistoryPost(
-                            'You cancel recivied friendship request from ' . User::find($userId)->username . '.',
+                            'You canceled the received friendship request from ' . User::find($userId)->username . '.',
                             Auth::user()->id
                         );
 
         $historyPost2 = $this->writeHistoryPost(
-                            Auth::user()->username . ' cancel recivied friendship request from you.',
+                            Auth::user()->username . ' canceled the received friendship request from you.',
                             $userId
                         );
 
@@ -68,12 +68,12 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
     public function friendshipRequestSended(int $userId) : array
     {
         $historyPost1 = $this->writeHistoryPost(
-                            'You sended friendship request to ' . User::find($userId)->username . '.',
+                            'You sent friendship request to ' . User::find($userId)->username . '.',
                             Auth::user()->id
                         );
 
         $historyPost2 = $this->writeHistoryPost(
-                            'You recivied friendship request from ' . Auth::user()->username . '.',
+                            'You received friendship request from ' . Auth::user()->username . '.',
                             User::find($userId)->id
                         );
 
@@ -86,7 +86,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
     public function deleteFromFriendList(int $friendId) : array
     {
         $historyPost1 = $this->writeHistoryPost(
-                            'You deleted a friend named ' . User::find($friendId)->username,
+                            'You deleted a friend named ' . User::find($friendId)->username . ' from your friend list.',
                             Auth::user()->id
                         );
 
@@ -150,7 +150,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
         foreach( $members as $member ) {
             if ( $member->id == $leaveUser->id ) {
                 $historyPost =  $this->writeHistoryPost(
-                                    'You leave public group named ' . $group->group_name . '.',
+                                    'You leave from public group named ' . $group->group_name . '.',
                                     $leaveUser->id
                                 );
 
@@ -159,7 +159,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
             }
 
             $historyPost =  $this->writeHistoryPost(
-                                $leaveUser->username . ' leave group named ' . $group->group_name . '.',
+                                $leaveUser->username . ' left group named ' . $group->group_name . '.',
                                 $member->id
                             );
 
@@ -193,7 +193,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
             } else {
 
                 $historyPost =   $this->writeHistoryPost(
-                                    $usernames . ' join to group named ' . $group->group_name . '.',
+                                    $usernames . ' joined to group named ' . $group->group_name . '.',
                                     $member->id
                                 );
 

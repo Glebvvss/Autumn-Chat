@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactScrollbar from 'react-scrollbar-js';
+import $ from "jquery";
 
 import { makeUriForRequest } from '../../../../../../functions';
 
