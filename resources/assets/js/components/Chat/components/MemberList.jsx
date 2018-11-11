@@ -16,6 +16,10 @@ class MemberList extends Component {
       this.props.getMembersOfGroup(this.props.selectedContactId);
     });
   }
+  
+  componentWillUnmount() {
+    this.props.resetMessageList();
+  }
 
   render() {
     this.subscribeOnChangesInMemberList();
@@ -44,6 +48,9 @@ export default connect(
   dispatch => ({
     getMembersOfGroup: (groupId) => {
       dispatch( getMembersOfGroup(groupId) );
+    },
+    resetMessageList: () => {
+      dispatch({ type: 'RESET_MESSAGE_LIST' });
     }
   })
 )(MemberList);

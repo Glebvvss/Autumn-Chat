@@ -39,11 +39,10 @@ $padding_blocks: 20px;
 	padding-left: 15px;
 }
 
-div.delete-from-friends {
+@mixin leaveContactBtn {
 	background: $orange;
   display: block;
   float: right;
-  margin-top: -16px;
   margin-right: -28px;
   width: 33px;
   height: 14px;
@@ -59,6 +58,15 @@ div.delete-from-friends {
 	text-align: center;
   color: white;
   padding: 0;
+}
+
+.delete-from-friends {
+	@include leaveContactBtn;
+	margin-top: -16px;
+}
+
+.leave-public-group {
+	@include leaveContactBtn;
 }
 
 .sidebar-head {

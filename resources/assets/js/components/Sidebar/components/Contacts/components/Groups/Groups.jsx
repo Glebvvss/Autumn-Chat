@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { makeUriForRequest } from '../../../../../functions.js';
+
+import LeaveGroupButton from './components/LeaveGroupButton';
+import { makeUriForRequest } from '../../../../../../functions.js';
 
 import { getLatestMessages,
-         dropUnreadMessageLink } from '../../../../../actions/messages';
+         dropUnreadMessageLink } from '../../../../../../actions/messages';
 
 import { getGroups, 
          getMembersOfGroup, 
-         getFriendsWhoNotInGroup } from '../../../../../actions/groups';
+         getFriendsWhoNotInGroup } from '../../../../../../actions/groups';
 
 class Groups extends Component {
 
@@ -81,13 +83,24 @@ class Groups extends Component {
                              this.props.selectedContactType == 'GROUP' ) ? 'active-contact' : null} >
               
               {item.group_name}
-              {this.renderIfHaveUnreadMessagesMarker(item)}
+              <UnreadMessageMarker exists={item.unread_message_exists} />
+              <LeaveGroupButton groupId={item.id}/>
             </li> ))
         }
       </ul>
     );
   }
 
+}
+
+function UnreadMessageMarker(props) {
+  if ( props.exists === true ) {
+    return (
+      <div className="notice-new">NEW</div>
+    );
+  } else {
+    return <span></span>;
+  }
 }
 
 export default connect(

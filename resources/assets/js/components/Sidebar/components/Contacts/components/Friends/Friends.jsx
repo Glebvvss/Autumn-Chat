@@ -91,9 +91,7 @@ function UnreadMessageMarker(props) {
       <div className="notice-new">NEW</div>
     );
   } else {
-    return (
-      <span></span>
-    );
+    return <span></span>;
   }
 }
 
