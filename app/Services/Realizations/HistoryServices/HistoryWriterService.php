@@ -25,7 +25,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
 
         return [
             $historyPost1->user_id => $historyPost1,
-            $historyPost2->user_id => $historyPost1
+            $historyPost2->user_id => $historyPost2
         ];
     }
 
@@ -43,7 +43,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
 
         return [
             $historyPost1->user_id => $historyPost1,
-            $historyPost2->user_id => $historyPost1
+            $historyPost2->user_id => $historyPost2
         ];
     }
 
@@ -61,7 +61,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
 
         return [
             $historyPost1->user_id => $historyPost1,
-            $historyPost2->user_id => $historyPost1
+            $historyPost2->user_id => $historyPost2
         ];
     }
 
@@ -79,31 +79,32 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
 
         return [
             $historyPost1->user_id => $historyPost1,
-            $historyPost2->user_id => $historyPost1
+            $historyPost2->user_id => $historyPost2
         ];
     }
 
     public function deleteFromFriendList(int $friendId) : array
     {
-        $historyPost1 = $this->historyService->writeHistoryPost(
-                            'You deleted a friend named ' . User::find($request->friendId)->username,
+        $historyPost1 = $this->writeHistoryPost(
+                            'You deleted a friend named ' . User::find($friendId)->username,
                             Auth::user()->id
                         );
 
-        $historyPost1 = $this->historyService->writeHistoryPost(
+        $historyPost2 = $this->writeHistoryPost(
                             'You have been deleted from friends of ' . Auth::user()->username, 
                             $friendId
                         );
 
         return [
             $historyPost1->user_id => $historyPost1,
-            $historyPost2->user_id => $historyPost1
+            $historyPost2->user_id => $historyPost2
         ];   
     }
 
     public function groupCreatedBy(int $userCreatorId, int $groupId) : array
     {
         $group   = Group::find($groupId);
+
         $creator = User::find($userCreatorId);
 
         $members = Group::find($groupId)
@@ -119,7 +120,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
                                     $creator->id
                                 );
 
-                $historyPostList[$histryPost->user_id] = $histryPost;
+                $historyPostList[$historyPost->user_id] = $historyPost;
                 continue;
             }
 
@@ -153,7 +154,7 @@ class HistoryWriterService extends HistoryService implements IHistoryWriterServi
                                     $leaveUser->id
                                 );
 
-                $historyPostList[$histryPost->user_id] = $histryPost;
+                $historyPostList[$historyPost->user_id] = $historyPost;
                 continue;
             }
 

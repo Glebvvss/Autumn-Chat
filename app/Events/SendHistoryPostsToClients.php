@@ -21,7 +21,7 @@ class SendHistoryPostsToClients implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct( array $historyPosts )
+    public function __construct( $historyPosts )
     {
         $this->historyPosts = $historyPosts;
     }

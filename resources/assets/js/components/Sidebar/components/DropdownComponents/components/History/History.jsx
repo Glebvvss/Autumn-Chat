@@ -26,6 +26,7 @@ class History extends Component {
   componentDidMount() {
     this.changeScrollbarStateByResizeWindow();
     this.props.getLatestHistoryList();
+    this.subscribeOnChangesInHistory();
   }
 
   subscribeOnChangesInHistory() {
@@ -36,10 +37,10 @@ class History extends Component {
       response.json().then(httpData => {
         let socket = io(':3001'),
             userId = httpData.userId,
-            room   = 'update-unread-message-merkers-of-user-id:' + userId;
+            room   = 'get-history-post-of:' + userId;
 
-        socket.on(room, (socketData) => {
-          
+        socket.on(room, newHistoryPost => {
+          this.props.addNewHistoryPost([newHistoryPost]);
         });
       });
     });
@@ -155,6 +156,9 @@ export default connect(
     },
     getLatestHistoryList: () => {
       dispatch( getLatestHistoryList() );
+    },
+    addNewHistoryPost: newHistoryPost => {
+      dispatch({ type: 'ADD_NEW_HISTORY_POST', payload: newHistoryPost });
     }
   })
 )(History);

@@ -59776,6 +59776,13 @@ function history() {
   var action = arguments[1];
 
 
+  if (action.type === 'ADD_NEW_HISTORY_POST') {
+    var updatedLoadedHistoryPosts = action.payload.concat(state.loadedHistoryPosts);
+    return _extends({}, state, {
+      loadedHistoryPosts: Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* cloneObject */])(updatedLoadedHistoryPosts)
+    });
+  }
+
   if (action.type === 'SET_FULL_HISTORY_LOADED') {
     return _extends({}, state, {
       fullHistoryLoaded: true
@@ -59784,7 +59791,7 @@ function history() {
 
   if (action.type === 'RESET_FULL_HISTORY_LOADED') {
     return _extends({}, state, {
-      fullHistoryLoadedallHistoryLoaded: false
+      fullHistoryLoaded: false
     });
   }
 
@@ -59795,9 +59802,9 @@ function history() {
   }
 
   if (action.type === 'UPDATE_LOADED_HISTORY_LIST') {
-    var updatedLoadedHistoryPosts = state.loadedHistoryPosts.concat(action.payload);
+    var _updatedLoadedHistoryPosts = state.loadedHistoryPosts.concat(action.payload);
     return _extends({}, state, {
-      loadedHistoryPosts: Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* cloneObject */])(updatedLoadedHistoryPosts),
+      loadedHistoryPosts: Object(__WEBPACK_IMPORTED_MODULE_0__functions_js__["a" /* cloneObject */])(_updatedLoadedHistoryPosts),
       countLoads: state.countLoads + 1
     });
   }
@@ -64555,29 +64562,34 @@ var History = function (_Component) {
     value: function componentDidMount() {
       this.changeScrollbarStateByResizeWindow();
       this.props.getLatestHistoryList();
+      this.subscribeOnChangesInHistory();
     }
   }, {
     key: 'subscribeOnChangesInHistory',
     value: function subscribeOnChangesInHistory() {
+      var _this2 = this;
+
       fetch(Object(__WEBPACK_IMPORTED_MODULE_3__functions__["b" /* makeUriForRequest */])('/get-user-id'), {
         method: 'get'
       }).then(function (response) {
         response.json().then(function (httpData) {
           var socket = io(':3001'),
               userId = httpData.userId,
-              room = 'update-unread-message-merkers-of-user-id:' + userId;
+              room = 'get-history-post-of:' + userId;
 
-          socket.on(room, function (socketData) {});
+          socket.on(room, function (newHistoryPost) {
+            _this2.props.addNewHistoryPost([newHistoryPost]);
+          });
         });
       });
     }
   }, {
     key: 'changeScrollbarStateByResizeWindow',
     value: function changeScrollbarStateByResizeWindow() {
-      var _this2 = this;
+      var _this3 = this;
 
       window.addEventListener('resize', function (event) {
-        _this2.setState(_extends({}, _this2.state, {
+        _this3.setState(_extends({}, _this3.state, {
           scrollbar: {
             width: 240,
             height: document.documentElement.clientHeight / 2 - 20
@@ -64702,6 +64714,9 @@ function BottomElement(props) {
     },
     getLatestHistoryList: function getLatestHistoryList() {
       dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_history__["b" /* getLatestHistoryList */])());
+    },
+    addNewHistoryPost: function addNewHistoryPost(newHistoryPost) {
+      dispatch({ type: 'ADD_NEW_HISTORY_POST', payload: newHistoryPost });
     }
   };
 })(History));

@@ -9,6 +9,10 @@ io.on('connection', (socket) => {
     redis.on('pmessage', (pattern, chanel, message) => {
       let messageJSON = JSON.parse(message);
 
+      if ( messageJSON.event === 'SEND_HISTORY_POSTS_TO_CLIENTS' ) {
+        sendHistoryPostsToClients(socket, messageJSON);
+      }
+
       if ( messageJSON.event === 'ADD_NEW_MESSAGE_TO_LIST' ) {
         addNewMessageToList(socket, messageJSON);
       }
@@ -41,17 +45,28 @@ io.on('connection', (socket) => {
   });
 });
 
+function sendHistoryPostsToClients(socket, messageJSON) {
+  let historyPosts = messageJSON.data.historyPosts;
+
+  for (key in historyPosts) {
+    let historyPost = historyPosts[key],
+        room = 'get-history-post-of:' + historyPosts[key]['user']['id'];
+
+    socket.emit(room, historyPost);
+  }
+}
+
 function addNewMessageToList(socket, messageJSON) {
-  let groupId = messageJSON.data.groupId;
-  let message = messageJSON.data.message;
+  let groupId = messageJSON.data.groupId,
+      message = messageJSON.data.message,
       room    = 'add-new-message-to-list:' + groupId;
 
   socket.emit(room, message);
 }
 
 function updateMembersOfPublicGroup(socket, messageJSON) {
-  let groupId         = messageJSON.data.groupId;
-  let newMemberIdList = messageJSON.data.newMemberIdList;
+  let groupId         = messageJSON.data.groupId,
+      newMemberIdList = messageJSON.data.newMemberIdList,
       room            = 'update-members-of-public-group:' + groupId;
       
   socket.emit(room, 'update');
@@ -59,6 +74,7 @@ function updateMembersOfPublicGroup(socket, messageJSON) {
   if ( newMemberIdList != null ) {
     newMemberIdList.map((newMemberId) => {
       let room = 'update-group-list:' + newMemberId;
+
       socket.emit(room, 'update');
     });
   }
@@ -69,6 +85,7 @@ function newPublicGroupCreated(socket, messageJSON) {
 
   memberIdList.map(memberId => {
     let room    = 'update-group-list:' + memberId;
+
     socket.emit(room, 'update');
   });
 }
@@ -78,6 +95,7 @@ function updateUnreadMessageMarkers(socket, messageJSON) {
 
   userIdList.map(userId => {
     let room    = 'update-unread-message-merkers-of-user-id:' + userId;
+
     socket.emit(room, 'update');
   });
 }

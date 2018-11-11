@@ -62,7 +62,7 @@ class GroupController extends Controller
             'dialogId' => $dialogId
         ]);
     }
-  
+
     public function createPublicType(Request $request) {
         $memberIdList = json_decode($request->groupMembersIdList);
 
@@ -103,6 +103,15 @@ class GroupController extends Controller
 
         event( new UpdateMembersOfPublicGroup($request->groupId) );
         event( new SendHistoryPostsToClients($historyPosts) );
+    }
+
+    public function test() 
+    {
+        $historyPosts = $this->historyWriterService->friendAdded(
+                            3
+                        );
+
+        dump( $historyPosts );
     }
 
     public function addNewMembersToPublicType(Request $request) {

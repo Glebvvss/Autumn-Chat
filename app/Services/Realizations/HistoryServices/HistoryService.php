@@ -62,9 +62,13 @@ class HistoryService implements IHistoryService
         $history->new = true;
         $history->user()->associate(User::find($userId));
 
-        $newPost = $history->save();
+        $postAddedToBatabese = $history->save();
 
-        return History::find($newPost->id);
+        if ( !$postAddedToBatabese ) {
+            throw new \Exception('Post was not added to database.');
+        }
+
+        return $history;
     }
 
     public function checkOnNewByUserId(int $userId) : bool

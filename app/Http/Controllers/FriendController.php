@@ -55,7 +55,7 @@ class FriendController extends Controller
     {
         $this->friendService->deleteFromFriends($request->friendId);
 
-        $historyPosts = $this->historyWriterService->deleteFromFriendList($friendId);
+        $historyPosts = $this->historyWriterService->deleteFromFriendList($request->friendId);
 
         event( new UpdateFriendList($request->friendId) );
         event( new SendHistoryPostsToClients($historyPosts) );   

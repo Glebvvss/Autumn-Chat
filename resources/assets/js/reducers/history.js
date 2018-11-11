@@ -10,6 +10,14 @@ let defaultState = {
 
 export function history(state = defaultState, action) {
 
+  if ( action.type === 'ADD_NEW_HISTORY_POST' ) {
+    let updatedLoadedHistoryPosts = action.payload.concat(state.loadedHistoryPosts);
+    return {
+      ...state,
+      loadedHistoryPosts: cloneObject(updatedLoadedHistoryPosts),
+    };
+  }
+
   if ( action.type === 'SET_FULL_HISTORY_LOADED' ) {
     return {
       ...state,
@@ -20,7 +28,7 @@ export function history(state = defaultState, action) {
   if ( action.type === 'RESET_FULL_HISTORY_LOADED' ) {
     return {
       ...state,
-      fullHistoryLoadedallHistoryLoaded: false,
+      fullHistoryLoaded: false,
     };
   }
 
